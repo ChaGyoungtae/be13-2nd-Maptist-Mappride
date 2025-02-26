@@ -45,11 +45,16 @@ public class PlaceService {
     }
 
     public Long createPlace(PlaceRequestDto placeRequestDto) {
+
+        System.out.println(placeRequestDto);
+
         Optional<Category> findCategory = categoryRepository.findById(placeRequestDto.getCategoryId());
 
         if(findCategory.isEmpty()){
             throw new RuntimeException("카테고리를 찾을 수 없습니다.");
         }
+
+        //System.out.println(findCategory.get().getName());
 
         String address = naverGeocodingService.getAddressFromCoordinates(placeRequestDto.getLatitude(), placeRequestDto.getLongitude());
 
