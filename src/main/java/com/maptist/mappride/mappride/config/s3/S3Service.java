@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.MemberRepository;
+import com.maptist.mappride.mappride.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class S3Service {
 
     private final AmazonS3 amazonS3;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
 
     //여러사진 저장
@@ -38,10 +40,11 @@ public class S3Service {
         List<String> fileNameList = new ArrayList<>();
         // forEach 를 통해 파일들을 순차적으로 fileNameList 에 추가
         multipartFiles.forEach(file -> {
-        String fileName = createFileName(file.getOriginalFilename());
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(file.getSize());
-        objectMetadata.setContentType(file.getContentType());
+
+            String fileName = createFileName(file.getOriginalFilename());
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(file.getSize());
+            objectMetadata.setContentType(file.getContentType());
 
         try(InputStream inputStream = file.getInputStream()){
             amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
@@ -58,13 +61,37 @@ public class S3Service {
     //사진 1장 저장
     public String uploadFile(MultipartFile multipartFile){
 
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            return null;
+        }
+
+        SecurityUserDto principal = (SecurityUserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = memberRepository.findByEmail(principal.getEmail()).get().getId();
+        String fileName = createFileName(multipartFile.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+
+        try(InputStream inputStream = multipartFile.getInputStream()){
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        }
+
+        return fileName;
+    }
+
+
+    //대표 사진 저장
+    public String uploadThumbnail(MultipartFile multipartFile, Long placeId){
+
     if (multipartFile == null || multipartFile.isEmpty()) {
         return null;
     }
     SecurityUserDto principal = (SecurityUserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Long userId = memberRepository.findByEmail(principal.getEmail()).get().getId();
-    Long placeId = 999L;
-    String fileName = userId +"_"+placeId+"_"+ createFileName(multipartFile.getOriginalFilename());
+    String fileName ="thumbnail_" + createFileName(multipartFile.getOriginalFilename());
     ObjectMetadata objectMetadata = new ObjectMetadata();
     objectMetadata.setContentLength(multipartFile.getSize());
     objectMetadata.setContentType(multipartFile.getContentType());
@@ -78,6 +105,9 @@ public class S3Service {
 
     return fileName;
 }
+
+
+
 
     //파일명 난수화를 위한 UUID 생성
     public String createFileName(String fileName){

@@ -20,4 +20,8 @@ public class PlaceRepository {
                 .getResultList();
     }
 
+    public Long save(Place place) {
+        em.persist(place);
+        return place.getId();
+    }
 }

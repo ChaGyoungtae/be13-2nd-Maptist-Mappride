@@ -39,7 +39,7 @@ public class NaverGeocodingService {
         return extractAddress(response.getBody());  // JSON 응답을 그대로 반환
     }
 
-    public String extractAddress(String jsonResponse) {
+    private String extractAddress(String jsonResponse) {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
