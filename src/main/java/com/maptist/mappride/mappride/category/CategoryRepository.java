@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
+import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ public class CategoryRepository {
         //CategoryByMember 에서 입력받은 memberId를 가진 CategoryId 를 조회한다.
         String query = """
             
-            SELECT new com.maptist.mappride.mappride.category.dto.CategoryDto(c.name,c.isPublic)
+            SELECT new com.maptist.mappride.mappride.category.dto.CategoryDto(c.name,c.publish)
             FROM Category c
             JOIN CategoryByMember cbm ON c.id = cbm.category.id
             WHERE cbm.member.id = :memberId
@@ -48,16 +49,17 @@ public class CategoryRepository {
 
 
     // 카테고리 수정
-    public void updateCategory(CategoryDto dto) {
+    public void updateCategory(CategoryUpdateDto categoryUpdateDto) {
         String query = """
                 UPDATE Category c
-                SET c.name = :name, c.isPublic = :isPublic
+                SET c.name = :name, c.publish = :publish
                 WHERE c.id = :id
                 """;
 
         em.createQuery(query)
-                .setParameter("name", dto.getName())
-                .setParameter("isPublic", dto.isPublic())
+                .setParameter("name", categoryUpdateDto.getName())
+                .setParameter("publish",categoryUpdateDto.isPublish())
+                .setParameter("id", categoryUpdateDto.getId())
                 .executeUpdate();
     }
 

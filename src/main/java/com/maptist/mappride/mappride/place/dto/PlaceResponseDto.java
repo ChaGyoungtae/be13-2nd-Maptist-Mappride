@@ -2,7 +2,6 @@ package com.maptist.mappride.mappride.place.dto;
 
 
 import com.maptist.mappride.mappride.category.Category;
-import com.maptist.mappride.mappride.place.Place;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

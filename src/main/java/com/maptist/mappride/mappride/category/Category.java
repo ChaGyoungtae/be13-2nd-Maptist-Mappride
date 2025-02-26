@@ -26,6 +26,6 @@ public class Category {
     private String name;
 
     @Column(nullable = false)
-    private boolean isPublic;
+    private boolean publish;
 
 }

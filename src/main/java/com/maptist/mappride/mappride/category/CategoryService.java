@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
+import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.member.Member;
@@ -81,7 +82,7 @@ public class CategoryService {
 
     // 카테고리 수정
 
-    public void updateCategory(CategoryDto dto) {
+    public void updateCategory(CategoryUpdateDto dto) {
         categoryRepository.updateCategory(dto);
     }
 
@@ -93,11 +94,13 @@ public class CategoryService {
 
         Optional<Category> findCategory = categoryRepository.findById(categoryId);
 
-        if(findCategory.isPresent()) {
-            categoryRepository.deleteById(findCategory.get());
-        } else {
+        if(findCategory.isEmpty()) {
             throw new RuntimeException("findCategory is null");
         }
+        Member member = memberService.getMember();
+        CategoryByMember categoryByMember = categoryByMemberRepository.findByMemberIdAndCategoryId(member.getId(),categoryId);
+
+        categoryByMemberRepository.delete(categoryByMember);
 
     }
 

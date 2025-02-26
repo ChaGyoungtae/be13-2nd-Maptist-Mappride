@@ -1,12 +1,11 @@
 package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
-import com.maptist.mappride.mappride.place.Place;
+import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.place.PlaceService;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,6 +33,7 @@ public class CategoryController {
     // 데이터 유효성 검증완료전까진 dto로 감싸서 전달함
     @PostMapping
     public ResponseEntity<Long> createCategory(@RequestBody CategoryDto dto) {
+        System.out.println(dto);
         return categoryService.createCategory(dto);
     }
 
@@ -62,7 +61,7 @@ public class CategoryController {
 
     // 카테고리 수정
     @PutMapping("/update")
-    public ResponseEntity<Long> updateCategory(@RequestBody CategoryDto dto) {
+    public ResponseEntity<Long> updateCategory(@RequestBody CategoryUpdateDto dto) {
 
         categoryService.updateCategory(dto);
         return ResponseEntity.ok().build();
