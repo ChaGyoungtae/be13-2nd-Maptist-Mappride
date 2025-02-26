@@ -3,6 +3,9 @@ package com.maptist.mappride.mappride.place;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +19,9 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping
-    public ResponseEntity<Long> createPlace(@RequestBody PlaceRequestDto placeRequestDto){
-
+    public ResponseEntity<Long> createPlace(@ModelAttribute PlaceRequestDto placeRequestDto){
+        System.out.println(placeRequestDto);
         return ResponseEntity.ok().body(placeService.createPlace(placeRequestDto));
     }
+
 }
