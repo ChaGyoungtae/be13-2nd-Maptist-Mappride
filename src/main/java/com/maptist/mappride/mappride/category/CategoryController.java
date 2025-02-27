@@ -3,7 +3,7 @@ package com.maptist.mappride.mappride.category;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.place.PlaceService;
-import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
+import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +51,9 @@ public class CategoryController {
 
     // 카테고리 별 장소 조회
     @GetMapping("/{categoryId}/places")
-    public ResponseEntity<List<PlaceResponseDto>> getPlacesByCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable Long categoryId) {
 
-        List<PlaceResponseDto> places = placeService.findPlacesByCategory(categoryId);
+        List<PlacesByCategoryResponseDto> places = placeService.findPlacesByCategory(categoryId);
 
         return ResponseEntity.ok().body(places);
     }
@@ -75,8 +75,5 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().build();
     }
-
-
-
 
 }

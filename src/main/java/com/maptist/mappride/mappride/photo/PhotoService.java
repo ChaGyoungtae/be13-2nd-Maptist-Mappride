@@ -16,4 +16,8 @@ public class PhotoService {
     public Long save(Photo photo) {
         return photoRepository.create(photo);
     }
+
+    public void deletePhoto(Long id) {
+        photoRepository.remove(photoRepository.findById(id));
+    }
 }

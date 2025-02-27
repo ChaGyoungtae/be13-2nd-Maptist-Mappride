@@ -13,17 +13,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class S3Service {
 
     @Value("${cloud.aws.s3.bucket}")
@@ -123,8 +126,17 @@ public class S3Service {
         }
     }
 
-    public void deleteFile(String fileName){
+    public void deleteFile(String url){
+        String fileName = getFileNameFromUrl(url);
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-        System.out.println(bucket);
+    }
+
+    public static String getFileNameFromUrl(String url) {
+        // URL에서 파일 이름을 추출
+        URI uri = URI.create(url);
+        String path = uri.getPath();
+
+        // 마지막 슬래시 (/) 이후 부분이 파일 이름
+        return path.substring(path.lastIndexOf('/') + 1);
     }
 }
