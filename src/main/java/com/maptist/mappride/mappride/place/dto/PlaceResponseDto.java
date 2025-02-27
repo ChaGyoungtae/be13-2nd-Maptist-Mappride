@@ -5,8 +5,10 @@ import com.maptist.mappride.mappride.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,18 +30,10 @@ public class PlaceResponseDto {
 
     private String content;
 
+    private String thumbnail;
+
+    private List<String> photoUrls;
+
     private LocalDateTime reg_date;
-
-
-    public PlaceResponseDto(Long id, Category category, String name, Double latitude, Double longitude, String address, String color, String content) {
-        this.id = id;
-        this.category = category;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-        this.color = color;
-        this.content = content;
-    }
 
 }

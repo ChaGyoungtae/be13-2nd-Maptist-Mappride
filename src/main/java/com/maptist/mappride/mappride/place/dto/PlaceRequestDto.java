@@ -1,53 +1,29 @@
 package com.maptist.mappride.mappride.place.dto;
 
 import com.maptist.mappride.mappride.category.Category;
-import com.maptist.mappride.mappride.place.Place;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 @ToString
-@Setter
 public class PlaceRequestDto {
-    private Long categoryId;
 
-    private String name;
+    private final Long placeId;
 
-    private Double latitude;
+    private final String name;
 
-    private Double longitude;
+    private final Double latitude;
 
-    private String color;
+    private final Double longitude;
 
-    private String content;
+    private final String color;
 
-    private MultipartFile thumbnail;
-
-    private List<MultipartFile> multipartFiles;
-
-    public Place toPlace(Category category, String address, LocalDateTime regDate){
-
-        return Place.builder()
-                .category(category)
-                .name(name)
-                .latitude(latitude)
-                .longitude(longitude)
-                .address(address)
-                .color(color)
-                .content(content)
-                .reg_date(regDate)
-                .build();
-    }
+    private final String content;
 
 }

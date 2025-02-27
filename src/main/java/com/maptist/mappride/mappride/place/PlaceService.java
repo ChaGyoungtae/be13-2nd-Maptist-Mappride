@@ -7,23 +7,22 @@ import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.photo.Photo;
+import com.maptist.mappride.mappride.photo.PhotoRepository;
 import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
+import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -38,17 +37,19 @@ public class PlaceService {
     private final AmazonS3 amazonS3;
     private final MemberService memberService;
     private final PhotoService photoService;
+    private final PhotoRepository photoRepository;
 
 
-    public List<PlaceResponseDto> findPlacesByCategory(Long categoryId) {
+    public List<PlacesByCategoryResponseDto> findPlacesByCategory(Long categoryId) {
         return placeRepository.findPlacesByCategoryId(categoryId);
     }
 
-    public Long createPlace(PlaceRequestDto placeRequestDto) {
+    @Transactional
+    public Long createPlace(PlaceRegisterDto placeRegisterDto) {
 
-        System.out.println(placeRequestDto);
+        System.out.println(placeRegisterDto);
 
-        Optional<Category> findCategory = categoryRepository.findById(placeRequestDto.getCategoryId());
+        Optional<Category> findCategory = categoryRepository.findById(placeRegisterDto.getCategoryId());
 
         if(findCategory.isEmpty()){
             throw new RuntimeException("카테고리를 찾을 수 없습니다.");
@@ -56,9 +57,9 @@ public class PlaceService {
 
         //System.out.println(findCategory.get().getName());
 
-        String address = naverGeocodingService.getAddressFromCoordinates(placeRequestDto.getLatitude(), placeRequestDto.getLongitude());
+        String address = naverGeocodingService.getAddressFromCoordinates(placeRegisterDto.getLatitude(), placeRegisterDto.getLongitude());
 
-        Place place = placeRequestDto.toPlace(findCategory.get(),address, LocalDateTime.now());
+        Place place = placeRegisterDto.toPlace(findCategory.get(),address, LocalDateTime.now());
         Long placeId = placeRepository.save(place);
 
         Member member = memberService.getMember();
@@ -68,14 +69,14 @@ public class PlaceService {
         String fileName;
         boolean isThumbnail;
 
-        for(int i = -1; i< placeRequestDto.getMultipartFiles().size(); i++){
+        for(int i = -1; i< placeRegisterDto.getMultipartFiles().size(); i++){
             if(i == -1) {
-                thumbnail = placeRequestDto.getThumbnail();
+                thumbnail = placeRegisterDto.getThumbnail();
                 fileName = s3Service.uploadFile(thumbnail);
                 isThumbnail = true;
             }
             else {
-                multipartFile = placeRequestDto.getMultipartFiles().get(i);
+                multipartFile = placeRegisterDto.getMultipartFiles().get(i);
                 fileName = s3Service.uploadFile(multipartFile);
                 isThumbnail = false;
             }
@@ -85,5 +86,30 @@ public class PlaceService {
         }
 
         return placeId;
+    }
+
+    public PlaceResponseDto findById(Long placeId) {
+
+        return placeRepository.findPlaceResponseDtoById(placeId);
+    }
+
+    @Transactional
+    public Long modifyPlace(PlaceRequestDto placeRequestDto) {
+        String address = naverGeocodingService.getAddressFromCoordinates(placeRequestDto.getLatitude(), placeRequestDto.getLongitude());
+        return placeRepository.updatePlace(placeRequestDto, address);
+    }
+
+    @Transactional
+    public Long deletePlace(Long placeId) {
+        // placeId를 이용해 사진 리스트 가져오기
+        List<Photo> photoList = photoRepository.findByPlaceId(placeId);
+        // 사진 지우고, photo 테이블 지우고
+        for(Photo p : photoList){
+            s3Service.deleteFile(p.getPhotoUrl());
+            photoRepository.remove(p);
+        }
+        // place 지우기
+        Place place = placeRepository.findOne(placeId);
+        return placeRepository.delete(place);
     }
 }
