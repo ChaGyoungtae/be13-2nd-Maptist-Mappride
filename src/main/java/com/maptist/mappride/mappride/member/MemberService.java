@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.member;
 
+import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,5 +59,12 @@ public class MemberService {
     public void updateMyInfo(MemberUpdateDto dto)
     {
         memberRepository.updateMyInfo(dto);
+    }
+
+    // 유저 아이디로 부터 유저 카테고리들 조회
+    public List<CategoryByMemberResponseDto> searchCategories() {
+        Long memberId = getMember().getId();
+
+        return memberRepository.getCategories(memberId);
     }
 }
