@@ -1,0 +1,68 @@
+package com.maptist.mappride.mappride.comment;
+
+import com.maptist.mappride.mappride.comment.dto.CommentRequestDto;
+import com.maptist.mappride.mappride.comment.dto.CommentUpdateDto;
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+@RequiredArgsConstructor
+public class CommentRepository {
+
+    private final EntityManager em;
+
+    // 댓글 생성
+    public Long create(Comment comment) {
+        em.persist(comment);
+        return comment.getId();
+    }
+
+
+    // 장소별 댓글 조회
+    public List<CommentRequestDto> findByPlaceId(Long placeId) {
+        return em.createQuery("SELECT new com.maptist.mappride.mappride.comment.dto.CommentRequestDto(c.comment, c.place.id) FROM Comment c WHERE c.place.id = :placeId", CommentRequestDto.class)
+                .setParameter("placeId", placeId)
+                .getResultList();
+    }
+
+
+    // 댓글 수정
+    public void updateComment(CommentUpdateDto commentUpdateDto) {
+        String query = """
+                UPDATE Comment c
+                SET c.comment = :comment
+                WHERE c.id = :id
+                """;
+
+       em.createQuery(query)
+               .setParameter("comment", commentUpdateDto.getComment())
+               .setParameter("id", commentUpdateDto.getId())
+               .executeUpdate();
+    }
+
+    // 댓글 삭제
+    public void delete(Comment findComment) {
+        em.remove(findComment);
+    }
+
+    public Optional<Comment> findById(Long commentId) {
+        return Optional.ofNullable(em.find(Comment.class, commentId));
+    }
+
+}
+
+
+//    public List<Comment> findByPlace(Place place) {
+//        return em.createQuery("SELECT c FROM Comment c WHERE c.place = :place", Comment.class)
+//                .setParameter("place", place)
+//                .getResultList();
+//    }
+
+//    public List<Comment> findAll() {
+//
+//        return em.createQuery("select c from Comment c", Comment.class).getResultList();
+//    }
