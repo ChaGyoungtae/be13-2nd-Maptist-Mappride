@@ -131,7 +131,7 @@ public class S3Service {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
 
-    public static String getFileNameFromUrl(String url) {
+    public String getFileNameFromUrl(String url) {
         // URL에서 파일 이름을 추출
         URI uri = URI.create(url);
         String path = uri.getPath();

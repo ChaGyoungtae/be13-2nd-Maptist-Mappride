@@ -16,7 +16,7 @@ import java.util.List;
 public class PlaceResponseDto {
     private Long id;
 
-    private Category category;
+    private Long categoryId;
 
     private String name;
 

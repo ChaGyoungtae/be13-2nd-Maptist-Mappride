@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.place;
 
-import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
@@ -40,7 +39,7 @@ public class PlaceRepository {
 
     public PlaceResponseDto findPlaceResponseDtoById(Long placeId){
             List<Object[]> result = em.createQuery(
-            "SELECT p.id, p.category, p.name, p.latitude, p.longitude, " +
+            "SELECT p.id, p.category.id, p.name, p.latitude, p.longitude, " +
             "p.address, p.color, p.content, " +
             "CASE WHEN ph.thumbnail = true THEN ph.photoUrl ELSE NULL END, " + // 썸네일 URL
             "ph.photoUrl, p.reg_date " +
@@ -61,7 +60,7 @@ public class PlaceRepository {
         for (Object[] row : result) {
             if (dto == null) {
                 dto = new PlaceResponseDto(
-                        (Long) row[0], (Category) row[1], (String) row[2], (Double) row[3],
+                        (Long) row[0], (Long) row[1], (String) row[2], (Double) row[3],
                         (Double) row[4], (String) row[5], (String) row[6], (String) row[7],
                         null,  // 썸네일 초기화
                         new ArrayList<>(),  // photoUrls 리스트 초기화
@@ -80,7 +79,7 @@ public class PlaceRepository {
         }
 
         dto.getPhotoUrls().addAll(photoUrls);
-        dto = new PlaceResponseDto(dto.getId(), dto.getCategory(), dto.getName(),
+        dto = new PlaceResponseDto(dto.getId(), dto.getCategoryId(), dto.getName(),
                 dto.getLatitude(), dto.getLongitude(), dto.getAddress(),
                 dto.getColor(), dto.getContent(), thumbnail, dto.getPhotoUrls(), dto.getReg_date());
 
@@ -114,5 +113,14 @@ public class PlaceRepository {
         em.remove(place);
 
         return place.getId();
+    }
+
+    public Place findByPhotoId(Long photoId) {
+        return em.createQuery("select p " +
+                "from Photo ph " +
+                "join Place p on p.id = ph.place.id " +
+                "where ph.id =: photoId", Place.class)
+                .setParameter("photoId", photoId)
+                .getSingleResult();
     }
 }
