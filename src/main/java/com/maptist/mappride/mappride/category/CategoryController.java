@@ -1,8 +1,11 @@
 package com.maptist.mappride.mappride.category;
 
+import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
+import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.place.PlaceService;
+import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +36,7 @@ public class CategoryController {
     // 데이터 유효성 검증완료전까진 dto로 감싸서 전달함
     @PostMapping
     public ResponseEntity<Long> createCategory(@RequestBody CategoryDto dto) {
-        System.out.println(dto);
+
         return categoryService.createCategory(dto);
     }
 
@@ -50,7 +53,7 @@ public class CategoryController {
 
 
     // 카테고리 별 장소 조회
-    @GetMapping("/{categoryId}/places")
+    @GetMapping("/{category-id}/places")
     public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable Long categoryId) {
 
         List<PlacesByCategoryResponseDto> places = placeService.findPlacesByCategory(categoryId);
@@ -63,17 +66,41 @@ public class CategoryController {
     @PutMapping("/update")
     public ResponseEntity<Long> updateCategory(@RequestBody CategoryUpdateDto dto) {
 
-        categoryService.updateCategory(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(categoryService.updateCategory(dto));
     }
 
 
-
     // 카테고리 삭제
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/{category-id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().build();
     }
+
+    // 남의 카테고리 전체 조회
+    @GetMapping("/{member-id}")
+    public ResponseEntity<List<OtherFindCategoryDto>> findOtherMemberCategory(@PathVariable("member-id") Long memberId) {
+        return ResponseEntity.ok().body(categoryService.findByOtherMemberId(memberId));
+    }
+
+    // 복사 카테고리 전체 복사해서 내껄로 만듦, 장소만 복사해서 내 카테고리로 가져옴.(유진언니)
+    // name, id 받아오는 dto(categoryCopyDto)
+
+    @PostMapping("/copy")
+    public ResponseEntity<Long> copyCategory(@RequestBody CategoryCopyDto dto) {
+        return ResponseEntity.ok().body(categoryService.copyCategory(dto));
+    }
+
+    //
+
+
+
+//    // 남의 카테고리안에 장소 조회
+//    @GetMapping("/{member-id}/places")
+//    public ResponseEntity<List<PlaceResponseDto>> findOtherMemberCategoryInPlaces(@PathVariable("member-id") Long memberId) {
+//        List<PlaceResponseDto> places = placeService.findPlacesByOtherMemberCategoryId(memberId);
+//
+//        return ResponseEntity.ok().body(places);
+//    }
 
 }

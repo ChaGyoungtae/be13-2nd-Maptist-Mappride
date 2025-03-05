@@ -1,5 +1,7 @@
 package com.maptist.mappride.mappride.place;
 
+import com.maptist.mappride.mappride.category.Category;
+import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
@@ -39,7 +41,7 @@ public class PlaceRepository {
 
     public PlaceResponseDto findPlaceResponseDtoById(Long placeId){
             List<Object[]> result = em.createQuery(
-            "SELECT p.id, p.category.id, p.name, p.latitude, p.longitude, " +
+            "SELECT p.id, p.category, p.name, p.latitude, p.longitude, " +
             "p.address, p.color, p.content, " +
             "CASE WHEN ph.thumbnail = true THEN ph.photoUrl ELSE NULL END, " + // 썸네일 URL
             "ph.photoUrl, p.reg_date " +
@@ -115,12 +117,51 @@ public class PlaceRepository {
         return place.getId();
     }
 
+
+    public List<PlaceCopyDto> findPlaceCopyDtoBycategoryId(Long categoryId) {
+
+        return em.createQuery("select new com.maptist.mappride.mappride.place.dto.PlaceCopyDto(p.name," +
+                        " p.latitude," +
+                        " p.longitude," +
+                        " p.address," +
+                        " p.color," +
+                        " p.content) " +
+                "from Place p " +
+                "where p.category.id =: categoryId ", PlaceCopyDto.class)
+                .setParameter("categoryId", categoryId)
+                .getResultList();
+
+    }
+
     public Place findByPhotoId(Long photoId) {
         return em.createQuery("select p " +
-                "from Photo ph " +
-                "join Place p on p.id = ph.place.id " +
-                "where ph.id =: photoId", Place.class)
+                        "from Photo ph " +
+                        "join Place p on p.id = ph.place.id " +
+                        "where ph.id =: photoId", Place.class)
                 .setParameter("photoId", photoId)
                 .getSingleResult();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

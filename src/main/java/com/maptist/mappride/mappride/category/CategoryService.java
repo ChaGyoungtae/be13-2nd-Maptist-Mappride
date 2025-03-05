@@ -1,11 +1,17 @@
 package com.maptist.mappride.mappride.category;
 
+import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
+import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
+import com.maptist.mappride.mappride.place.Place;
+import com.maptist.mappride.mappride.place.PlaceRepository;
+import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
+import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +34,12 @@ public class CategoryService {
 
     private final MemberService memberService;
 
+    private final PlaceRepository placeRepository;
+
 
     // 카테고리 생성
     // 유효성 검사라서 비즈니스 로직임 CategoryController에서 왔음
+    @Transactional
     public ResponseEntity<Long> createCategory(@RequestBody CategoryDto categoryDto) {
         // RequestParam 대신 RequestBody씀
 
@@ -81,9 +90,11 @@ public class CategoryService {
 
 
     // 카테고리 수정
-
-    public void updateCategory(CategoryUpdateDto dto) {
+    @Transactional
+    public Long updateCategory(CategoryUpdateDto dto) {
+        System.out.println(dto);
         categoryRepository.updateCategory(dto);
+        return dto.getId();
     }
 
 
@@ -104,6 +115,48 @@ public class CategoryService {
 
     }
 
+
+    // 남의 카테고리 전체 조회
+    public List<OtherFindCategoryDto> findByOtherMemberId(Long memberId) {
+
+        //멤버아이디를 레포지토리로 이동
+        return categoryRepository.findCategoryByOtherMemberId(memberId);
+    }
+
+    public Long copyCategory(CategoryCopyDto dto) {
+
+        try{
+            validateDuplicateCategory(dto.getName());
+        } catch (IllegalStateException e){
+            log.error("카테고리 중복");
+        }
+
+
+
+        // categoryByMember 테이블에 저장할 현재 유저 정보 가져오기
+        Member member = memberService.getMember();
+        Category category = dto.toCategory();
+        categoryRepository.create(category);
+        // categoryByMember 객체 생성 후 db에 저장함
+        CategoryByMember categoryByMember = new CategoryByMember(member,category);
+        categoryByMemberRepository.save(categoryByMember);
+        // 확인용 로그
+        log.info("Category copied: {}", category.getId());
+
+        // dto에 있는 categoryId 변수로 저장
+        Long categoryId = dto.getCategoryId();
+        List<PlaceCopyDto> placeCopyDtos = placeRepository.findPlaceCopyDtoBycategoryId(categoryId);
+        for(PlaceCopyDto placeDto : placeCopyDtos) {
+            Place place = placeDto.toPlace(category);
+            placeRepository.save(place);
+        }
+
+
+        return category.getId();
+
+
+
+    }
 
 
 //    public List<Category> findAllCategory() {

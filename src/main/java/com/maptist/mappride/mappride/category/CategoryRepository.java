@@ -2,6 +2,7 @@ package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
+import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -77,8 +78,30 @@ public class CategoryRepository {
     }
 
 
+
 //    public List<Category> findAll() {
 //        return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
 //
 //    }
+
+
+    // 남의 카테고리 전체 조회
+    public List<OtherFindCategoryDto> findCategoryByOtherMemberId(Long memberId) {
+        //CategoryByMember 에서 입력받은 memberId를 가진 CategoryId 를 조회한다.
+        String query = """
+            
+            SELECT new com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto(c.id,c.name)
+            FROM Category c
+            JOIN CategoryByMember cbm ON c.id = cbm.category.id
+            WHERE cbm.member.id = :memberId and c.publish = true
+            """;
+
+        return em.createQuery(query, OtherFindCategoryDto.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+        // 위에서 조회한 CategoryId를 통해 Category들을 조회해서 DTO로 반환
+    }
+
+
+
 }
