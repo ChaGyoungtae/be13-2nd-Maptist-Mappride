@@ -1,13 +1,18 @@
 package com.maptist.mappride.mappride.category;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
+import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
+import com.maptist.mappride.mappride.photo.Photo;
+import com.maptist.mappride.mappride.photo.PhotoRepository;
+import com.maptist.mappride.mappride.photo.dto.PhotoResponseDto;
 import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
@@ -18,7 +23,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +43,9 @@ public class CategoryService {
     private final MemberService memberService;
 
     private final PlaceRepository placeRepository;
+    private final PhotoRepository photoRepository;
+    private final AmazonS3 amazonS3;
+    private final S3Service s3Service;
 
 
     // 카테고리 생성
@@ -123,7 +134,8 @@ public class CategoryService {
         return categoryRepository.findCategoryByOtherMemberId(memberId);
     }
 
-    public Long copyCategory(CategoryCopyDto dto) {
+    @Transactional
+    public Long copyCategory(CategoryCopyDto dto){
 
         try{
             validateDuplicateCategory(dto.getName());
@@ -146,9 +158,32 @@ public class CategoryService {
         // dto에 있는 categoryId 변수로 저장
         Long categoryId = dto.getCategoryId();
         List<PlaceCopyDto> placeCopyDtos = placeRepository.findPlaceCopyDtoBycategoryId(categoryId);
+
+        System.out.println(123123);
+        System.out.println(placeCopyDtos);
+        MultipartFile multipartFile = null;
         for(PlaceCopyDto placeDto : placeCopyDtos) {
+
             Place place = placeDto.toPlace(category);
             placeRepository.save(place);
+
+
+            Long prevPlaceId = placeDto.getPlaceId();
+            List<PhotoResponseDto> photoResponseDtos = photoRepository.findPhotosByPlaceId(prevPlaceId);
+            for(PhotoResponseDto photoResponseDto: photoResponseDtos){
+
+                try{
+                    String fileName = s3Service.getFileNameFromUrl(photoResponseDto.getPhotoUrl());
+                    multipartFile = s3Service.getFileAsMultipartFile(s3Service.getBucket(), fileName);
+                } catch (IOException ex){
+                    ex.printStackTrace();
+                    log.error("이미지 불러오기 실패");
+                } finally {
+                    s3Service.uploadFile(multipartFile);
+                    Photo photo = photoResponseDto.toPhoto(member,place);
+                    photoRepository.create(photo);
+                }
+            }
         }
 
 
