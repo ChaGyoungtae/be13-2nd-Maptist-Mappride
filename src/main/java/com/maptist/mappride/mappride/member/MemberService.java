@@ -2,9 +2,7 @@ package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
-import com.maptist.mappride.mappride.member.DTO.MemberDto;
-import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
-import com.maptist.mappride.mappride.member.DTO.RegisterDto;
+import com.maptist.mappride.mappride.member.DTO.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -61,10 +59,30 @@ public class MemberService {
         memberRepository.updateMyInfo(dto);
     }
 
-    // 유저 아이디로 부터 유저 카테고리들 조회
-    public List<CategoryByMemberResponseDto> searchCategories() {
+    // 내 카테고리 조회 (페이지 이동)
+    public List<CategoryByMemberResponseDto> searchCategories()
+    {
+        // 유저 아이디로 부터 유저 카테고리들 조회
         Long memberId = getMember().getId();
 
         return memberRepository.getCategories(memberId);
+    }
+
+    // 멤버 검색 (이름)
+    public List<MemberNameDto> selectOtherName(String name)
+    {
+        return memberRepository.selectOtherName(name);
+    }
+
+    // 멤버 검색 (이메일)
+    public MemberEmailDto selectOtherEmail(String email)
+    {
+        return memberRepository.selectOtherEmail(email);
+    }
+
+    // 멤버 검색 (닉네임)
+    public MemberNickNameDto selectOtherNickName(String nickName)
+    {
+        return memberRepository.selectOtherNickName(nickName);
     }
 }
