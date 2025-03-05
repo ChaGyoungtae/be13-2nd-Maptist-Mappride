@@ -5,12 +5,16 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.MemberRepository;
 import com.maptist.mappride.mappride.member.MemberService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +34,7 @@ import java.util.UUID;
 public class S3Service {
 
     @Value("${cloud.aws.s3.bucket}")
+    @Getter
     private String bucket;
 
     private final AmazonS3 amazonS3;
@@ -68,8 +73,6 @@ public class S3Service {
             return null;
         }
 
-        SecurityUserDto principal = (SecurityUserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId = memberRepository.findByEmail(principal.getEmail()).get().getId();
         String fileName = createFileName(multipartFile.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
@@ -139,4 +142,18 @@ public class S3Service {
         // 마지막 슬래시 (/) 이후 부분이 파일 이름
         return path.substring(path.lastIndexOf('/') + 1);
     }
+
+        public MultipartFile getFileAsMultipartFile(String bucketName, String fileName) throws IOException {
+            // S3에서 파일 가져오기
+            S3Object s3Object = amazonS3.getObject(bucketName, fileName);
+            S3ObjectInputStream inputStream = s3Object.getObjectContent();
+
+            // MultipartFile로 변환
+            return new MockMultipartFile(
+                    fileName,              // 파일명
+                    fileName,              // 원본 파일명
+                    s3Object.getObjectMetadata().getContentType(), // 컨텐츠 타입
+                    inputStream            // 파일 데이터
+            );
+        }
 }

@@ -120,7 +120,9 @@ public class PlaceRepository {
 
     public List<PlaceCopyDto> findPlaceCopyDtoBycategoryId(Long categoryId) {
 
-        return em.createQuery("select new com.maptist.mappride.mappride.place.dto.PlaceCopyDto(p.name," +
+        return em.createQuery("select new com.maptist.mappride.mappride.place.dto.PlaceCopyDto(" +
+                        "p.id, " +
+                        "p.name," +
                         " p.latitude," +
                         " p.longitude," +
                         " p.address," +

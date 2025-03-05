@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 @Setter
 public class PlaceCopyDto {
 
+    private final Long placeId;
+
     private final String name;
 
     private final Double latitude;
