@@ -39,12 +39,15 @@ public class Member {
     private String name;
 
     @Column(unique = true)
-    private String nickname;
+    private String nickName;
 
     private LocalDate birthDay;
 
     @Column(nullable = false)
     private String userRole;
+
+    @Column(nullable = false)
+    private boolean publish;
 
     private Member(String email, String name, String userRole){
         this.email = email;

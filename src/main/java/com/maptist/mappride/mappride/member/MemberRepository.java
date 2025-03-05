@@ -1,8 +1,8 @@
 package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
-import com.maptist.mappride.mappride.member.DTO.MemberDto;
-import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
+import com.maptist.mappride.mappride.member.DTO.*;
+import com.maptist.mappride.mappride.photo.Photo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -52,22 +52,20 @@ public class MemberRepository {
     // 내 정보 수정
     public void updateMyInfo(MemberUpdateDto memberDto)
     {
-        System.out.println("Repository" + memberDto.getBirthDay());
-        System.out.println("Repository" + memberDto.getNickname());
-
         String query = """
                 UPDATE Member m
-                SET m.nickname = :nickname, m.birthDay = :birthDay
+                SET m.nickName = :nickname, m.birthDay = :birthDay
                 WHERE m.id = :id
                 """;
 
         em.createQuery(query)
-                .setParameter("nickname", memberDto.getNickname())
+                .setParameter("nickname", memberDto.getNickName())
                 .setParameter("birthDay", memberDto.getBirthDay())
                 .setParameter("id", memberDto.getId())
                 .executeUpdate();
     }
 
+    // 내 카테고리 조회 (페이지 이동)
     public List<CategoryByMemberResponseDto> getCategories(Long memberId) {
 
         String query = """
@@ -80,5 +78,47 @@ public class MemberRepository {
         return em.createQuery(query, CategoryByMemberResponseDto.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
+    }
+
+    //멤버 검색 (이름)
+    public List<MemberNameDto> selectOtherName(String name)
+    {
+        String query = """
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNameDto(m.name)
+            FROM Member m
+            WHERE m.name = :name
+            """;
+
+        return em.createQuery(query, MemberNameDto.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
+    // 멤버 검색 (이메일)
+    public MemberEmailDto selectOtherEmail(String email)
+    {
+        String query = """
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberEmailDto(m.email)
+            FROM Member m
+            WHERE m.email = :email
+            """;
+
+        return em.createQuery(query, MemberEmailDto.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
+    // 멤버 검색 (닉네임)
+    public MemberNickNameDto selectOtherNickName(String nickName)
+    {
+        String query = """
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNickNameDto(m.nickName)
+            FROM Member m
+            WHERE m.nickName = :nickName
+            """;
+
+        return em.createQuery(query, MemberNickNameDto.class)
+                .setParameter("nickName", nickName)
+                .getSingleResult();
     }
 }
