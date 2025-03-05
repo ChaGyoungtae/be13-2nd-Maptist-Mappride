@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.category.dto;
 
+import com.maptist.mappride.mappride.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +12,13 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
-public class CategoryUpdateDto {
-    private Long id;
+@ToString
+public class OtherFindCategoryDto {
+
+    private Long categoryId;
     private String name;
-    private boolean publish;
+
+
+
 }

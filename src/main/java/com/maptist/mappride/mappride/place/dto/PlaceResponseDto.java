@@ -15,25 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 public class PlaceResponseDto {
     private Long id;
-
     private Long categoryId;
-
     private String name;
-
     private Double latitude;
-
     private Double longitude;
-
     private String address;
-
     private String color;
-
     private String content;
-
     private String thumbnail;
-
     private List<String> photoUrls;
-
     private LocalDateTime reg_date;
 
 }
