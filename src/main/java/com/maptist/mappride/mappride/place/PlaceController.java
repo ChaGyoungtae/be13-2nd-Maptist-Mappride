@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.place;
 
+import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
@@ -43,5 +44,10 @@ public class PlaceController {
         Long deletePlaceId = placeService.deletePlace(placeId);
         String deleteSuccess = "delete place( " + deletePlaceId + " ) is success";
         return ResponseEntity.ok().body(deleteSuccess);
+    }
+
+    @PostMapping("/copy")
+    public ResponseEntity<Long> copyPlace(@RequestBody PlaceCopyRequestDto placeCopyRequestDto){
+        return ResponseEntity.ok().body(placeService.copyPlace(placeCopyRequestDto));
     }
 }

@@ -2,7 +2,6 @@ package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
 import com.maptist.mappride.mappride.member.DTO.*;
-import com.maptist.mappride.mappride.photo.Photo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -109,15 +108,15 @@ public class MemberRepository {
     }
 
     // 멤버 검색 (닉네임)
-    public MemberNickNameDto selectOtherNickName(String nickName)
+    public MemberNicknameDto selectOtherNickname(String nickName)
     {
         String query = """
-            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNickNameDto(m.nickName)
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNicknameDto(m.nickname)
             FROM Member m
-            WHERE m.nickName = :nickName
+            WHERE m.nickname = :nickName
             """;
 
-        return em.createQuery(query, MemberNickNameDto.class)
+        return em.createQuery(query, MemberNicknameDto.class)
                 .setParameter("nickName", nickName)
                 .getSingleResult();
     }

@@ -135,6 +135,25 @@ public class PlaceRepository {
 
     }
 
+    public PlaceCopyDto findPlaceCopyDtoById(Long placeId) {
+
+        return em.createQuery("select new com.maptist.mappride.mappride.place.dto.PlaceCopyDto(" +
+                        "p.id, " +
+                        "p.name," +
+                        " p.latitude," +
+                        " p.longitude," +
+                        " p.address," +
+                        " p.color," +
+                        " p.content) " +
+                "from Place p " +
+                "where p.id =: placeId ", PlaceCopyDto.class)
+                .setParameter("placeId", placeId)
+                .getSingleResult();
+
+    }
+
+
+
     public Place findByPhotoId(Long photoId) {
         return em.createQuery("select p " +
                         "from Photo ph " +

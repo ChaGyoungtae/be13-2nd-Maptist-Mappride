@@ -12,6 +12,7 @@ import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.photo.Photo;
 import com.maptist.mappride.mappride.photo.PhotoRepository;
+import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoResponseDto;
 import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
@@ -46,6 +47,7 @@ public class CategoryService {
     private final PhotoRepository photoRepository;
     private final AmazonS3 amazonS3;
     private final S3Service s3Service;
+    private final PhotoService photoService;
 
 
     // 카테고리 생성
@@ -159,31 +161,12 @@ public class CategoryService {
         Long categoryId = dto.getCategoryId();
         List<PlaceCopyDto> placeCopyDtos = placeRepository.findPlaceCopyDtoBycategoryId(categoryId);
 
-        System.out.println(123123);
-        System.out.println(placeCopyDtos);
-        MultipartFile multipartFile = null;
         for(PlaceCopyDto placeDto : placeCopyDtos) {
 
             Place place = placeDto.toPlace(category);
             placeRepository.save(place);
 
-
-            Long prevPlaceId = placeDto.getPlaceId();
-            List<PhotoResponseDto> photoResponseDtos = photoRepository.findPhotosByPlaceId(prevPlaceId);
-            for(PhotoResponseDto photoResponseDto: photoResponseDtos){
-
-                try{
-                    String fileName = s3Service.getFileNameFromUrl(photoResponseDto.getPhotoUrl());
-                    multipartFile = s3Service.getFileAsMultipartFile(s3Service.getBucket(), fileName);
-                } catch (IOException ex){
-                    ex.printStackTrace();
-                    log.error("이미지 불러오기 실패");
-                } finally {
-                    s3Service.uploadFile(multipartFile);
-                    Photo photo = photoResponseDto.toPhoto(member,place);
-                    photoRepository.create(photo);
-                }
-            }
+            photoService.copyPhoto(placeDto.getPlaceId(),member,place);
         }
 
 
@@ -192,6 +175,8 @@ public class CategoryService {
 
 
     }
+
+
 
 
 //    public List<Category> findAllCategory() {
