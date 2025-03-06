@@ -74,7 +74,7 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
 
             System.out.println(registerDto.toString());
             // 회원이 존재하지 않을경우, 서비스 제공자와 email을 쿼리스트링으로 전달하는 url을 만들어준다.
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/auth/register")
+            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/api/v1/auth/register")
                     .queryParam("loginUser", registerDtoJson)
                     .queryParam("provider", provider)
                     .build()
