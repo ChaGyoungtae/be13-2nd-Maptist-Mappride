@@ -116,7 +116,7 @@ public class PlaceRepository {
     }
 
 
-    public List<PlaceCopyDto> findPlaceCopyDtoBycategoryId(Long categoryId) {
+    public List<PlaceCopyDto> findPlaceCopyDtoByCategoryId(Long categoryId) {
 
         return em.createQuery("select new com.maptist.mappride.mappride.place.dto.PlaceCopyDto(" +
                         "p.id, " +
@@ -174,6 +174,14 @@ public class PlaceRepository {
         return em.createQuery(query, PlacePreviewResponseDto.class)
                 .setParameter("placeId", placeId).
                 getSingleResult();
+    }
+
+    public List<Place> findByCategoryId(Long categoryId) {
+        return em.createQuery("select p " +
+                        "from Place p " +
+                        "where p.category.id =: categoryId", Place.class)
+                .setParameter("categoryId", categoryId)
+                .getResultList();
     }
 }
 

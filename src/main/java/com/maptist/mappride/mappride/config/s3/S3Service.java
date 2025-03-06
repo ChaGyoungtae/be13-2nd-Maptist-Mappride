@@ -39,7 +39,6 @@ public class S3Service {
 
     private final AmazonS3 amazonS3;
     private final MemberRepository memberRepository;
-    private final MemberService memberService;
 
 
     //여러사진 저장

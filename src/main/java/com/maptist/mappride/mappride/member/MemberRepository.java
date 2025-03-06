@@ -128,4 +128,8 @@ public class MemberRepository {
                 .setParameter("nickName", nickName)
                 .getSingleResult();
     }
+
+    public void delete(Member member) {
+        em.remove(member);
+    }
 }

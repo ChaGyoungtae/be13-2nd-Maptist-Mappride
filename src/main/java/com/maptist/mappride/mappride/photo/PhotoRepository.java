@@ -66,4 +66,13 @@ public class PhotoRepository {
                 .setParameter("photoId", photoId)
                 .executeUpdate();
     }
+
+    public List<Photo> findByMemberId(Long memberId) {
+        return em.createQuery("select p " +
+                        "from Photo p " +
+                        "where p.member.id =: memberId", Photo.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+
+    }
 }

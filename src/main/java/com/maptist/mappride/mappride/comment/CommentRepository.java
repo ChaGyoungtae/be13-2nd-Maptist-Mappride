@@ -53,4 +53,11 @@ public class CommentRepository {
         return Optional.ofNullable(em.find(Comment.class, commentId));
     }
 
+    public List<Comment> findCommentsByMemberId(Long memberId){
+        return em.createQuery("select c " +
+                "from Comment c " +
+                "where c.member.id =: memberId", Comment.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
 }
