@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.category;
 
-import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

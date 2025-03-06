@@ -27,4 +27,15 @@ public class CategoryByMemberRepository {
                 .setParameter("memberId", memberId)
                 .getSingleResult();
     }
+
+    public Long findMemberIdByCategoryId(Long categoryId){
+        CategoryByMember result = em.createQuery("select cbm " +
+                        "from CategoryByMember cbm " +
+                        "where cbm.category.id =: categoryId", CategoryByMember.class)
+                .setParameter("categoryId", categoryId)
+                .getSingleResult();
+
+        return result.getId();
+
+    }
 }

@@ -5,7 +5,6 @@ import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.place.PlaceService;
-import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -91,17 +89,5 @@ public class CategoryController {
     public ResponseEntity<Long> copyCategory(@RequestBody CategoryCopyDto dto) {
         return ResponseEntity.ok().body(categoryService.copyCategory(dto));
     }
-
-    //
-
-
-
-//    // 남의 카테고리안에 장소 조회
-//    @GetMapping("/{member-id}/places")
-//    public ResponseEntity<List<PlaceResponseDto>> findOtherMemberCategoryInPlaces(@PathVariable("member-id") Long memberId) {
-//        List<PlaceResponseDto> places = placeService.findPlacesByOtherMemberCategoryId(memberId);
-//
-//        return ResponseEntity.ok().body(places);
-//    }
 
 }

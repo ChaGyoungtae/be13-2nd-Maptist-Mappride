@@ -54,15 +54,3 @@ public class CommentRepository {
     }
 
 }
-
-
-//    public List<Comment> findByPlace(Place place) {
-//        return em.createQuery("SELECT c FROM Comment c WHERE c.place = :place", Comment.class)
-//                .setParameter("place", place)
-//                .getResultList();
-//    }
-
-//    public List<Comment> findAll() {
-//
-//        return em.createQuery("select c from Comment c", Comment.class).getResultList();
-//    }

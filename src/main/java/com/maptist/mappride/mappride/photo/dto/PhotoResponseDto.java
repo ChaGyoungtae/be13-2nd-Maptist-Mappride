@@ -6,7 +6,6 @@ import com.maptist.mappride.mappride.place.Place;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @RequiredArgsConstructor

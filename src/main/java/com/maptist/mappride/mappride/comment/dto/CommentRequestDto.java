@@ -4,10 +4,8 @@ import com.maptist.mappride.mappride.comment.Comment;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.place.Place;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;

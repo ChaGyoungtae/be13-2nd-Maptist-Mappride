@@ -1,33 +1,26 @@
 package com.maptist.mappride.mappride.category;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
-import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
-import com.maptist.mappride.mappride.photo.Photo;
-import com.maptist.mappride.mappride.photo.PhotoRepository;
+import com.maptist.mappride.mappride.notification.NotificationService;
+import com.maptist.mappride.mappride.notification.dto.CategorySseResponse;
 import com.maptist.mappride.mappride.photo.PhotoService;
-import com.maptist.mappride.mappride.photo.dto.PhotoResponseDto;
 import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
-import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,17 +31,11 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-
     private final CategoryByMemberRepository categoryByMemberRepository;
-
     private final MemberService memberService;
-
     private final PlaceRepository placeRepository;
-    private final PhotoRepository photoRepository;
-    private final AmazonS3 amazonS3;
-    private final S3Service s3Service;
     private final PhotoService photoService;
-
+    private final NotificationService notificationService;
 
     // 카테고리 생성
     // 유효성 검사라서 비즈니스 로직임 CategoryController에서 왔음
@@ -169,18 +156,23 @@ public class CategoryService {
             photoService.copyPhoto(placeDto.getPlaceId(),member,place);
         }
 
+        String nickname = member.getNickname();
+        Category prevCategory = categoryRepository.findById(categoryId).get();
+        String categoryName = prevCategory.getName();
+
+        // 복사 알림 dto 만들어서 알림 전송
+        CategorySseResponse categorySseResponse = CategorySseResponse.builder()
+                .nickname(nickname)
+                .categoryName(categoryName)
+                .build();
+
+        notificationService.customNotify(member.getId(), categorySseResponse, nickname + "님이 당신의 " + categoryName + " 을(를) 복사 했습니다.","copy");
+
+        // 알림받은 사용자의 scrapCnt + 1
+        memberService.plusScrapCnt(prevCategory.getId());
+
 
         return category.getId();
-
-
-
     }
-
-
-
-
-//    public List<Category> findAllCategory() {
-//        return categoryRepository.findAll();
-//    }
 
 }

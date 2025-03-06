@@ -56,12 +56,6 @@ public class CommentService {
         return commentRequestDtos;
     }
 
-
-//    public List<CommentRequestDto> find
-
-    //        List<Comment> findComments = commentRepository.findByPlaceId();
-//        return commentRepository.findByPlaceId(placeId);
-
     // 댓글 수정
     public void updateComment(CommentUpdateDto dto) {
         commentRepository.updateComment(dto);

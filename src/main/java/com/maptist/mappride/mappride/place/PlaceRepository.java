@@ -5,7 +5,6 @@ import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,7 +18,6 @@ import java.util.List;
 public class PlaceRepository {
 
     private final EntityManager em;
-    private final JPAQueryFactory jpaQueryFactory;
 
     public List<PlacesByCategoryResponseDto> findPlacesByCategoryId(Long categoryId) {
         String query = "SELECT new com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto(p.id, p.name) " +

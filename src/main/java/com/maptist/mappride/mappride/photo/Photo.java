@@ -2,7 +2,6 @@ package com.maptist.mappride.mappride.photo;
 
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.place.Place;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
