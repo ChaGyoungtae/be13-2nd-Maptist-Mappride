@@ -10,6 +10,8 @@ import com.maptist.mappride.mappride.photo.Photo;
 import com.maptist.mappride.mappride.photo.PhotoRepository;
 import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
+import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
@@ -54,8 +56,6 @@ public class PlaceService {
         if(findCategory.isEmpty()){
             throw new RuntimeException("카테고리를 찾을 수 없습니다.");
         }
-
-        //System.out.println(findCategory.get().getName());
 
         String address = naverGeocodingService.getAddressFromCoordinates(placeRegisterDto.getLatitude(), placeRegisterDto.getLongitude());
 
@@ -111,5 +111,25 @@ public class PlaceService {
         // place 지우기
         Place place = placeRepository.findOne(placeId);
         return placeRepository.delete(place);
+    }
+
+    public Long copyPlace(PlaceCopyRequestDto placeCopyRequestDto) {
+
+        // placeId를 이용해 아이디, 카테고리 id를 제외한 place 테이블의 데이터 가져오기,
+        // category - findById 로 가져와서 매핑해서 db에 저장,
+        // photo도 placeId로 조회해와서 넣기
+        Member member = memberService.getMember();
+        Optional<Category> category = categoryRepository.findById(placeCopyRequestDto.getCategoryId());
+        if(category.isEmpty()) {
+            throw new RuntimeException("category 조회 실패");
+        }
+
+        PlaceCopyDto placeCopyDto = placeRepository.findPlaceCopyDtoById(placeCopyRequestDto.getPlaceId());
+        Place place = placeCopyDto.toPlace(category.get());
+        Long placeId = placeRepository.save(place);
+
+        photoService.copyPhoto(placeCopyDto.getPlaceId(), member, place);
+
+        return placeId;
     }
 }

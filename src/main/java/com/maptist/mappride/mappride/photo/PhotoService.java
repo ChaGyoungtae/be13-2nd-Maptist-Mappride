@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,25 @@ public class PhotoService {
         photoRepository.generalToThumbnail(photoId);
 
         return photoId;
+    }
+
+    public void copyPhoto(Long prevPlaceId, Member member, Place place){
+        List<PhotoResponseDto> photoResponseDtos = photoRepository.findPhotosByPlaceId(prevPlaceId);
+        MultipartFile multipartFile = null;
+        for(PhotoResponseDto photoResponseDto: photoResponseDtos){
+
+            try{
+                String fileName = s3Service.getFileNameFromUrl(photoResponseDto.getPhotoUrl());
+                multipartFile = s3Service.getFileAsMultipartFile(s3Service.getBucket(), fileName);
+            } catch (IOException ex){
+                ex.printStackTrace();
+                log.error("이미지 불러오기 실패");
+            } finally {
+                s3Service.uploadFile(multipartFile);
+                Photo photo = photoResponseDto.toPhoto(member,place);
+                photoRepository.create(photo);
+            }
+        }
     }
 
 }

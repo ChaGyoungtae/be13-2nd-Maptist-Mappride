@@ -44,7 +44,7 @@ public class MemberController
     }
 
     // 내 카테고리 조회 (페이지 이동)
-    @GetMapping("/manageCategories")
+    @GetMapping("/manage-categories")
     public ResponseEntity<List<CategoryByMemberResponseDto>> manageCategories() {
 
         List<CategoryByMemberResponseDto> memberCategories = memberService.searchCategories();
@@ -74,11 +74,11 @@ public class MemberController
         return ResponseEntity.ok(selectOtherEmail);
     }
     // 멤버 검색 (닉네임)
-    @GetMapping("/{nick-name}")
-    public ResponseEntity<MemberNickNameDto>selectOtherNickName(@PathVariable("nick-name") String nickName)
+    @GetMapping("/{nickname}")
+    public ResponseEntity<MemberNicknameDto>selectOtherNickname(@PathVariable("nickname") String nickname)
     {
-        MemberNickNameDto selectOtherNickName = memberService.selectOtherNickName(nickName);
+        MemberNicknameDto selectOtherNickname = memberService.selectOtherNickname(nickname);
 
-        return ResponseEntity.ok(selectOtherNickName);
+        return ResponseEntity.ok(selectOtherNickname);
     }
 }

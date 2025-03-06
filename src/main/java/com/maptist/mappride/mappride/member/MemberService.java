@@ -81,8 +81,8 @@ public class MemberService {
     }
 
     // 멤버 검색 (닉네임)
-    public MemberNickNameDto selectOtherNickName(String nickName)
+    public MemberNicknameDto selectOtherNickname(String nickName)
     {
-        return memberRepository.selectOtherNickName(nickName);
+        return memberRepository.selectOtherNickname(nickName);
     }
 }

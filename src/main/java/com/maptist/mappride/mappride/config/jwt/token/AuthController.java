@@ -55,7 +55,7 @@ public class AuthController {
         return ResponseEntity.badRequest().body(TokenResponseStatus.addStatus(400, null));
     }
 
-    @GetMapping("/loginSuccess")
+    @GetMapping("/login-success")
     public ResponseEntity<String> login(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 소셜로그인 후 그 유저에 대한 회원 정보가 있으면 토큰 발급 후 여기로 리디렉션됌.
         String decodedCookie = decodeCookie(request, response);
@@ -70,7 +70,7 @@ public class AuthController {
         return memberSerivce.register(registerDto);
     }
 
-    @PostMapping("/sendError")
+    @PostMapping("/send-error")
     public ResponseEntity<String> loginFailure(@RequestParam("message") String message){
         return ResponseEntity.badRequest().body(message);
     }
