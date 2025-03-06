@@ -1,8 +1,11 @@
 package com.maptist.mappride.mappride.categoryByMember;
 
+import com.maptist.mappride.mappride.category.Category;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,5 +40,14 @@ public class CategoryByMemberRepository {
 
         return result.getId();
 
+    }
+
+    public List<CategoryByMember> findByMemberId(Long memberId) {
+
+        return em.createQuery("select cbm " +
+                        "from CategoryByMember cbm " +
+                        "where cbm.member.id =: memberId", CategoryByMember.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
     }
 }

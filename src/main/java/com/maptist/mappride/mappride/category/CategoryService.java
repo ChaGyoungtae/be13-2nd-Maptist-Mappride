@@ -146,7 +146,7 @@ public class CategoryService {
 
         // dto에 있는 categoryId 변수로 저장
         Long categoryId = dto.getCategoryId();
-        List<PlaceCopyDto> placeCopyDtos = placeRepository.findPlaceCopyDtoBycategoryId(categoryId);
+        List<PlaceCopyDto> placeCopyDtos = placeRepository.findPlaceCopyDtoByCategoryId(categoryId);
 
         for(PlaceCopyDto placeDto : placeCopyDtos) {
 

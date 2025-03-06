@@ -67,7 +67,7 @@ public class CategoryRepository {
 
 
     // 삭제
-    public void deleteById(Category findCategory) {
+    public void delete(Category findCategory) {
         em.remove(findCategory);
     }
 
