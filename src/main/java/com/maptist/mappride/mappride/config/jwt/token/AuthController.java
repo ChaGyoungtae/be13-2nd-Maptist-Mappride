@@ -3,7 +3,6 @@ package com.maptist.mappride.mappride.config.jwt.token;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maptist.mappride.mappride.config.jwt.DTO.StatusResponseDto;
 import com.maptist.mappride.mappride.config.jwt.DTO.TokenResponseStatus;
-import com.maptist.mappride.mappride.config.jwt.JwtUtil;
 import com.maptist.mappride.mappride.member.DTO.RegisterDto;
 import com.maptist.mappride.mappride.member.MemberService;
 import jakarta.servlet.http.Cookie;
@@ -26,13 +25,11 @@ import java.util.Base64;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final RefreshTokenRepository tokenRepository;
     private final RefreshTokenService tokenService;
-    private final MemberService memberSerivce;
-    private final JwtUtil jwtUtil;
+    private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
     @PostMapping("/logout")
@@ -67,7 +64,7 @@ public class AuthController {
     public ResponseEntity<Long> register(@RequestParam("loginUser") String registerDtoJson) throws Exception {
         // 소셜로그인 성공 시 그 유저에 대한 회원 정보가 DB에 존재하지 않을 때, 회원가입 진행
         RegisterDto registerDto = objectMapper.readValue(registerDtoJson, RegisterDto.class);
-        return memberSerivce.register(registerDto);
+        return memberService.register(registerDto);
     }
 
     @PostMapping("/send-error")

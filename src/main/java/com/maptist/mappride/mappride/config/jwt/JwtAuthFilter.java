@@ -33,12 +33,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
 //        return request.getRequestURI().contains("/");
-        return request.getRequestURI().contains("/auth") ||
-               request.getRequestURI().contains("/login") ;
+        return request.getRequestURI().contains("/login");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
+
+        String requestURI = request.getRequestURI();
+        // "/api/v1/auth/**" 경로는 JWT 검증을 거치지 않음
+        if (requestURI.startsWith("/api/v1/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // request Header에서 AccessToken을 가져온다.
         String atc = request.getHeader("Authorization");
 
