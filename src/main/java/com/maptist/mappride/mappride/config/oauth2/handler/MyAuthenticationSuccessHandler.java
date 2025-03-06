@@ -27,7 +27,6 @@ import java.util.Base64;
 public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
-    private final MemberService memberSerivce;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -55,7 +54,7 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
             GeneratedToken token = jwtUtil.generateToken(email, role);
 
             // accessToken을 쿼리스트링에 담는 url을 만들어준다.
-           String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/auth/login-success")
+           String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/api/v1/auth/login-success")
                    .build()
                     .encode(StandardCharsets.UTF_8)
                     .toUriString();

@@ -141,7 +141,7 @@ public class MemberService {
             photoRepository.remove(p);
         }
 
-        // place 삭제
+        // cbm, category, place 삭제
         List<CategoryByMember> categorieByMembers = categoryByMemberRepository.findByMemberId(memberId);
         List<Category> categories = new ArrayList<>();
         List<Place> places = new ArrayList<>();

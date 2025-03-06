@@ -19,7 +19,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         // 인증 실패시 메인 페이지로 이동
-        String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/auth/send-error")
+        String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/api/v1/auth/send-error")
                 .queryParam("message",exception.getMessage())
                 .encode(StandardCharsets.UTF_8)
                 .toUriString();
