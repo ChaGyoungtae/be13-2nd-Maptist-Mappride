@@ -48,13 +48,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         atc = atc.split(" ")[1];
 
-//        if (!StringUtils.hasText(atc)) {
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization header is required");
-//            return;
-//        }
-
-
-
         // AccessToken을 검증하고, 만료되었을경우 예외를 발생시킨다.
         if (!jwtUtil.verifyToken(atc) || jwtUtil.isExpired(atc)) {
             throw new JwtException("Access Token 만료!");
@@ -83,7 +76,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 
 
     public Authentication getAuthentication(SecurityUserDto member) {

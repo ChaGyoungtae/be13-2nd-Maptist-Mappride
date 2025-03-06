@@ -1,6 +1,10 @@
 package com.maptist.mappride.mappride.member.DTO;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -16,4 +20,6 @@ public class MemberUpdateDto
     private String nickName;
 
     private LocalDate birthDay;
+
+    private boolean publish;
 }

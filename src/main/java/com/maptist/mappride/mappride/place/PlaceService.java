@@ -3,9 +3,14 @@ package com.maptist.mappride.mappride.place;
 import com.amazonaws.services.s3.AmazonS3;
 import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryRepository;
+import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
+import com.maptist.mappride.mappride.member.MemberRepository;
 import com.maptist.mappride.mappride.member.MemberService;
+import com.maptist.mappride.mappride.notification.NotificationService;
+import com.maptist.mappride.mappride.notification.dto.CategorySseResponse;
+import com.maptist.mappride.mappride.notification.dto.PlaceSseResponse;
 import com.maptist.mappride.mappride.photo.Photo;
 import com.maptist.mappride.mappride.photo.PhotoRepository;
 import com.maptist.mappride.mappride.photo.PhotoService;
@@ -40,9 +45,30 @@ public class PlaceService {
     private final MemberService memberService;
     private final PhotoService photoService;
     private final PhotoRepository photoRepository;
+    private final NotificationService notificationService;
+    private final MemberRepository memberRepository;
+    private final CategoryByMemberRepository categoryByMemberRepository;
 
 
     public List<PlacesByCategoryResponseDto> findPlacesByCategory(Long categoryId) {
+
+        Member member = memberService.getMember();
+        String nickname = member.getNickname();
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if(category.isEmpty()){
+            throw new RuntimeException("카테고리 조회 실패");
+        }
+        // 조회알림 dto 만들어서 알림 보내기
+        String categoryName = category.get().getName();
+        CategorySseResponse categorySseResponse = CategorySseResponse.builder()
+                .categoryName(categoryName)
+                .nickname(nickname)
+                .build();
+        notificationService.customNotify(member.getId(),categorySseResponse, nickname + "님이 당신의 "+ categoryName +" 카테고리를 조회했습니다.", "show");
+
+        // 알림받은 사용자의 scrapCnt + 1
+        memberService.plusScrapCnt(category.get().getId());
+
         return placeRepository.findPlacesByCategoryId(categoryId);
     }
 
@@ -113,6 +139,7 @@ public class PlaceService {
         return placeRepository.delete(place);
     }
 
+    @Transactional
     public Long copyPlace(PlaceCopyRequestDto placeCopyRequestDto) {
 
         // placeId를 이용해 아이디, 카테고리 id를 제외한 place 테이블의 데이터 가져오기,
@@ -129,6 +156,18 @@ public class PlaceService {
         Long placeId = placeRepository.save(place);
 
         photoService.copyPhoto(placeCopyDto.getPlaceId(), member, place);
+        String nickname = member.getNickname();
+        String placeName = place.getName();
+        // 복사 알림 dto 만들어서 알림 전송
+        PlaceSseResponse placeSseResponse = PlaceSseResponse.builder()
+                .nickname(nickname)
+                .placeName(placeName)
+                .build();
+
+        notificationService.customNotify(member.getId(), placeSseResponse, nickname + "님이 당신의 " + placeName + " 을(를) 복사 했습니다.","copy");
+
+        // 알림받은 사용자의 scrapCnt + 1
+        memberService.plusScrapCnt(category.get().getId());
 
         return placeId;
     }

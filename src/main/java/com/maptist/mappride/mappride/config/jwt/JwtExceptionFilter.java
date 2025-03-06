@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor

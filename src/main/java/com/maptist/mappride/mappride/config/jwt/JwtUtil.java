@@ -4,7 +4,6 @@ import com.maptist.mappride.mappride.config.jwt.DTO.GeneratedToken;
 import com.maptist.mappride.mappride.config.jwt.token.AccessTokenService;
 import com.maptist.mappride.mappride.config.jwt.token.RefreshToken;
 import com.maptist.mappride.mappride.config.jwt.token.RefreshTokenRepository;
-import com.maptist.mappride.mappride.config.jwt.token.RefreshTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

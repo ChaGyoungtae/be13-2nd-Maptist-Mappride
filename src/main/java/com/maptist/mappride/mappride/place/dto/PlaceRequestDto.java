@@ -1,12 +1,9 @@
 package com.maptist.mappride.mappride.place.dto;
 
-import com.maptist.mappride.mappride.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder

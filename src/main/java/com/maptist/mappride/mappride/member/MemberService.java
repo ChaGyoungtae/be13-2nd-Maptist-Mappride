@@ -1,8 +1,14 @@
 package com.maptist.mappride.mappride.member;
 
+import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
-import com.maptist.mappride.mappride.member.DTO.*;
+import com.maptist.mappride.mappride.member.DTO.MemberDto;
+import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
+import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
+import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
+import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
+import com.maptist.mappride.mappride.member.DTO.RegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +26,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final CategoryByMemberRepository categoryByMemberRepository;
 
     public Optional<Member> findByEmail(String email){
         return memberRepository.findByEmail(email);
@@ -84,5 +91,14 @@ public class MemberService {
     public MemberNicknameDto selectOtherNickname(String nickName)
     {
         return memberRepository.selectOtherNickname(nickName);
+    }
+
+    public void plusScrapCnt(Long categoryId){
+        // 카테고리 id를 이용해 멤버 id 조회
+        Long memberIdByCategoryId = categoryByMemberRepository.findMemberIdByCategoryId(categoryId);
+        // 알림 받은 멤버 조회
+        Member NotifiedMember = memberRepository.findById(memberIdByCategoryId);
+        // scrapCnt + 1
+        NotifiedMember.plusScrapCnt();
     }
 }

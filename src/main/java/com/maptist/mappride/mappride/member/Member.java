@@ -2,7 +2,6 @@ package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.grade.Grade;
 import com.maptist.mappride.mappride.member.DTO.RegisterDto;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,18 +48,28 @@ public class Member {
     @Column(nullable = false)
     private boolean publish;
 
+    @Column(nullable = false)
+    private int scrapCnt;
+
     private Member(String email, String name, String userRole){
         this.email = email;
         this.name = name;
         this.userRole = userRole;
+        this.scrapCnt = 0;
+        this.publish = false;
     }
 
     public static Member createMember(RegisterDto registerDto){
         Member member = new Member(
                 registerDto.getEmail(),
                 registerDto.getName(),
-                registerDto.getUserRole());
+                registerDto.getUserRole()
+        );
 
         return member;
+    }
+
+    public void plusScrapCnt(){
+        this.scrapCnt++;
     }
 }

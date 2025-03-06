@@ -1,7 +1,11 @@
 package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
-import com.maptist.mappride.mappride.member.DTO.*;
+import com.maptist.mappride.mappride.member.DTO.MemberDto;
+import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
+import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
+import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
+import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,10 @@ import java.util.Optional;
 public class MemberRepository {
 
     private final EntityManager em;
+
+    public Member findById(Long memberId){
+        return em.find(Member.class, memberId);
+    }
 
     public Optional<Member> findByEmail(String email) {
         try {
@@ -53,7 +61,7 @@ public class MemberRepository {
     {
         String query = """
                 UPDATE Member m
-                SET m.nickName = :nickname, m.birthDay = :birthDay
+                SET m.nickname = :nickname, m.birthDay = :birthDay
                 WHERE m.id = :id
                 """;
 
