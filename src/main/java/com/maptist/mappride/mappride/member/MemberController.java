@@ -67,7 +67,7 @@ public class MemberController
     }
 
     //멤버 검색 (이름)
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<List<MemberNameDto>>selectOtherName(@PathVariable("name") String name)
     {
         List<MemberNameDto> selectMyInfo = memberService.selectOtherName(name);
@@ -76,7 +76,7 @@ public class MemberController
     }
 
     // 멤버 검색 (이메일)
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<MemberEmailDto>selectOtherEmail(@PathVariable("email") String email)
     {
         MemberEmailDto selectOtherEmail = memberService.selectOtherEmail(email);
@@ -84,7 +84,7 @@ public class MemberController
         return ResponseEntity.ok(selectOtherEmail);
     }
     // 멤버 검색 (닉네임)
-    @GetMapping("/{nickname}")
+    @GetMapping("/nickname/{nickname}")
     public ResponseEntity<MemberNicknameDto>selectOtherNickname(@PathVariable("nickname") String nickname)
     {
         MemberNicknameDto selectOtherNickname = memberService.selectOtherNickname(nickname);
