@@ -1,7 +1,7 @@
 package com.maptist.mappride.mappride.place;
 
-import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
+import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
@@ -161,6 +161,21 @@ public class PlaceRepository {
                         "where ph.id =: photoId", Place.class)
                 .setParameter("photoId", photoId)
                 .getSingleResult();
+    }
+
+    public PlacePreviewResponseDto findPlacePreviewById(Long placeId) {
+
+        String query = "SELECT new com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto(" +
+                "p.name, p.address, p.color, p.content, " +
+                "(SELECT ph2.photoUrl FROM Photo ph2 WHERE ph2.place.id = p.id AND ph2.thumbnail = true ORDER BY ph2.id DESC LIMIT 1), " +
+                "ph.photoUrl) " +
+                "FROM Place p " +
+                "LEFT JOIN Photo ph ON ph.place.id = p.id " +
+                "WHERE p.id = :placeId";
+
+        return em.createQuery(query, PlacePreviewResponseDto.class)
+                .setParameter("placeId", placeId).
+                getSingleResult();
     }
 }
 

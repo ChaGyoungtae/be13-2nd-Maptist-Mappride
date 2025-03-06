@@ -34,7 +34,7 @@ public class MemberDto
         this.grade = member.getGrade();
         this.email = member.getEmail();
         this.name = member.getName();
-        this.nickName = member.getNickName();
+        this.nickName = member.getNickname();
         this.birthDay = member.getBirthDay();
         this.userRole = member.getUserRole();
     }

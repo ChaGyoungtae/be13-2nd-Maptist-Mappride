@@ -12,6 +12,7 @@ import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
@@ -22,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,5 +131,9 @@ public class PlaceService {
         photoService.copyPhoto(placeCopyDto.getPlaceId(), member, place);
 
         return placeId;
+    }
+
+    public PlacePreviewResponseDto getPlacePreview(Long placeId) {
+        return placeRepository.findPlacePreviewById(placeId);
     }
 }

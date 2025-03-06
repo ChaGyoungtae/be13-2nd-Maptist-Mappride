@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.place;
 
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
@@ -49,5 +50,14 @@ public class PlaceController {
     @PostMapping("/copy")
     public ResponseEntity<Long> copyPlace(@RequestBody PlaceCopyRequestDto placeCopyRequestDto){
         return ResponseEntity.ok().body(placeService.copyPlace(placeCopyRequestDto));
+    }
+
+
+    @GetMapping("/{place-id}/preview")
+    public ResponseEntity<PlacePreviewResponseDto> getPlacePreview(@PathVariable("place-id") Long placeId) {
+
+        PlacePreviewResponseDto placePreviewResponseDto = placeService.getPlacePreview(placeId);
+        return ResponseEntity.ok().body(placePreviewResponseDto);
+
     }
 }

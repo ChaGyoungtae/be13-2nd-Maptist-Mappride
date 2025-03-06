@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -74,7 +73,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityUserDto userDto = SecurityUserDto.builder()
                     .email(findMember.getEmail())
                     .role("ROLE_".concat(findMember.getUserRole()))
-                    .nickname(findMember.getNickName())
+                    .nickname(findMember.getNickname())
                     .build();
 
             // SecurityContext에 인증 객체를 등록해준다.
