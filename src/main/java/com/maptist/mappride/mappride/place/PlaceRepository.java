@@ -166,9 +166,9 @@ public class PlaceRepository {
     public PlacePreviewResponseDto findPlacePreviewById(Long placeId) {
 
         String query = "SELECT new com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto(" +
-                "p.name, p.address, p.color, p.content, " +
-                "(SELECT ph2.photoUrl FROM Photo ph2 WHERE ph2.place.id = p.id AND ph2.thumbnail = true ORDER BY ph2.id DESC LIMIT 1), " +
-                "ph.photoUrl) " +
+                "p.name, p.address, p.color," +
+                "(SELECT ph2.photoUrl FROM Photo ph2 WHERE ph2.place.id = p.id AND ph2.thumbnail = true ORDER BY ph2.id DESC LIMIT 1)" +
+                ") " +
                 "FROM Place p " +
                 "LEFT JOIN Photo ph ON ph.place.id = p.id " +
                 "WHERE p.id = :placeId";
