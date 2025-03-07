@@ -4,7 +4,6 @@ import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
-import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.place.PlaceService;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
