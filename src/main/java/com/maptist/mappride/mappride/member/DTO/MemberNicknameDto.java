@@ -13,5 +13,5 @@ import lombok.ToString;
 @ToString
 public class MemberNicknameDto
 {
-    private String nickName;
+    private String nickname;
 }
