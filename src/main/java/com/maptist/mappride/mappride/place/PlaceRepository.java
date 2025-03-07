@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.place;
 
-import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
@@ -190,7 +189,7 @@ public class PlaceRepository {
     public List<PlaceInfoDto> findPlacesInfoByCategoryId(long categoryId) {
 
         return em.createQuery(
-                "select new com.maptist.mappride.mappride.place.dto.PlaceInfoDto(p.name, p.address)" +
+                "select new com.maptist.mappride.mappride.place.dto.PlaceInfoDto(p.id, p.name, p.address)" +
                         "from Place p " +
                         "where p.category.id =: categoryId", PlaceInfoDto.class)
                 .setParameter("categoryId", categoryId)

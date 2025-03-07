@@ -8,6 +8,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class PlaceInfoDto {
+    private final long id;
     private final String name;
     private final String address;
 }

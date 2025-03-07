@@ -207,4 +207,8 @@ public class PlaceService {
         return placeRepository.findPlacesInfoByCategoryId(categoryId)   ;
     }
 
+    // place Id로부터 place 정보 조회
+    public PlaceResponseDto getPlaceById(long placeId) {
+        return placeRepository.findPlaceResponseDtoById(placeId);
+    }
 }
