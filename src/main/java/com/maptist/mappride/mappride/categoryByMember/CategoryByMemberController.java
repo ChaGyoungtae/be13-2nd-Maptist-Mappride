@@ -4,10 +4,12 @@ import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberRespon
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.place.PlaceService;
 import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
+import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,5 +42,11 @@ public class CategoryByMemberController {
             }
             return ResponseEntity.ok().body(places);
         }
+    }
+    // 조회된 유저의 모든 장소중 하나를 클릭하면 장소의 상세정보 제공
+    @GetMapping("/places/{place-id}")
+    public ResponseEntity<PlaceResponseDto> getPlaceDetailsByPlaceId(@PathVariable("place-id") long placeId) {
+        PlaceResponseDto placeResponseDto = placeService.getPlaceById(placeId);
+        return ResponseEntity.ok().body(placeResponseDto);
     }
 }
