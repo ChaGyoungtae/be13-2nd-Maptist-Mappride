@@ -3,6 +3,7 @@ package com.maptist.mappride.mappride.config.jwt;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberRepository;
+import com.maptist.mappride.mappride.member.MemberService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,7 +28,7 @@ import java.util.List;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -64,10 +65,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (jwtUtil.verifyToken(atc)) {
 
             // AccessToken 내부의 payload에 있는 email로 user를 조회한다. 없다면 예외를 발생시킨다 -> 정상 케이스가 아님
-            Member findMember = memberRepository.findByEmail(jwtUtil.getUid(atc))
-                    .orElseThrow(IllegalStateException::new);
-
-            System.out.println("findMember = " + findMember);
+            Member findMember = memberService.findByEmail(jwtUtil.getUid(atc))
+                    .orElseThrow(() -> new IllegalArgumentException("해당 이메일로 가입된 회원이 없습니다."));
 
             // SecurityContext에 등록할 User 객체를 만들어준다.
             SecurityUserDto userDto = SecurityUserDto.builder()
