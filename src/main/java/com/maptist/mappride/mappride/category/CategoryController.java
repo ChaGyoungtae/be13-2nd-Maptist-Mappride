@@ -53,7 +53,7 @@ public class CategoryController {
 
     // 카테고리 별 장소 조회
     @GetMapping("/{category-id}/places")
-    public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable("category-id") Long categoryId) {
 
         List<PlacesByCategoryResponseDto> places = placeService.findPlacesByCategory(categoryId);
 
@@ -89,5 +89,6 @@ public class CategoryController {
     public ResponseEntity<Long> copyCategory(@RequestBody CategoryCopyDto dto) {
         return ResponseEntity.ok().body(categoryService.copyCategory(dto));
     }
+
 
 }
