@@ -199,7 +199,11 @@ public class CategoryService {
                 .categoryName(categoryName)
                 .build();
 
-        notificationService.customNotify(member.getId(), categorySseResponse, nickname + "님이 당신의 " + categoryName + " 을(를) 복사 했습니다.","copy");
+        String comment = nickname + "님이 당신의 " + categoryName + " 을(를) 복사 했습니다.";
+
+        notificationService.customNotify(member.getId(), categorySseResponse, comment,"copy");
+
+
 
         // 알림받은 사용자의 scrapCnt + 1
         memberService.plusScrapCnt(prevCategory.getId());

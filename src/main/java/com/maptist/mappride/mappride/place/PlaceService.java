@@ -3,10 +3,12 @@ package com.maptist.mappride.mappride.place;
 import com.amazonaws.services.s3.AmazonS3;
 import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryRepository;
+import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
+import com.maptist.mappride.mappride.comment.Comment;
+import com.maptist.mappride.mappride.comment.CommentRepository;
 import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
-import com.maptist.mappride.mappride.member.MemberRepository;
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.notification.NotificationService;
 import com.maptist.mappride.mappride.notification.dto.CategorySseResponse;
@@ -46,8 +48,8 @@ public class PlaceService {
     private final PhotoService photoService;
     private final PhotoRepository photoRepository;
     private final NotificationService notificationService;
-    private final MemberRepository memberRepository;
     private final CategoryByMemberRepository categoryByMemberRepository;
+    private final CommentRepository commentRepository;
 
 
     public List<PlacesByCategoryResponseDto> findPlacesByCategory(Long categoryId) {
@@ -58,16 +60,21 @@ public class PlaceService {
         if(category.isEmpty()){
             throw new RuntimeException("카테고리 조회 실패");
         }
-        // 조회알림 dto 만들어서 알림 보내기
-        String categoryName = category.get().getName();
-        CategorySseResponse categorySseResponse = CategorySseResponse.builder()
-                .categoryName(categoryName)
-                .nickname(nickname)
-                .build();
-        notificationService.customNotify(member.getId(),categorySseResponse, nickname + "님이 당신의 "+ categoryName +" 카테고리를 조회했습니다.", "show");
+        // member 카테고리 작성자가 다른 경우, 타인이 조회하는 중이므로 알림을 보낸다.
+        CategoryByMember findCbm = categoryByMemberRepository.findByMemberIdAndCategoryId(member.getId(),category.get().getId());
+        if(findCbm.getMember() != member){
+            // 조회알림 dto 만들어서 알림 보내기
+            String categoryName = category.get().getName();
+            CategorySseResponse categorySseResponse = CategorySseResponse.builder()
+                    .categoryName(categoryName)
+                    .nickname(nickname)
+                    .build();
+            notificationService.customNotify(member.getId(),categorySseResponse, nickname + "님이 당신의 "+ categoryName +" 카테고리를 조회했습니다.", "show");
+            // 알림받은 사용자의 scrapCnt + 1
+            memberService.plusScrapCnt(category.get().getId());
+        }
 
-        // 알림받은 사용자의 scrapCnt + 1
-        memberService.plusScrapCnt(category.get().getId());
+
 
         return placeRepository.findPlacesByCategoryId(categoryId);
     }
@@ -138,11 +145,20 @@ public class PlaceService {
             throw new RuntimeException("본인의 장소만 삭제할 수 있습니다.");
         }
 
-        // 사진 지우고, photo 테이블 지우고
+        // 사진 지우고, photo 테이블 지우기
         for(Photo p : photoList){
             s3Service.deleteFile(p.getPhotoUrl());
             photoRepository.remove(p);
         }
+
+        // placeId를 이용해 댓글 리스트 가져오기
+        List<Comment> commentList = commentRepository.findByPlaceId(placeId);
+
+        // 댓글 지우기
+        for(Comment c: commentList){
+            commentRepository.delete(c);
+        }
+
         // place 지우기
         return placeRepository.delete(place);
     }

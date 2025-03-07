@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +30,8 @@ public class PhotoController {
         return ResponseEntity.ok((s3Service.uploadFile(multipartFile)));
     }
 
-    @DeleteMapping("s3/delete-image")
-    public ResponseEntity<String> deleteImage(@RequestParam("fileName") String fileName){
+    @DeleteMapping("s3/delete-image/{file-name}")
+    public ResponseEntity<String> deleteImage(@PathVariable("file-name") String fileName){
         s3Service.deleteFile(fileName);
         return ResponseEntity.ok().body("delete Success");
     }

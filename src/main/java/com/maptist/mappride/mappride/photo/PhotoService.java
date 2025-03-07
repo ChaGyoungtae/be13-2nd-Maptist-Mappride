@@ -35,6 +35,14 @@ public class PhotoService {
     }
 
     public void deletePhoto(Long id) {
+
+        Photo findPhoto = photoRepository.findById(id);
+        if(findPhoto.getMember() != memberService.getMember()){
+            throw new RuntimeException("본인의 사진만 삭제할 수 있습니다.");
+        }
+
+        s3Service.deleteFile(findPhoto.getPhotoUrl());
+
         photoRepository.remove(photoRepository.findById(id));
     }
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maptist.mappride.mappride.config.jwt.DTO.GeneratedToken;
 import com.maptist.mappride.mappride.config.jwt.JwtUtil;
 import com.maptist.mappride.mappride.member.DTO.RegisterDto;
-import com.maptist.mappride.mappride.member.MemberService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

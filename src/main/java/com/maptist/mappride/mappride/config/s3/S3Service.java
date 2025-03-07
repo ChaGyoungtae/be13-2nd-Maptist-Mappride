@@ -9,7 +9,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.MemberRepository;
-import com.maptist.mappride.mappride.member.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.categoryByMember;
 
-import com.maptist.mappride.mappride.category.Category;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

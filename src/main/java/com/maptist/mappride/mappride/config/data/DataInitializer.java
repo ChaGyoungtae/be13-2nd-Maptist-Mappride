@@ -1,12 +1,11 @@
 package com.maptist.mappride.mappride.config.data;
 
 import com.maptist.mappride.mappride.grade.Grade;
-import com.maptist.mappride.mappride.grade.GradeRepository;
 import com.maptist.mappride.mappride.grade.GradeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component

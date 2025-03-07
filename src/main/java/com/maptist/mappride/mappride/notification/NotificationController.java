@@ -7,15 +7,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-@RestController
+@RestController("/api/v1/subscribe")
 @RequiredArgsConstructor
 public class NotificationController {
 
     private final NotificationService notificationService;
 
-    // 카테고리 별 장소 조회
-    @GetMapping(value = "/{category-id}/places", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter getPlacesByCategory(@PathVariable Long categoryId) {
-        return notificationService.getPlacesByCategory(categoryId);
+    // 알림 연결
+    @GetMapping(value = "/{member-id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter getPlacesByCategory(@PathVariable("member-id") Long memberId) {
+        return notificationService.subscribe(memberId);
     }
+
+
+
+
+
+
 }

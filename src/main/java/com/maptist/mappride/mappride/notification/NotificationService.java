@@ -13,16 +13,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private final CategoryByMemberRepository categoryByMemberRepository;
     private final MemberRepository memberRepository;
     private final EmitterRepository emitterRepository;
 
     private static final Long DEFAULT_TIMEOUT = 600L * 1000 * 60;
 
-    public SseEmitter getPlacesByCategory(Long categoryId) {
-
-        // categoryId 를 통해 memberId 가져오기
-        Long memberId = categoryByMemberRepository.findMemberIdByCategoryId(categoryId);
+    public SseEmitter subscribe(Long memberId) {
 
         SseEmitter emitter = createEmitter(memberId);
         sendToClient(memberId, "EventStream Created. [userId="+ memberId + "]", "sse 접속 성공");
