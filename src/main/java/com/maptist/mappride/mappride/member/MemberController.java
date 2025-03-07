@@ -95,6 +95,7 @@ public class MemberController
     @DeleteMapping
     public ResponseEntity<String> deleteMember(){
         memberService.deleteMember();
-        return ResponseEntity.ok().body("delete Success");
+        String deleteMessage = "delete Success";
+        return ResponseEntity.ok().body(deleteMessage);
     }
 }
