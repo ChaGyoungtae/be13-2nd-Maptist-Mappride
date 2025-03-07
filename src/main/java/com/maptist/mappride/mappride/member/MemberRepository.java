@@ -45,7 +45,9 @@ public class MemberRepository {
     public MemberDto selectMyInfo(Long memberId)
     {
         String query = """
-            SELECT new com.maptist.mappride.mappride.member.DTO.MemberDto(m)
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberDto(
+            m.id, m.grade.name, m.email, m.name, m.nickname, m.birthDay,
+            m.userRole, m.publish, m.scrapCnt)
             FROM Member m
             WHERE m.id = :memberId
             """;
