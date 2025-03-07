@@ -66,7 +66,7 @@ public class MemberRepository {
                 """;
 
         em.createQuery(query)
-                .setParameter("nickname", memberDto.getNickName())
+                .setParameter("nickname", memberDto.getNickname())
                 .setParameter("birthDay", memberDto.getBirthDay())
                 .setParameter("id", memberDto.getId())
                 .executeUpdate();
@@ -93,7 +93,7 @@ public class MemberRepository {
         String query = """
             SELECT new com.maptist.mappride.mappride.member.DTO.MemberNameDto(m.name)
             FROM Member m
-            WHERE m.name = :name
+            WHERE m.name = :name and m.publish = true
             """;
 
         return em.createQuery(query, MemberNameDto.class)
@@ -104,29 +104,43 @@ public class MemberRepository {
     // 멤버 검색 (이메일)
     public MemberEmailDto selectOtherEmail(String email)
     {
-        String query = """
-            SELECT new com.maptist.mappride.mappride.member.DTO.MemberEmailDto(m.email)
-            FROM Member m
-            WHERE m.email = :email
-            """;
+        try
+        {
+            String query = """
+                SELECT new com.maptist.mappride.mappride.member.DTO.MemberEmailDto(m.email)
+                FROM Member m
+                WHERE m.email = :email and m.publish = true
+                """;
 
-        return em.createQuery(query, MemberEmailDto.class)
-                .setParameter("email", email)
-                .getSingleResult();
+            return em.createQuery(query, MemberEmailDto.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        }
+        catch (NoResultException e)
+        {
+            return null;
+        }
     }
 
     // 멤버 검색 (닉네임)
-    public MemberNicknameDto selectOtherNickname(String nickName)
+    public MemberNicknameDto selectOtherNickname(String nickname)
     {
-        String query = """
-            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNicknameDto(m.nickname)
-            FROM Member m
-            WHERE m.nickname = :nickName
-            """;
+        try
+        {
+            String query = """
+                SELECT new com.maptist.mappride.mappride.member.DTO.MemberNicknameDto(m.nickname)
+                FROM Member m
+                WHERE m.nickname = :nickname and m.publish = true
+                """;
 
-        return em.createQuery(query, MemberNicknameDto.class)
-                .setParameter("nickName", nickName)
-                .getSingleResult();
+            return em.createQuery(query, MemberNicknameDto.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+        }
+        catch (NoResultException e)
+        {
+            return null;
+        }
     }
 
     public void delete(Member member) {

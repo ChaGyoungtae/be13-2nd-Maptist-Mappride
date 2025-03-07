@@ -27,7 +27,7 @@ public class MemberDto
 
     private String name;
 
-    private String nickName;
+    private String nickname;
 
     private LocalDate birthDay;
 
@@ -39,7 +39,7 @@ public class MemberDto
         this.grade = member.getGrade();
         this.email = member.getEmail();
         this.name = member.getName();
-        this.nickName = member.getNickname();
+        this.nickname = member.getNickname();
         this.birthDay = member.getBirthDay();
         this.userRole = member.getUserRole();
     }

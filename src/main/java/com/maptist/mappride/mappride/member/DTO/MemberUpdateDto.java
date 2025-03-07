@@ -17,7 +17,7 @@ public class MemberUpdateDto
 {
     private Long id;
 
-    private String nickName;
+    private String nickname;
 
     private LocalDate birthDay;
 
