@@ -51,7 +51,7 @@ public class CommentService {
 //    // 장소별 댓글 조회
     @Transactional(readOnly = true)
     public List<CommentRequestDto> findByPlaceId(Long placeId) {
-        List<CommentRequestDto> commentRequestDtos = commentRepository.findByPlaceId(placeId);
+        List<CommentRequestDto> commentRequestDtos = commentRepository.findCommentRequestDtoByPlaceId(placeId);
 
         return commentRequestDtos;
     }
@@ -66,7 +66,13 @@ public class CommentService {
     public void deleteComment(Long commentId) {
         Optional<Comment> deleteComment = commentRepository.findById(commentId);
         if(deleteComment.isPresent()){
-            commentRepository.delete(deleteComment.get());
+            Comment comment = deleteComment.get();
+            if (comment.getMember() == memberService.getMember()) {
+                commentRepository.delete(deleteComment.get());
+            } else {
+                throw new RuntimeException("본인의 댓글만 삭제할 수 있습니다.");
+            }
+
         } else {
             log.info("Comment not found: {}", commentId);
         }

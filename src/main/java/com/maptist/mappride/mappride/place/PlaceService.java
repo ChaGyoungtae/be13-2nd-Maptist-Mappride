@@ -127,15 +127,23 @@ public class PlaceService {
 
     @Transactional
     public Long deletePlace(Long placeId) {
+
+        Place place = placeRepository.findOne(placeId);
+
+
         // placeId를 이용해 사진 리스트 가져오기
         List<Photo> photoList = photoRepository.findByPlaceId(placeId);
+
+        if( memberService.getMember() != photoList.get(0).getMember()){
+            throw new RuntimeException("본인의 장소만 삭제할 수 있습니다.");
+        }
+
         // 사진 지우고, photo 테이블 지우고
         for(Photo p : photoList){
             s3Service.deleteFile(p.getPhotoUrl());
             photoRepository.remove(p);
         }
         // place 지우기
-        Place place = placeRepository.findOne(placeId);
         return placeRepository.delete(place);
     }
 

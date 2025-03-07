@@ -6,10 +6,15 @@ import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
 import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
+import com.maptist.mappride.mappride.comment.Comment;
+import com.maptist.mappride.mappride.comment.CommentRepository;
+import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.notification.NotificationService;
 import com.maptist.mappride.mappride.notification.dto.CategorySseResponse;
+import com.maptist.mappride.mappride.photo.Photo;
+import com.maptist.mappride.mappride.photo.PhotoRepository;
 import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +42,9 @@ public class CategoryService {
     private final PlaceRepository placeRepository;
     private final PhotoService photoService;
     private final NotificationService notificationService;
+    private final CommentRepository commentRepository;
+    private final PhotoRepository photoRepository;
+    private final S3Service s3Service;
 
     // 카테고리 생성
     // 유효성 검사라서 비즈니스 로직임 CategoryController에서 왔음
@@ -108,8 +117,32 @@ public class CategoryService {
         if(findCategory.isEmpty()) {
             throw new RuntimeException("findCategory is null");
         }
+
         Member member = memberService.getMember();
         CategoryByMember categoryByMember = categoryByMemberRepository.findByMemberIdAndCategoryId(member.getId(),categoryId);
+
+        // 카테고리 안에 장소 안에 사진, 이미지 지우고, 댓글 지우고, 마지막에 cbm/ 카테고리 삭제
+        List<Place> places = placeRepository.findByCategoryId(categoryId);
+        List<Comment> comments = new ArrayList<>();
+        List<Photo> photos = new ArrayList<>();
+        for(Place p : places){
+
+            comments.clear();
+            comments = commentRepository.findByPlaceId(p.getId());
+            for(Comment c : comments){
+                commentRepository.delete(c);
+            }
+
+            photos.clear();
+            photos = photoRepository.findByPlaceId(p.getId());
+            for(Photo ph: photos){
+                String photoUrl = ph.getPhotoUrl();
+                s3Service.deleteFile(photoUrl);
+                photoRepository.remove(ph);
+            }
+
+            placeRepository.delete(p);
+        }
 
         categoryByMemberRepository.delete(categoryByMember);
 
@@ -174,5 +207,7 @@ public class CategoryService {
 
         return category.getId();
     }
+
+
 
 }
