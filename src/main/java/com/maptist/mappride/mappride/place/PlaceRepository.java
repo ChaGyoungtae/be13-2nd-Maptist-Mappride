@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.place;
 
-import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
