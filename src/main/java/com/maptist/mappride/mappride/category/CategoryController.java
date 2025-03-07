@@ -4,6 +4,7 @@ import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
+import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.place.PlaceService;
 import com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,7 @@ public class CategoryController {
 
     // 카테고리 별 장소 조회
     @GetMapping("/{category-id}/places")
-    public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable("category-id") Long categoryId) {
 
         List<PlacesByCategoryResponseDto> places = placeService.findPlacesByCategory(categoryId);
 
@@ -89,5 +90,6 @@ public class CategoryController {
     public ResponseEntity<Long> copyCategory(@RequestBody CategoryCopyDto dto) {
         return ResponseEntity.ok().body(categoryService.copyCategory(dto));
     }
+
 
 }

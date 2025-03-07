@@ -17,4 +17,8 @@ public class CategoryByMemberResponseDto {
 
     private Long memberId;
 
+    public long getCategoryId() {
+        return category.getId();
+    }
+
 }

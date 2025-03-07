@@ -19,6 +19,7 @@ import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
@@ -195,8 +196,15 @@ public class PlaceService {
 
         return placeId;
     }
-
+    // preview를 return
     public PlacePreviewResponseDto getPlacePreview(Long placeId) {
         return placeRepository.findPlacePreviewById(placeId);
     }
+
+    // 특정 카테고리 장소들 리스트를 return
+    public List<PlaceInfoDto> getPlacesByCategoryId(long categoryId) {
+
+        return placeRepository.findPlacesInfoByCategoryId(categoryId)   ;
+    }
+
 }
