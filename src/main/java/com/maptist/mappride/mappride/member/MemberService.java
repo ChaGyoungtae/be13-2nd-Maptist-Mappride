@@ -9,6 +9,8 @@ import com.maptist.mappride.mappride.comment.Comment;
 import com.maptist.mappride.mappride.comment.CommentRepository;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.config.s3.S3Service;
+import com.maptist.mappride.mappride.grade.Grade;
+import com.maptist.mappride.mappride.grade.GradeRepository;
 import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
@@ -43,13 +45,15 @@ public class MemberService {
     private final S3Service s3Service;
     private final PlaceRepository placeRepository;
     private final CategoryRepository categoryRepository;
+    private final GradeRepository gradeRepository;
 
     public Optional<Member> findByEmail(String email){
         return memberRepository.findByEmail(email);
     }
 
     public ResponseEntity<Long> register(RegisterDto registerDto) {
-        Member member = Member.createMember(registerDto);
+        Grade beginner = gradeRepository.findBeginner();
+        Member member = Member.createMember(registerDto, beginner);
 
         return ResponseEntity.ok().body(memberRepository.save(member));
     }

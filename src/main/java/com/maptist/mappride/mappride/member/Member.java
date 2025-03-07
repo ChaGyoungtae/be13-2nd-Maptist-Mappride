@@ -13,6 +13,7 @@ import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -51,19 +52,21 @@ public class Member {
     @Column(nullable = false)
     private int scrapCnt;
 
-    private Member(String email, String name, String userRole){
+    private Member(String email, String name, String userRole, Grade beginner){
         this.email = email;
         this.name = name;
         this.userRole = userRole;
         this.scrapCnt = 0;
         this.publish = false;
+        this.grade = beginner;
     }
 
-    public static Member createMember(RegisterDto registerDto){
+    public static Member createMember(RegisterDto registerDto, Grade beginner){
         Member member = new Member(
                 registerDto.getEmail(),
                 registerDto.getName(),
-                registerDto.getUserRole()
+                registerDto.getUserRole(),
+                beginner
         );
 
         return member;
@@ -72,4 +75,6 @@ public class Member {
     public void plusScrapCnt(){
         this.scrapCnt++;
     }
+
+    public void updateGrade(Grade grade) {this.grade = grade; }
 }

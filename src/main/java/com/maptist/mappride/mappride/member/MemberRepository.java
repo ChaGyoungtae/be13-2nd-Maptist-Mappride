@@ -146,4 +146,11 @@ public class MemberRepository {
     public void delete(Member member) {
         em.remove(member);
     }
+
+
+    public List<Member> findAll(){
+        return em.createQuery("select m " +
+                "from Member m", Member.class)
+                .getResultList();
+    }
 }
