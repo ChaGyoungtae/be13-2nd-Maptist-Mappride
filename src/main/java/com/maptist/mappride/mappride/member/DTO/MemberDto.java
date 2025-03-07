@@ -21,7 +21,7 @@ public class MemberDto
 {
     private Long id;
 
-    private Grade grade;
+    private String gradeName;
 
     private String email;
 
@@ -33,14 +33,8 @@ public class MemberDto
 
     private String userRole;
 
-    public MemberDto(Member member)
-    {
-        this.id = member.getId();
-        this.grade = member.getGrade();
-        this.email = member.getEmail();
-        this.name = member.getName();
-        this.nickname = member.getNickname();
-        this.birthDay = member.getBirthDay();
-        this.userRole = member.getUserRole();
-    }
+    private boolean publish;
+
+    private int scrapCnt;
+
 }
