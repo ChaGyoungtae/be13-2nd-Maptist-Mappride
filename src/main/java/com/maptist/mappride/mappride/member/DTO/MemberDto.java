@@ -1,7 +1,5 @@
 package com.maptist.mappride.mappride.member.DTO;
 
-import com.maptist.mappride.mappride.grade.Grade;
-import com.maptist.mappride.mappride.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

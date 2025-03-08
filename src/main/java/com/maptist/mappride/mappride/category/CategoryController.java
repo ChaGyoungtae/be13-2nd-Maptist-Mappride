@@ -27,31 +27,21 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
-
     private final PlaceService placeService;
 
 
-    // 카테고리 생성
-    // 데이터 유효성 검증완료전까진 dto로 감싸서 전달함
     @PostMapping
     public ResponseEntity<Long> createCategory(@RequestBody CategoryDto dto) {
 
         return categoryService.createCategory(dto);
     }
 
-
-    // memberId로 카테고리 아이디 조회함 그리구 카테고리 아이디 리스트형태로 옴.
-    // 각각 카테고리 아이디에 대응하는 카테고리들을 싹 다 가져와서 리스트로 저장
-    // 근데 이거 select할때 dto로 넣아야함.
-    // 카테고리 전체 조회
     @GetMapping
     public ResponseEntity<List<CategoryDto>>findAll() {
         List<CategoryDto> findAllCategory = categoryService.findByMemberId();
         return ResponseEntity.ok(findAllCategory);
     }
 
-
-    // 카테고리 별 장소 조회
     @GetMapping("/{category-id}/places")
     public ResponseEntity<List<PlacesByCategoryResponseDto>> getPlacesByCategory(@PathVariable("category-id") Long categoryId) {
 
@@ -60,16 +50,12 @@ public class CategoryController {
         return ResponseEntity.ok().body(places);
     }
 
-
-    // 카테고리 수정
     @PutMapping("/update")
     public ResponseEntity<Long> updateCategory(@RequestBody CategoryUpdateDto dto) {
 
         return ResponseEntity.ok().body(categoryService.updateCategory(dto));
     }
 
-
-    // 카테고리 삭제
     @DeleteMapping("/{category-id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable("category-id") Long categoryId) {
         categoryService.deleteCategory(categoryId);
@@ -82,13 +68,8 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.findByOtherMemberId(memberId));
     }
 
-    // 복사 카테고리 전체 복사해서 내껄로 만듦, 장소만 복사해서 내 카테고리로 가져옴.(유진언니)
-    // name, id 받아오는 dto(categoryCopyDto)
-
     @PostMapping("/copy")
     public ResponseEntity<Long> copyCategory(@RequestBody CategoryCopyDto dto) {
         return ResponseEntity.ok().body(categoryService.copyCategory(dto));
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.member;
 
-import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
+import com.maptist.mappride.mappride.category.Category;
+import com.maptist.mappride.mappride.category.dto.CategoryResponseDto;
 import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
@@ -75,18 +76,28 @@ public class MemberRepository {
     }
 
     // 내 카테고리 조회 (페이지 이동)
-    public List<CategoryByMemberResponseDto> getCategories(Long memberId) {
+    public List<CategoryResponseDto> getCategories(Long memberId) {
 
         String query = """
-                SELECT new com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto(c, cbm.member.id)
+                SELECT new com.maptist.mappride.mappride.category.dto.CategoryResponseDto(c, c.member.id)
                 FROM Category c
-                JOIN CategoryByMember cbm ON c.id = cbm.category.id
-                WHERE cbm.member.id = :memberId
+                WHERE c.member.id = :memberId
                 """;
 
-        return em.createQuery(query, CategoryByMemberResponseDto.class)
+        return em.createQuery(query, CategoryResponseDto.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
+    }
+
+    // 카테고리Id로 memberId찾기
+    public Long findMemberIdByCategoryId(Long categoryId){
+        Category result = em.createQuery("select cbm " +
+                        "from Category cbm " +
+                        "where cbm.id =: categoryId", Category.class)
+                .setParameter("categoryId", categoryId)
+                .getSingleResult();
+
+        return result.getId();
     }
 
     //멤버 검색 (이름)
@@ -148,7 +159,6 @@ public class MemberRepository {
     public void delete(Member member) {
         em.remove(member);
     }
-
 
     public List<Member> findAll(){
         return em.createQuery("select m " +

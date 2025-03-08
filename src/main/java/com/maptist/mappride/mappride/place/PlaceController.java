@@ -52,12 +52,17 @@ public class PlaceController {
         return ResponseEntity.ok().body(placeService.copyPlace(placeCopyRequestDto));
     }
 
-
     @GetMapping("/{place-id}/preview")
     public ResponseEntity<PlacePreviewResponseDto> getPlacePreview(@PathVariable("place-id") Long placeId) {
 
         PlacePreviewResponseDto placePreviewResponseDto = placeService.getPlacePreview(placeId);
         return ResponseEntity.ok().body(placePreviewResponseDto);
+    }
 
+    // 조회된 유저의 모든 장소중 하나를 클릭하면 장소의 상세정보 제공
+    @GetMapping("/details/{place-id}")
+    public ResponseEntity<PlaceResponseDto> getPlaceDetailsByPlaceId(@PathVariable("place-id") long placeId) {
+        PlaceResponseDto placeResponseDto = placeService.getPlaceById(placeId);
+        return ResponseEntity.ok().body(placeResponseDto);
     }
 }

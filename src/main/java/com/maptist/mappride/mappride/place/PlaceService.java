@@ -3,8 +3,6 @@ package com.maptist.mappride.mappride.place;
 import com.amazonaws.services.s3.AmazonS3;
 import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryRepository;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.comment.Comment;
 import com.maptist.mappride.mappride.comment.CommentRepository;
 import com.maptist.mappride.mappride.config.s3.S3Service;
@@ -19,7 +17,6 @@ import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
-import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
@@ -49,7 +46,6 @@ public class PlaceService {
     private final PhotoService photoService;
     private final PhotoRepository photoRepository;
     private final NotificationService notificationService;
-    private final CategoryByMemberRepository categoryByMemberRepository;
     private final CommentRepository commentRepository;
 
 
@@ -62,7 +58,7 @@ public class PlaceService {
             throw new RuntimeException("카테고리 조회 실패");
         }
         // member 카테고리 작성자가 다른 경우, 타인이 조회하는 중이므로 알림을 보낸다.
-        CategoryByMember findCbm = categoryByMemberRepository.findByMemberIdAndCategoryId(member.getId(),category.get().getId());
+        Category findCbm = categoryRepository.findByMemberIdAndCategoryId(member.getId(),category.get().getId());
         if(findCbm.getMember() != member){
             // 조회알림 dto 만들어서 알림 보내기
             String categoryName = category.get().getName();
@@ -74,9 +70,6 @@ public class PlaceService {
             // 알림받은 사용자의 scrapCnt + 1
             memberService.plusScrapCnt(category.get().getId());
         }
-
-
-
         return placeRepository.findPlacesByCategoryId(categoryId);
     }
 
@@ -201,11 +194,11 @@ public class PlaceService {
         return placeRepository.findPlacePreviewById(placeId);
     }
 
-    // 특정 카테고리 장소들 리스트를 return
-    public List<PlaceInfoDto> getPlacesByCategoryId(long categoryId) {
-
-        return placeRepository.findPlacesInfoByCategoryId(categoryId)   ;
-    }
+//    // 특정 카테고리 장소들 리스트를 return -- cbm 에서 쓰던거라 쓸일없지만~ 사람일은 모르니께
+//    public List<PlaceInfoDto> getPlacesByCategoryId(long categoryId) {
+//
+//        return placeRepository.findPlacesInfoByCategoryId(categoryId);
+//    }
 
     // place Id로부터 place 정보 조회
     public PlaceResponseDto getPlaceById(long placeId) {

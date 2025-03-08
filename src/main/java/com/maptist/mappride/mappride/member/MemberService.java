@@ -2,9 +2,7 @@ package com.maptist.mappride.mappride.member;
 
 import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryRepository;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
-import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
+import com.maptist.mappride.mappride.category.dto.CategoryResponseDto;
 import com.maptist.mappride.mappride.comment.Comment;
 import com.maptist.mappride.mappride.comment.CommentRepository;
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
@@ -39,7 +37,6 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final CategoryByMemberRepository categoryByMemberRepository;
     private final CommentRepository commentRepository;
     private final PhotoRepository photoRepository;
     private final S3Service s3Service;
@@ -87,7 +84,7 @@ public class MemberService {
     }
 
     // 내 카테고리 조회 (페이지 이동)
-    public List<CategoryByMemberResponseDto> searchCategories()
+    public List<CategoryResponseDto> searchCategories()
     {
         // 유저 아이디로 부터 유저 카테고리들 조회
         Long memberId = getMember().getId();
@@ -115,7 +112,7 @@ public class MemberService {
 
     public void plusScrapCnt(Long categoryId){
         // 카테고리 id를 이용해 멤버 id 조회
-        Long memberIdByCategoryId = categoryByMemberRepository.findMemberIdByCategoryId(categoryId);
+        Long memberIdByCategoryId = memberRepository.findMemberIdByCategoryId(categoryId);
         // 알림 받은 멤버 조회
         Member NotifiedMember = memberRepository.findById(memberIdByCategoryId);
         // scrapCnt + 1
@@ -123,7 +120,7 @@ public class MemberService {
     }
 
     public void deleteMember() {
-        //comment, image, photo, place, cbm, category 순서대로 삭제
+        //comment, image, photo, place, category 순서대로 삭제
 
         Member member = getMember();
 
@@ -145,18 +142,11 @@ public class MemberService {
             photoRepository.remove(p);
         }
 
-        // cbm, category, place 삭제
-        List<CategoryByMember> categorieByMembers = categoryByMemberRepository.findByMemberId(memberId);
-        List<Category> categories = new ArrayList<>();
+        // category, place 삭제
+        // memberId 를 통해서 그 멤버가 만든 카테고리 전체를 조회
+        List<Category> categories = categoryRepository.findByMemberId(memberId);
+
         List<Place> places = new ArrayList<>();
-        for(CategoryByMember cbm : categorieByMembers){
-            Optional<Category> category = categoryRepository.findById(cbm.getCategory().getId());
-            if(category.isEmpty()){
-                throw new RuntimeException("카테고리 조회 실패");
-            }
-            categories.add(category.get());
-            categoryByMemberRepository.delete(cbm);
-        }
         for(Category category: categories){
             places.clear();
             places = (placeRepository.findByCategoryId(category.getId()));
@@ -166,12 +156,7 @@ public class MemberService {
             categoryRepository.delete(category);
         }
 
-
         //멤버 삭제
         memberRepository.delete(member);
-
-
-
-
     }
 }

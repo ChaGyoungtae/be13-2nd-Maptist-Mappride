@@ -1,6 +1,6 @@
 package com.maptist.mappride.mappride.member;
 
-import com.maptist.mappride.mappride.categoryByMember.DTO.CategoryByMemberResponseDto;
+import com.maptist.mappride.mappride.category.dto.CategoryResponseDto;
 import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
@@ -55,9 +55,9 @@ public class MemberController
 
     // 내 카테고리 조회 (페이지 이동)
     @GetMapping("/manage-categories")
-    public ResponseEntity<List<CategoryByMemberResponseDto>> manageCategories() {
+    public ResponseEntity<List<CategoryResponseDto>> manageCategories() {
 
-        List<CategoryByMemberResponseDto> memberCategories = memberService.searchCategories();
+        List<CategoryResponseDto> memberCategories = memberService.searchCategories();
 
         if (memberCategories.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
