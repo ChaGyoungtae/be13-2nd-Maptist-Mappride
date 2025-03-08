@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.place;
 
 import com.maptist.mappride.mappride.category.Category;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

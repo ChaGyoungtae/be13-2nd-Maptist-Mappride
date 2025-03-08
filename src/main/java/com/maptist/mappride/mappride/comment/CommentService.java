@@ -35,6 +35,10 @@ public class CommentService {
 
         Place place = placeRepository.findOne(commentRequestDto.getPlaceId());
 
+        if(place == null) {
+            throw new RuntimeException("Place not found");
+        }
+
         // dto로부터 객체 생성
         Comment comment = commentRequestDto.toComment(member, place);
 

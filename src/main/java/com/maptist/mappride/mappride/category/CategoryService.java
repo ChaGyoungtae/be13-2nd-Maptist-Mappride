@@ -78,7 +78,9 @@ public class CategoryService {
         // 멤버 객체에서 아이디만 빼옴
         Long memberId = member.getId();
         //멤버아이디를 레포지토리로 이동
-        return categoryRepository.findCategoryByMemberId(memberId);
+        List<CategoryDto> categoryDtos = categoryRepository.findCategoryDtoByMemberId(memberId);
+        System.out.println("categoryDtos = " + categoryDtos);
+        return categoryDtos;
     }
 
     // 카테고리 수정
@@ -101,6 +103,7 @@ public class CategoryService {
 
         // 카테고리 안에 장소 안에 사진, 이미지 지우고, 댓글지움/ 카테고리 삭제
         List<Place> places = placeRepository.findByCategoryId(categoryId);
+
         List<Comment> comments = new ArrayList<>();
         List<Photo> photos = new ArrayList<>();
         for(Place p : places){
@@ -121,6 +124,8 @@ public class CategoryService {
 
             placeRepository.delete(p);
         }
+
+        categoryRepository.delete(findCategory.get());
 
     }
 
