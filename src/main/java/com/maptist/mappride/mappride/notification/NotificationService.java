@@ -1,6 +1,5 @@
 package com.maptist.mappride.mappride.notification;
 
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberRepository;
 import lombok.RequiredArgsConstructor;

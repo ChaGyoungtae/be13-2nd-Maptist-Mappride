@@ -14,10 +14,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class OtherFindCategoryDto {
-
     private Long categoryId;
     private String name;
-
-
-
 }

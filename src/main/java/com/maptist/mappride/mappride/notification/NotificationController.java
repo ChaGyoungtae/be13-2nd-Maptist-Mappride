@@ -18,10 +18,4 @@ public class NotificationController {
     public SseEmitter getPlacesByCategory(@PathVariable("member-id") Long memberId) {
         return notificationService.subscribe(memberId);
     }
-
-
-
-
-
-
 }

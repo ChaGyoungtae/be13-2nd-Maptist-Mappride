@@ -4,8 +4,6 @@ import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMember;
-import com.maptist.mappride.mappride.categoryByMember.CategoryByMemberRepository;
 import com.maptist.mappride.mappride.comment.Comment;
 import com.maptist.mappride.mappride.comment.CommentRepository;
 import com.maptist.mappride.mappride.config.s3.S3Service;
@@ -37,7 +35,6 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final CategoryByMemberRepository categoryByMemberRepository;
     private final MemberService memberService;
     private final PlaceRepository placeRepository;
     private final PhotoService photoService;
@@ -46,31 +43,23 @@ public class CategoryService {
     private final PhotoRepository photoRepository;
     private final S3Service s3Service;
 
-    // 카테고리 생성
-    // 유효성 검사라서 비즈니스 로직임 CategoryController에서 왔음
     @Transactional
     public ResponseEntity<Long> createCategory(@RequestBody CategoryDto categoryDto) {
-        // RequestParam 대신 RequestBody씀
-
-        try{ // 중복된 이름의 카테고리가 있는지 검사
+        try{
             validateDuplicateCategory(categoryDto.getName());
         } catch (IllegalStateException e){
-            // 중복된 이름의 카테고리 있으면 에러발생
             log.error(e.getMessage());
             return ResponseEntity.badRequest().body(-1L);
         }
 
-        // categoryByMember 테이블에 저장할 현재 유저 정보 가져오기
         Member member = memberService.getMember();
-        // dto로부터 카테고리 객체 만듬 : fromDto
-        Category category = categoryDto.toCategory();
+
+        // dto로부터 카테고리 객체 만듬
+        Category category = categoryDto.toCategory(member);
         Long categoryId = categoryRepository.create(category);
-        // categoryByMember 객체 생성 후 db에 저장함
-        CategoryByMember categoryByMember = new CategoryByMember(member,category);
-        categoryByMemberRepository.save(categoryByMember);
         // 확인용 로그
         log.info("Category created: {}", categoryId);
-        return ResponseEntity.ok().body(categoryId); // 잘됐는지 알려줌
+        return ResponseEntity.ok().body(categoryId);
     }
 
     // 이름중복
@@ -82,8 +71,6 @@ public class CategoryService {
         }
     }
 
-
-
     // 카테고리 조회
     public List<CategoryDto> findByMemberId() {
         // 멤버 가져와서 내꺼만 조회 멤버아이디말고 객체로 받아와야된다
@@ -94,10 +81,6 @@ public class CategoryService {
         return categoryRepository.findCategoryByMemberId(memberId);
     }
 
-
-
-
-
     // 카테고리 수정
     @Transactional
     public Long updateCategory(CategoryUpdateDto dto) {
@@ -106,10 +89,8 @@ public class CategoryService {
         return dto.getId();
     }
 
-
-
-    @Transactional
     // 카테고리 삭제
+    @Transactional
     public void deleteCategory(Long categoryId) {
 
         Optional<Category> findCategory = categoryRepository.findById(categoryId);
@@ -118,10 +99,7 @@ public class CategoryService {
             throw new RuntimeException("findCategory is null");
         }
 
-        Member member = memberService.getMember();
-        CategoryByMember categoryByMember = categoryByMemberRepository.findByMemberIdAndCategoryId(member.getId(),categoryId);
-
-        // 카테고리 안에 장소 안에 사진, 이미지 지우고, 댓글 지우고, 마지막에 cbm/ 카테고리 삭제
+        // 카테고리 안에 장소 안에 사진, 이미지 지우고, 댓글지움/ 카테고리 삭제
         List<Place> places = placeRepository.findByCategoryId(categoryId);
         List<Comment> comments = new ArrayList<>();
         List<Photo> photos = new ArrayList<>();
@@ -144,17 +122,14 @@ public class CategoryService {
             placeRepository.delete(p);
         }
 
-        categoryByMemberRepository.delete(categoryByMember);
-
     }
-
 
     // 남의 카테고리 전체 조회
     public List<OtherFindCategoryDto> findByOtherMemberId(Long memberId) {
-
         //멤버아이디를 레포지토리로 이동
         return categoryRepository.findCategoryByOtherMemberId(memberId);
     }
+
 
     @Transactional
     public Long copyCategory(CategoryCopyDto dto){
@@ -165,15 +140,11 @@ public class CategoryService {
             log.error("카테고리 중복");
         }
 
-
-
         // categoryByMember 테이블에 저장할 현재 유저 정보 가져오기
         Member member = memberService.getMember();
         Category category = dto.toCategory();
         categoryRepository.create(category);
-        // categoryByMember 객체 생성 후 db에 저장함
-        CategoryByMember categoryByMember = new CategoryByMember(member,category);
-        categoryByMemberRepository.save(categoryByMember);
+
         // 확인용 로그
         log.info("Category copied: {}", category.getId());
 
@@ -203,15 +174,9 @@ public class CategoryService {
 
         notificationService.customNotify(member.getId(), categorySseResponse, comment,"copy");
 
-
-
         // 알림받은 사용자의 scrapCnt + 1
         memberService.plusScrapCnt(prevCategory.getId());
 
-
         return category.getId();
     }
-
-
-
 }
