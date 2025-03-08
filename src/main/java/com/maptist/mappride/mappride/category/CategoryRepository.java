@@ -21,6 +21,14 @@ public class CategoryRepository {
         return category.getId();
     }
 
+    public List<Category> findByMemberId(Long memberId) {
+        return em.createQuery("select c " +
+                "from Category c " +
+                "where c.member.id =: memberId ",Category.class)
+                .setParameter("memberId",memberId)
+                .getResultList();
+    }
+
     public void updateCategory(CategoryUpdateDto categoryUpdateDto) {
         String query = """
                 UPDATE Category c
