@@ -75,6 +75,21 @@ public class MemberRepository {
                 .executeUpdate();
     }
 
+    // 닉네임 중복 체크
+    public Member findByNickname(String nickname)
+    {
+        try
+        {
+            return em.createQuery("SELECT m FROM Member m WHERE m.nickname = :nickname", Member.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+        }
+        catch (NoResultException e)
+        {
+            return null;
+        }
+    }
+
     // 내 카테고리 조회 (페이지 이동)
     public List<CategoryResponseDto> getCategories(Long memberId) {
 
