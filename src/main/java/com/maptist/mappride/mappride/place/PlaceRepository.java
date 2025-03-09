@@ -169,6 +169,7 @@ public class PlaceRepository {
                 "LEFT JOIN Photo ph ON ph.place.id = p.id " +
                 "WHERE p.id = :placeId";
 
+
         return em.createQuery(query, PlacePreviewResponseDto.class)
                 .setParameter("placeId", placeId).
                 getSingleResult();

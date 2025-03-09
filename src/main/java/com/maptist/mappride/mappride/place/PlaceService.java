@@ -204,4 +204,5 @@ public class PlaceService {
     public PlaceResponseDto getPlaceById(long placeId) {
         return placeRepository.findPlaceResponseDtoById(placeId);
     }
+
 }
