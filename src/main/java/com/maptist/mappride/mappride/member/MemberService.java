@@ -80,7 +80,28 @@ public class MemberService {
     // 내 정보 수정
     public void updateMyInfo(MemberUpdateDto dto)
     {
+        try 
+        {
+            validateDuplicateNickname(dto.getNickname());
+        } 
+        catch (IllegalStateException e)
+        {
+            log.error("닉네임 중복");
+            return;
+        }
+
         memberRepository.updateMyInfo(dto);
+    }
+
+    // 닉네임 중복 체크
+    private void validateDuplicateNickname(String nickname)
+    {
+        Member findNickname = memberRepository.findByNickname(nickname);
+
+        if (findNickname != null)
+        {
+            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+        }
     }
 
     // 내 카테고리 조회 (페이지 이동)
