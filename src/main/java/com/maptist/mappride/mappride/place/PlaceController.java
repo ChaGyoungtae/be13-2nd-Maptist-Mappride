@@ -1,11 +1,14 @@
 package com.maptist.mappride.mappride.place;
 
+import com.maptist.mappride.mappride.category.CategoryService;
+import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +20,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/place")
 public class PlaceController {
 
     private final PlaceService placeService;
+
+    private final CategoryService categoryService;
+
+
+    // 장소 생성 페이지 getMapping
+    @GetMapping
+    public ResponseEntity<List<CategoryDto>> getCategories(){
+        List<CategoryDto> categories = categoryService.findByMemberId();
+        return ResponseEntity.ok().body(categories);
+    }
 
     @PostMapping
     public ResponseEntity<Long> createPlace(@ModelAttribute PlaceRegisterDto placeRegisterDto){
@@ -56,6 +71,11 @@ public class PlaceController {
     public ResponseEntity<PlacePreviewResponseDto> getPlacePreview(@PathVariable("place-id") Long placeId) {
 
         PlacePreviewResponseDto placePreviewResponseDto = placeService.getPlacePreview(placeId);
+
+        if (placePreviewResponseDto == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
         return ResponseEntity.ok().body(placePreviewResponseDto);
     }
 
