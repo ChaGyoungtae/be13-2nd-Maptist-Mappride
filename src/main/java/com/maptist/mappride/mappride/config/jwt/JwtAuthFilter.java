@@ -41,8 +41,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
 
         String requestURI = request.getRequestURI();
-        // "/api/v1/auth/**" 경로는 JWT 검증을 거치지 않음
-        if (requestURI.startsWith("/api/v1/auth/")) {
+
+        //log.info("current uri = {}",requestURI);
+
+        // 해당 경로는 JWT 검증을 거치지 않음
+        if (requestURI.startsWith("/v3/")
+            || requestURI.startsWith("/api/v1/auth/")
+            || requestURI.startsWith("/swagger-ui/")) {
             filterChain.doFilter(request, response);
             return;
         }

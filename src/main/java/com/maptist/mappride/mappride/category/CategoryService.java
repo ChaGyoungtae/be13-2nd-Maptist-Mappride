@@ -145,9 +145,9 @@ public class CategoryService {
             log.error("카테고리 중복");
         }
 
-        // categoryByMember 테이블에 저장할 현재 유저 정보 가져오기
+        // 카테고리 만들어서 저장
         Member member = memberService.getMember();
-        Category category = dto.toCategory();
+        Category category = dto.toCategory(member);
         categoryRepository.create(category);
 
         // 확인용 로그
