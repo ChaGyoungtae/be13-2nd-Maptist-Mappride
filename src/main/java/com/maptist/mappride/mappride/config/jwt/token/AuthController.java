@@ -64,7 +64,7 @@ public class AuthController {
     public ResponseEntity<Long> register(@RequestParam("loginUser") String registerDtoJson) throws Exception {
         // 소셜로그인 성공 시 그 유저에 대한 회원 정보가 DB에 존재하지 않을 때, 회원가입 진행
         RegisterDto registerDto = objectMapper.readValue(registerDtoJson, RegisterDto.class);
-        return memberService.register(registerDto);
+        return ResponseEntity.ok().body(memberService.register(registerDto));
     }
 
     @PostMapping("/send-error")
