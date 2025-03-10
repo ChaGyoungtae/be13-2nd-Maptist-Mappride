@@ -48,11 +48,11 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
-    public ResponseEntity<Long> register(RegisterDto registerDto) {
+    public Long register(RegisterDto registerDto) {
         Grade beginner = gradeRepository.findBeginner();
         Member member = Member.createMember(registerDto, beginner);
 
-        return ResponseEntity.ok().body(memberRepository.save(member));
+        return memberRepository.save(member);
     }
 
     public Member getMember() {
