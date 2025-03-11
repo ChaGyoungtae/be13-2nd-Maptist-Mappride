@@ -82,7 +82,7 @@ public class MemberService {
     {
         try 
         {
-            validateDuplicateNickname(dto.getNickname());
+            validateDuplicateNickname(dto.getNickname(), dto.getId());
         } 
         catch (IllegalStateException e)
         {
@@ -94,11 +94,11 @@ public class MemberService {
     }
 
     // 닉네임 중복 체크
-    private void validateDuplicateNickname(String nickname)
+    private void validateDuplicateNickname(String nickname, Long memberId)
     {
-        Member findNickname = memberRepository.findByNickname(nickname);
+        Member findMember = memberRepository.findByNickname(nickname);
 
-        if (findNickname != null)
+        if (findMember != null && findMember.getId() != memberId)
         {
             throw new IllegalStateException("이미 존재하는 닉네임입니다.");
         }
@@ -133,7 +133,12 @@ public class MemberService {
 
     public void plusScrapCnt(Long categoryId){
         // 카테고리 id를 이용해 멤버 id 조회
-        Long memberIdByCategoryId = memberRepository.findMemberIdByCategoryId(categoryId);
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if(categoryOptional.isEmpty()){
+            throw new RuntimeException("category is not found");
+        }
+
+        Long memberIdByCategoryId = categoryOptional.get().getMember().getId();
         // 알림 받은 멤버 조회
         Member NotifiedMember = memberRepository.findById(memberIdByCategoryId);
         // scrapCnt + 1

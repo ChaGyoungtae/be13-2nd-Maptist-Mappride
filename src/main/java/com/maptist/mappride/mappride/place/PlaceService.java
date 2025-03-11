@@ -74,7 +74,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public Long createPlace(PlaceRegisterDto placeRegisterDto) {
+    public Long createPlace(MultipartFile thumbnail, List<MultipartFile> multipartFiles, PlaceRegisterDto placeRegisterDto) {
 
         System.out.println(placeRegisterDto);
 
@@ -91,19 +91,17 @@ public class PlaceService {
 
         Member member = memberService.getMember();
 
-        MultipartFile thumbnail;
         MultipartFile multipartFile;
         String fileName;
         boolean isThumbnail;
 
-        for(int i = -1; i< placeRegisterDto.getMultipartFiles().size(); i++){
+        for(int i = -1; i< multipartFiles.size(); i++){
             if(i == -1) {
-                thumbnail = placeRegisterDto.getThumbnail();
                 fileName = s3Service.uploadFile(thumbnail);
                 isThumbnail = true;
             }
             else {
-                multipartFile = placeRegisterDto.getMultipartFiles().get(i);
+                multipartFile = multipartFiles.get(i);
                 fileName = s3Service.uploadFile(multipartFile);
                 isThumbnail = false;
             }

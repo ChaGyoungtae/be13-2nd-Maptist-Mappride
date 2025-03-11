@@ -32,9 +32,9 @@ public class PlaceRegisterDto {
 
     private String content;
 
-    private MultipartFile thumbnail;
-
-    private List<MultipartFile> multipartFiles;
+//    private MultipartFile thumbnail;
+//
+//    private List<MultipartFile> multipartFiles;
 
     public Place toPlace(Category category, String address, LocalDateTime regDate){
 
