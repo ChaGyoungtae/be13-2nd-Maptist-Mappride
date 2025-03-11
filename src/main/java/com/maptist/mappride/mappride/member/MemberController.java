@@ -6,8 +6,6 @@ import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
 import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
-import io.swagger.v3.oas.annotations.headers.Header;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -81,7 +79,9 @@ public class MemberController
     @GetMapping("/email/{email}")
     public ResponseEntity<MemberEmailDto>selectOtherEmail(@PathVariable("email") String email)
     {
+        System.out.println(email);
         MemberEmailDto selectOtherEmail = memberService.selectOtherEmail(email);
+        System.out.println(selectOtherEmail);
 
         return ResponseEntity.ok(selectOtherEmail);
     }

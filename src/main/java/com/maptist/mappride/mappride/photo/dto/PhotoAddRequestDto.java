@@ -15,7 +15,7 @@ public class PhotoAddRequestDto {
 
     private final Long placeId;
 
-    private final List<MultipartFile> multipartFiles;
+    //private final List<MultipartFile> multipartFiles;
 
 
     public Photo addPhoto(Member member, Place place, String photoUrl){

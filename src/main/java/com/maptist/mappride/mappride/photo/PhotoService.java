@@ -50,14 +50,14 @@ public class PhotoService {
         return photoRepository.findPhotosByPlaceId(placeId);
     }
 
-    public List<Long> addPhotos(PhotoAddRequestDto photoAddRequestDto) {
+    public List<Long> addPhotos(List<MultipartFile> multipartFiles, PhotoAddRequestDto photoAddRequestDto) {
 
         Member member = memberService.getMember();
         Place place = placeRepository.findOne(photoAddRequestDto.getPlaceId());
 
         List<Long> photoIds = new ArrayList<>();
 
-        for(MultipartFile multipartFile: photoAddRequestDto.getMultipartFiles()){
+        for(MultipartFile multipartFile: multipartFiles){
             Photo photo = photoAddRequestDto.addPhoto(member, place, amazonS3.getUrl("mappride-bucket",s3Service.uploadFile(multipartFile)).toString());
             photoIds.add(photoRepository.create(photo));
         }

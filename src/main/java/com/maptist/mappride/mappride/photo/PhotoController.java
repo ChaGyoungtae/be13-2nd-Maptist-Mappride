@@ -4,6 +4,7 @@ import com.maptist.mappride.mappride.config.s3.S3Service;
 import com.maptist.mappride.mappride.photo.dto.PhotoAddRequestDto;
 import com.maptist.mappride.mappride.photo.dto.PhotoResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,9 +50,9 @@ public class PhotoController {
     }
 
     // 사진 추가하기
-    @PostMapping("/upload-photos")
-    public ResponseEntity<List<Long>> addPhoto(@ModelAttribute PhotoAddRequestDto photoAddRequestDto){
-        return ResponseEntity.ok().body(photoService.addPhotos(photoAddRequestDto));
+    @PostMapping(value = "/upload-photos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<List<Long>> addPhoto(@RequestPart List<MultipartFile> multipartFiles, @ModelAttribute PhotoAddRequestDto photoAddRequestDto){
+        return ResponseEntity.ok().body(photoService.addPhotos(multipartFiles,photoAddRequestDto));
     }
 
     // 대표사진 변경
