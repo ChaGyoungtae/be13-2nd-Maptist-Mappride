@@ -2,6 +2,7 @@ package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
+import com.maptist.mappride.mappride.category.dto.CategoryNameFindDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import com.maptist.mappride.mappride.comment.Comment;
@@ -184,4 +185,11 @@ public class CategoryService {
 
         return category.getId();
     }
+
+    public List<CategoryNameFindDto> findByCategoryName(String name) {
+        Long memberId = memberService.getMember().getId();
+        return categoryRepository.findCategoryName(name, memberId);
+
+    }
+
 }
