@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.category;
 
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
+import com.maptist.mappride.mappride.category.dto.CategoryNameFindDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
 import com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto;
 import jakarta.persistence.EntityManager;
@@ -96,5 +97,14 @@ public class CategoryRepository {
                 .setParameter("memberId", memberId)
                 .getResultList();
         // 위에서 조회한 CategoryId를 통해 Category들을 조회해서 DTO로 반환
+    }
+
+    public List<CategoryNameFindDto> findCategoryName(String name, Long memberId) {
+        return em.createQuery(
+                "SELECT new com.maptist.mappride.mappride.category.dto.CategoryNameFindDto(c.name, c.id, c.publish) " +
+                        "FROM Category c WHERE c.member.id =:memberId and c.name LIKE :name", CategoryNameFindDto.class)
+                .setParameter("name", "%" + name + "%")
+                .setParameter("memberId", memberId)
+                .getResultList();
     }
 }
