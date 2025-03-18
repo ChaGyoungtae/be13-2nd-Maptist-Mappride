@@ -49,17 +49,18 @@ public class PlaceService {
     private final CommentRepository commentRepository;
 
 
+    @Transactional
     public List<PlacesByCategoryResponseDto> findPlacesByCategory(Long categoryId) {
 
+        // 내 정보
         Member member = memberService.getMember();
         String nickname = member.getNickname();
         Optional<Category> category = categoryRepository.findById(categoryId);
         if(category.isEmpty()){
             throw new RuntimeException("카테고리 조회 실패");
         }
-        // member 카테고리 작성자가 다른 경우, 타인이 조회하는 중이므로 알림을 보낸다.
-        Category findCbm = categoryRepository.findByMemberIdAndCategoryId(member.getId(),category.get().getId());
-        if(findCbm.getMember() != member){
+
+        if(category.get().getMember() != member){
             // 조회알림 dto 만들어서 알림 보내기
             String categoryName = category.get().getName();
             CategorySseResponse categorySseResponse = CategorySseResponse.builder()

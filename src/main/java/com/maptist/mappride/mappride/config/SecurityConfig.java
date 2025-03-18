@@ -64,7 +64,7 @@ public class SecurityConfig {
     @Bean
     public UrlBasedCorsConfigurationSource myWebsiteConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "https://*.yourdomain.com")); // 와일드카드 패턴 허용
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "https://*.yourdomain.com")); // 와일드카드 패턴 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); // Credentials 허용

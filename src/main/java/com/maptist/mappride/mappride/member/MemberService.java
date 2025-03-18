@@ -21,7 +21,6 @@ import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,6 +142,7 @@ public class MemberService {
         Member NotifiedMember = memberRepository.findById(memberIdByCategoryId);
         // scrapCnt + 1
         NotifiedMember.plusScrapCnt();
+        System.out.println(NotifiedMember.getScrapCnt());
     }
 
     public void deleteMember() {
