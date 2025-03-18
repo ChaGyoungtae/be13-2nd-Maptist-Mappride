@@ -3,6 +3,7 @@ package com.maptist.mappride.mappride.notification;
 import com.maptist.mappride.mappride.member.Member;
 import com.maptist.mappride.mappride.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationService {
 
     private final MemberRepository memberRepository;
@@ -21,6 +23,7 @@ public class NotificationService {
 
         SseEmitter emitter = createEmitter(memberId);
         sendToClient(memberId, "EventStream Created. [userId="+ memberId + "]", "sse 접속 성공");
+        log.info("emitter = {}", emitter.toString());
         return emitter;
 
     }
