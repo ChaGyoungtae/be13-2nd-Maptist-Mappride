@@ -2,34 +2,58 @@
     <div class="div">
       <div class="rectangle-4"></div>
       <div class="image-15"></div>
+
       <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
+      <button class="rectangle-9" @click="handleClick('logout')"></button>
       <div class="logout">logout</div>
+      <button class="logout" @click="handleClick('logout')"></button>
+
+      <button class="rectangle-1" @click="handleClick('mappride')"></button>
       <div class="mappride">Mappride</div>
-      <div class="rectangle-6"></div>
+      <button class="mappride" @click="handleClick('mappride')"></button>
+
+      <button class="rectangle-2" @click="handleClick('rectangle-2')"></button>
       <div class="my-categories">My categories</div>
+      <button class="my-categories" @click="handleClick('my-categories')"></button>
+
       <div class="my-page">My page</div>
+
+      <button class="rectangle-3" @click="handleClick('map')"></button>
       <div class="map">Map</div>
-      <div class="rectangle-28"></div>
+      <button class="map" @click="handleClick('map')"></button>
+
+
       <img class="image-12" src="/src/assets/images/public/image-120.png" />
       <img class="image-13" src="/src/assets/images/public/image-130.png" />
       <img class="image-14" src="/src/assets/images/public/image-140.png" />
-      <img class="image-29" src="/src/assets/images/public/image-290.png" />
-      <div class="rectangle-29"></div>
+      <!-- <div class="rectangle-28"></div> -->
+      <div class="line-335"></div>
+
+      <img class="image-29" src="/src/assets/images/public/image-150.png" />
+      <button class="image-29" @click="handleClick('notification')"></button>
+
+      <input type="text" class="rectangle-29" value=""/>
       <div class="nickname">Nickname</div>
-      <div class="rectangle-30"></div>
+      <input type="text" class="rectangle-30" value=""/>
       <div class="email">Email</div>
-      <div class="rectangle-33"></div>
+      <input type="text" class="rectangle-33" value=""/>
       <div class="name">Name</div>
-      <div class="rectangle-34"></div>
+      <input type="text" class="rectangle-34" value=""/>
       <div class="birthday">Birthday</div>
-      <div class="rectangle-31"></div>
+      <input type="text" class="rectangle-31" value=""/>
       <div class="grade">Grade</div>
-      <div class="rectangle-32"></div>
+      <input type="text" class="rectangle-32" value=""/>
       <div class="user-type">User Type</div>
-      <div class="rectangle-49"></div>
+
+      <button class="rectangle-49" @click="handleClick('rec')"></button>
       <div class="withdrawal">withdrawal</div>
+      <button class="withdrawal" @click="handleClick('withdrawal')"></button>
+
       <img class="image-27" src="/src/assets/images/public/image-290.png" />
-      <img class="image-30" src="/src/assets/images/public/image-230.png" />
+      <button class="image-27" @click="handleClick('modify')"></button>
+      <img class="image-30" src="/src/assets/images/public/image-290.png" />
+      <button class="image-30" @click="handleClick('modify')"></button>
+
     </div>
   </template>
   <script>
@@ -38,6 +62,11 @@
     components: {},
     props: {},
     data() {},
+    methods: {
+    handleClick(button) {
+      console.log(`${button} 클릭됨`);
+    }
+  }
   };
   </script>
   <style scoped>
@@ -106,6 +135,37 @@
     height: 40.08px;
     -webkit-text-stroke: 1px #ffffff;
   }
+  .rectangle-1 {
+    background: #f7f7f7;
+    border-style: solid;
+    border-color: #b9adad;
+    border-width: 0px 1px 0px 0px;
+    width: 335.98px;
+    height: 104px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }  .rectangle-2 {
+    background: #f5f4f4;
+    border-style: solid;
+    border-color: #e8e7e7;
+    border-width: 0px 1px 0px 0px;
+    width: 335.98px;
+    height: 84.38px;
+    position: absolute;
+    left: 0px;
+    top: 512.38px;
+  }  .rectangle-3 {
+    background: #f3f3f3;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 0px 1px 0px 0px;
+    width: 335.98px;
+    height: 84.38px;
+    position: absolute;
+    left: 0px;
+    top: 343.62px;
+  }
   .rectangle-6 {
     background: #f7f7f7;
     border-style: solid;
@@ -172,9 +232,18 @@
     border-width: 1px;
     width: 336.87px;
     height: 1080px;
-    position: absolute;
+    position: relative;
     left: 0px;
     top: 0px;
+  }
+  .line-335{
+    position: absolute;
+    left: 335.98px;
+    top: 0;
+    width: 2px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 1;
   }
   .image-12 {
     width: 43.85px;
