@@ -2,40 +2,128 @@
   <div class="div">
     <div class="rectangle-4"></div>
     <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
-    <div class="logout">logout</div>
-    <img class="image-15" src="/src/assets/images/public/image-150.png" />
-    <div class="rectangle-29"></div>
+    <a href="#" class="logout">logout</a>
+    <img @click="handleClick" class="image-15" src="/src/assets/images/public/image-150.png" />
+    <!-- <div class="rectangle-29"></div> -->
+    <label><input type="text" class="rectangle-29"></label>
     <div class="place-name">Place Name</div>
-    <div class="rectangle-32"></div>
+    <!-- <div class="rectangle-32"></div> -->
+    <textarea class="rectangle-32"/>
     <div class="content">Content</div>
-    <div class="rectangle-23"></div>
+
+    <!-- <div class="rectangle-23"></div>
+    <img class="polygon-5" src="/src/assets/images/newPlaceComponet/polygon-50.png" />
+    <img class="ellipse-2" src="/src/assets/images/public/ellipse-20.png" /> -->
+
+    <!-- 색상 선택 드롭다운 -->
+    <div class="dropdown-container" @click="toggleDropdown">
+      <!-- 선택된 색상 표시 -->
+      <div class="selected-option">
+        <div class="color-circle" :class="selectedClass"></div>
+      </div>
+
+      <!-- 드롭다운 메뉴 -->
+      <ul v-if="isOpen" class="dropdown-menu">
+        <li v-for="(color, index) in colors" :key="index" @click="selectColor(color.className)">
+          <div class="color-circle" :class="color.className"></div>
+        </li>
+      </ul>
+    </div>
+
+
     <div class="rectangle-35"></div>
     <div class="rectangle-36"></div>
-    <div class="save">save</div>
-    <div class="cancel">cancel</div>
-    <img class="polygon-5" src="/src/assets/images/newPlaceComponet/polygon-50.png" />
-    <img class="ellipse-2" src="/src/assets/images/public/ellipse-20.png" />
+    <a href="#" class="save">save</a>
+    <a href="#" class="cancel">cancel</a>
+
     <div class="rectangle-33"></div>
-    <div class="add-thumbnail">+ add thumbnail</div>
+
+    <label for="thumbnailInput" class="add-thumbnail">
+      + add thumbnail<br>
+      <input id="thumbnailInput" type="file" @change="addImage"/> <br>
+      <img :src="src" />
+    </label>
+  
     <div class="rectangle-34"></div>
-    <div class="add-photos">+ add photos..</div>
+
+    <label for="photosInput" class="add-photos">
+      + add photos..<br>
+      <input id="photosInput" type="file" @change="addImages" multiple /> <br>
+      <img v-for="(item, index) in src" :key="index" :src="item" />
+    </label>
+
+
+    <!-- <div class="add-thumbnail">+ add thumbnail</div> -->
+
+    <!-- <div class="add-photos">+ add photos..</div> -->
     <div class="mappride">Mappride</div>
     <div class="rectangle-6"></div>
-    <div class="my-categories">My categories</div>
-    <div class="my-page">My page</div>
-    <div class="map">Map</div>
-    <div class="rectangle-28"></div>
+    <!-- <div class="my-categories"></div> -->
+    <a href="#" class="my-categories">categories</a>
+    <a href="#" class="my-page">My page</a>
+    <a href="#" class="map">Map</a>
     <img class="image-12" src="/src/assets/images/public/image-120.png" />
     <img class="image-13" src="/src/assets/images/public/image-130.png" />
     <img class="image-14" src="/src/assets/images/public/image-140.png" />
   </div>
 </template>
 <script>
+import { ref } from 'vue';
+
+const src = ref();
+
+const addImage = (e) => {
+  const [file] = e.target.files;
+  console.log(e.target.files);
+  if (file) {
+    src.value = URL.createObjectURL(file);
+  }
+};
+
+const addImages = (e) => {
+  const file = (e.target).files;
+  const fileLength = file.length;
+  let newList = [];
+  for (let i = 0; i < fileLength; i++) {
+    newList.push(URL.createObjectURL(file[i]));
+  }
+  src.value = newList;
+};
+
 export default {
   name: "Component",
   components: {},
   props: {},
+  methods: {
+    handleClick() {
+      alert("클릭 이벤트 테스트"); // 클릭 이벤트 테스트
+    }
+  },
   data() {},
+  setup() {
+    const isOpen = ref(false); // 드롭다운 열림 여부
+    const selectedClass = ref("ellipse-2"); // 기본 선택된 색상
+
+    const colors = ref([
+      { className: "ellipse-2" },
+      { className: "ellipse-3" },
+      { className: "ellipse-4" },
+      { className: "ellipse-5" },
+      { className: "ellipse-6" }
+    ]);
+     // 드롭다운 열고 닫기
+     const toggleDropdown = () => {
+      isOpen.value = !isOpen.value;
+    };
+
+    // 색상 선택
+    const selectColor = (colorClass) => {
+      selectedClass.value = colorClass;
+      isOpen.value = false; // 선택 후 드롭다운 닫기
+    };
+
+    return { isOpen, selectedClass, colors, toggleDropdown, selectColor };
+  }
 };
 </script>
 <style scoped>
@@ -48,6 +136,16 @@ export default {
   height: 1080px;
   position: relative;
   overflow: hidden;
+}
+.group-12 {
+  width: 248.36px;
+  height: 104.41px;
+  position: static;
+}
+.group-13 {
+  width: 248.36px;
+  height: 104.41px;
+  position: static;
 }
 .rectangle-4 {
   background: #ffffff;
@@ -96,6 +194,7 @@ export default {
   position: absolute;
   left: 314px;
   top: 237px;
+  font-size: medium;
 }
 .place-name {
   color: #999895;
@@ -115,6 +214,7 @@ export default {
   position: absolute;
   left: 314px;
   top: 371px;
+  font-size: medium;
 }
 .content {
   color: #999895;
@@ -127,7 +227,7 @@ export default {
   left: 314px;
   top: 318px;
 }
-.rectangle-23 {
+/* .rectangle-23 {
   background: #f7f7f9;
   border-style: solid;
   border-color: #d9d9d9;
@@ -137,7 +237,116 @@ export default {
   position: absolute;
   left: 1402px;
   top: 237px;
+} */
+/* .polygon-5 {
+  width: 24px;
+  height: 18px;
+  position: absolute;
+  left: 1492.08px;
+  top: 276px;
+  transform: translate(-22.45px, -13.49px);
+  overflow: visible;
 }
+.ellipse-2 {
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  left: 1418px;
+  top: 250px;
+  overflow: visible;
+} */
+
+.rectangle-23 {
+  background: #f7f7f9;
+  border: 1px solid #d9d9d9;
+  width: 100px;
+  height: 35px;
+  position: absolute;
+  left: 1402px;
+  top: 237px;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 드롭다운 컨테이너 */
+.dropdown-container {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  position: absolute;
+  left: 1266px;
+  top: 180px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 선택된 색상 표시 */
+.selected-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 5px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+/* 드롭다운 항목 */
+.dropdown-menu li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background: #f0f0f0;
+}
+
+/* 색상 원 */
+.color-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+/* 기존 ellipse 색상 유지 */
+.ellipse-2 {
+  background: #ffc1c1;
+}
+.ellipse-3 {
+  background: #c1ffe9;
+}
+.ellipse-4 {
+  background: #4285f4;
+}
+.ellipse-5 {
+  background: #fbbc05;
+}
+.ellipse-6 {
+  background: #ff0000;
+}
+
 .rectangle-35 {
   background: #f7f7f9;
   border-style: solid;
@@ -180,23 +389,7 @@ export default {
   left: 1421px;
   top: 967px;
 }
-.polygon-5 {
-  width: 24px;
-  height: 18px;
-  position: absolute;
-  left: 1492.08px;
-  top: 276px;
-  transform: translate(-22.45px, -13.49px);
-  overflow: visible;
-}
-.ellipse-2 {
-  width: 33px;
-  height: 33px;
-  position: absolute;
-  left: 1418px;
-  top: 250px;
-  overflow: visible;
-}
+
 .rectangle-33 {
   background: #f7f7f9;
   border-style: solid;
