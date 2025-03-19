@@ -25,12 +25,25 @@
       <img class="image-14" src="../assets/images/public/image-140.png" />
       <div class="rectangle-12"></div>
       <div class="rectangle-13"></div>
-      <img class="web-light-sq-si-4-x" src="../assets/images/loginComponent/web-light-sq-si-4-x0.png" />
+      <!-- <img class="web-light-sq-si-4-x" src="../assets/images/loginComponent/web-light-sq-si-4-x0.png" />
       <img
         class="kakao-login-medium-narrow"
         src="../assets/images/loginComponent/kakao-login-medium-narrow0.png"
       />
-      <img class="btn-g" src="../assets/images/loginComponent/btn-g0.png" />
+      <img class="btn-g" src="../assets/images/loginComponent/btn-g0.png" /> -->
+
+      <button class="login-button">
+        <img src="../assets/images/loginComponent/web-light-sq-si-4-x0.png" alt="Web Login" />
+      </button>
+      
+      <button class="kakao-login-button">
+        <img src="../assets/images/loginComponent/kakao-login-medium-narrow0.png" alt="Kakao Login" />
+      </button>
+      
+      <button class="google-login-button">
+        <img src="../assets/images/loginComponent/btn-g0.png" alt="Google Login" />
+      </button>
+
       <div class="line-13"></div>
     </div>
   </template>
@@ -363,6 +376,38 @@
     left: 913px;
     top: 597px;
     object-fit: cover;
+  }
+
+  .login-button, .kakao-login-button, .google-login-button {
+    width: 208px;
+    height: 43px;
+    position: absolute;
+    left: 913px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 0;
+  }
+  .login-button {
+    top: 449px;
+    background-color: #e1e1e1;
+  }
+  .kakao-login-button {
+    top: 523px;
+    background-color: #ffeb00;
+  }
+  .google-login-button {
+    top: 597px;
+    background-color: #4285F4;
+  }
+  .login-button img, .kakao-login-button img, .google-login-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
   }
   .line-13 {
     margin-top: -2px;
