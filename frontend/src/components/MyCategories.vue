@@ -1,30 +1,58 @@
 <template>
-  <div class="_1">
-    <div class="rectangle-21"></div>
-    <div class="rectangle-24"></div>
+  <a class="_1">
+    
+    <!-- <div class="dropdown-container" :class="{ open: isDropdownOpen }"> -->
+      <!-- 드롭다운 버튼 -->
+      <!-- <div class="dropdown-toggle" @click="toggleDropdown">
+        {{ selectedOption }}
+        <img class="polygon-6" src="/src/assets/images/public/polygon-60.png" />
+      </div> -->
+
+      <!-- 드롭다운 메뉴 -->
+      <!-- <div v-if="isDropdownOpen" class="dropdown-menu">
+        <div class="dropdown-option" @click="selectOption('O')">O</div>
+        <div class="dropdown-option" @click="selectOption('X')">X</div>
+      </div>
+    </div> -->
+
+    <div v-for="(option, index) in dropdowns" :key="index" class="dropdown-container" :class="{ open: option.isDropdownOpen }">
+      <!-- 드롭다운 버튼 -->
+      <div class="dropdown-toggle" @click="toggleDropdown(index)">
+        {{ option.selectedOption }}
+        <img class="polygon-6" src="/src/assets/images/public/polygon-60.png" />
+      </div>
+
+
+      <!-- 드롭다운 메뉴 -->
+      <div v-if="option.isDropdownOpen" class="dropdown-menu">
+        <div class="dropdown-option" @click="selectOption(index, 'O')">O</div>
+        <div class="dropdown-option" @click="selectOption(index, 'X')">X</div>
+      </div>
+    </div>
+
+
+
     <div class="rectangle-27"></div>
     <div class="rectangle-25"></div>
     <div class="rectangle-4"></div>
     <img class="image-15" src="/src/assets/images/public/image-150.png" />
-    <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
-    <div class="logout">logout</div>
-    <div class="rectangle-5"></div>
-    <div class="rectangle-17"></div>
+
+    <button class="logout-button">Logout</button>
+    <button class="search-button">Search</button>
+
+    <input type="text" class="rectangle-5"  placeholder="   . . ." />
+    <input type="text" class="rectangle-17" placeholder="  카테고리 제목을 입력하세요" />    
     <div class="rectangle-6"></div>
     <div class="name">name</div>
-    <div class="rectangle-8"></div>
-    <div class="search">search</div>
-    <div class="div">카페</div>
+    <!-- <div class="div">카페</div> -->
     <div class="rectangle-10"></div>
     <div class="rectangle-11"></div>
     <div class="rectangle-20"></div>
     <div class="rectangle-26"></div>
     <div class="title">TITLE</div>
     <div class="publish">PUBLISH</div>
-    <div class="_5">스터디카페 ( 5 )</div>
-    <div class="_3">코인노래방 ( 3 )</div>
-    <div class="o">O</div>
-    <div class="div2">. . .</div>
+    <a href="이동할_페이지_URL" class="_5">스터디카페 ( 5 )</a>
+    <a href="이동할_페이지_URL" class="_3">코인노래방 ( 3 )</a>
     <div class="line-2"></div>
     <div class="line-3"></div>
     <div class="line-4"></div>
@@ -34,70 +62,221 @@
     <div class="line-10"></div>
     <div class="line-11"></div>
     <div class="line-12"></div>
-    <img class="polygon-3" src="/src/assets/images/public/polygon-60.png" />
-    <img class="polygon-7" src="/src/assets/images/public/polygon-60.png" />
-    <img class="polygon-6" src="/src/assets/images/public/polygon-60.png" />
-    <div class="x">X</div>
-    <div class="o2">O</div>
-    <div class="x2">X</div>
     <div class="line-5"></div>
     <div class="line-13"></div>
-    <img class="polygon-4" src="/src/assets/images/public/polygon-60.png" />
-    <div class="rectangle-22"></div>
-    <div class="x3">X</div>
-    <img class="image-22" src="/src/assets/images/public/image-230.png" />
-    <img class="image-24" src="/src/assets/images/public/image-230.png" />
-    <img class="image-23" src="/src/assets/images/public/image-230.png" />
-    <img class="image-25" src="/src/assets/images/public/image-230.png" />
+    <img class="image-22" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+    <img class="image-24" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+    <img class="image-23" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+    <img class="image-25" src="/src/assets/images/myCategoriesComponent/image-250.png" />
     <div class="mappride">Mappride</div>
     <div class="rectangle-62"></div>
     <div class="my-categories">My categories</div>
-    <div class="my-page">My page</div>
-    <div class="map">Map</div>
+    <div href="이동할_페이지_URL" class="my-page">My page</div>
+    <div href="이동할_페이지_URL" class="map">Map</div>
     <div class="rectangle-28"></div>
     <img class="image-12" src="/src/assets/images/public/image-120.png" />
     <img class="image-13" src="/src/assets/images/public/image-130.png" />
     <img class="image-14" src="/src/assets/images/public/image-140.png" />
-    <div class="_40">혼밥 ( 40 )</div>
-    <img class="image-26" src="/src/assets/images/public/image-290.png" />
-    <img class="image-27" src="/src/assets/images/public/image-290.png" />
-    <img class="image-28" src="/src/assets/images/public/image-290.png" />
+    <a href="이동할_페이지_URL" class="_40">혼밥 ( 40 )</a>
+    <img class="image-26" src="/src/assets/images/public/image-290.png" @click="handleClick" />
+    <img class="image-27" src="/src/assets/images/public/image-290.png" @click="handleClick" />
+    <img class="image-28" src="/src/assets/images/public/image-290.png" @click="handleClick" />
     <div class="rectangle-282"></div>
-    <div class="o2">O</div>
-    <img class="polygon-8" src="/src/assets/images/public/polygon-60.png" />
-  </div>
+  </a>
 </template>
+
+
+
 <script>
 export default {
-  name: "One",
+  name: "DropdownComponent",  
   components: {},
   props: {},
-  data() {},
+  data() {
+    return {
+      dropdowns: [
+        { isDropdownOpen: false, selectedOption: "X", },
+        { isDropdownOpen: false, selectedOption: "X", },
+        { isDropdownOpen: false, selectedOption: "X", },
+        { isDropdownOpen: false, selectedOption: "X", }
+      ]
+      // isDropdownOpen: false,
+      // selectedOption: "X"
+    };
+  },
+  // methods: {
+  //   toggleDropdown() {
+  //     this.isDropdownOpen = !this.isDropdownOpen;
+  //   },
+  methods: {
+    // toggleDropdown() {
+    //   this.isDropdownOpen = !this.isDropdownOpen;
+    // },
+    toggleDropdown(index) {
+      this.dropdowns[index].isDropdownOpen = !this.dropdowns[index].isDropdownOpen;
+    },
+    // selectOption(option) {
+    //       this.selectedOption = option;
+    //       this.isDropdownOpen = false; // 선택 후 닫기
+    // }
+    selectOption(index, option) {
+      this.dropdowns[index].selectedOption = option;
+      this.dropdowns[index].isDropdownOpen = false; // 선택 후 닫기
+    }
+  }
 };
 </script>
+
+
+
 <style scoped>
 ._1,
 ._1 * {
   box-sizing: border-box;
 }
-._1 {
+._1 { /* 왼쪽, 센터 바탕색 */
   background: #ffffff;
   height: 1080px;
   position: relative;
   overflow: hidden;
 }
-.rectangle-21 {
+/* .rectangle-21 { /* 스터디카페 publish 드롭다운 
   background: #ffffff;
   border-style: solid;
   border-color: #d9d9d9;
   border-width: 1px;
   width: 130px;
   height: 45px;
-  position: absolute;
+  position: relative;
   left: 1174px;
   top: 233px;
+} */
+
+/* 드롭다운 컨테이너 */
+.dropdown-container {
+  position: relative;
+  left: 1174px;
+  top: 167px;
+  width: 129px;
+  height: 45px;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  cursor: pointer;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 100; /* 다른 요소보다 위에 표시 */
+  margin-bottom: 22px;
 }
-.rectangle-24 {
+
+/* 드롭다운 버튼 내부 삼각형 */
+/* .polygon-6 {
+  width: 23px;
+  height: 15px;
+  left: 1200px;
+  top: 225px;
+  transition: transform 0.3s ease;
+} */
+
+/* 드롭다운이 열릴 때 아이콘 회전 */
+.dropdown-container.open .polygon-6 {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 2000; /* 다른 요소보다 위에 표시 */
+}
+
+/* 드롭다운 옵션 */
+.dropdown-option {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background: #f0f0f0;
+}
+
+/* 드롭다운 컨테이너 */
+/* .dropdown-container {
+  position: relative;
+  left: 1174px;
+  top: 168px; 
+  width: 129px;
+  height: 45px;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  cursor: pointer;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+} */
+
+/* 드롭다운 버튼 내부 삼각형 이미지 */
+ /* .polygon-6 {
+  width: 23px;
+  height: 15px;
+  transition: transform 0.3s ease;
+}  */
+
+/* 삼각형 아이콘 위치 조정 */
+.polygon-6 {
+  width: 23px;
+  height: 15px;
+  position: absolute;
+  right: 10px; /* 오른쪽 정렬 */
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+/* 드롭다운이 열릴 때 아이콘 회전 */
+/* .dropdown-container.open .polygon-6 {
+  transform: rotate(180deg);
+} */
+
+/* 드롭다운 메뉴 스타일 */
+/* .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+} */
+
+/* 드롭다운 옵션 스타일 */
+/* .dropdown-option {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background: #f0f0f0;
+} */
+
+/*  카테고리 생성라인 publish_box */
+/* .rectangle-24 { 
   background: #ffffff;
   border-style: solid;
   border-color: #d9d9d9;
@@ -107,30 +286,12 @@ export default {
   position: absolute;
   left: 1174px;
   top: 168px;
-}
-.rectangle-27 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 129px;
-  height: 45px;
-  position: absolute;
-  left: 1174px;
-  top: 364px;
-}
-.rectangle-25 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 129px;
-  height: 46px;
-  position: absolute;
-  left: 1174px;
-  top: 296px;
-}
-.rectangle-4 {
+}  */
+
+
+
+
+.rectangle-4 { /* 최상단 검색창 바탕  */
   background: #ffffff;
   border-style: solid;
   border-color: #d3d3d3;
@@ -141,7 +302,7 @@ export default {
   left: 337px;
   top: 0px;
 }
-.image-15 {
+.image-15 { /* 알림종  */
   width: 45px;
   height: 45px;
   position: absolute;
@@ -149,28 +310,97 @@ export default {
   top: 27px;
   object-fit: cover;
   aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
-.rectangle-9 {
+
+
+.logout-button {
   width: 125px;
   height: 45px;
   position: absolute;
   left: 1758px;
   top: 23px;
-  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
 }
-.logout {
-  color: #000000;
-  text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
+
+.search-button {
+  width: 125px;
+  height: 45px;
   position: absolute;
-  left: 1796px;
-  top: 34px;
-  width: 67px;
-  height: 26px;
+  left: 1190px;
+  top: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
 }
-.rectangle-5 {
+
+
+.image-22:active {
+  transform: scale(0.95);
+}
+.image-23:active {
+  transform: scale(0.95);
+}
+.image-24:active {
+  transform: scale(0.95);
+}
+.image-26:active {
+  transform: scale(0.95);
+}
+.image-27:active {
+  transform: scale(0.95);
+}
+.image-28:active {
+  transform: scale(0.95);
+}
+.image-15:active {
+  transform: scale(0.95);
+}
+.image-25:active {
+  transform: scale(0.95);
+}
+
+
+
+/* 마우스 호버 효과 */
+.logout-button:hover {
+  background: #f0f0f0;
+}
+.search-button:hover {
+  background: #f0f0f0;
+}
+
+/* 클릭 효과 */
+.logout-button:active {
+  transform: scale(0.95);
+}
+.search-button:active {
+  transform: scale(0.95);
+}
+
+
+.rectangle-5 { /* 검색창  */
   background: #ffffff;
   border-style: solid;
   border-color: #d2d2d2;
@@ -180,19 +410,24 @@ export default {
   position: absolute;
   left: 717px;
   top: 22px;
+  outline: none;
+
 }
-.rectangle-17 {
+
+.rectangle-17 { /* 카테고리 이름 입력칸 */
   background: #ffffff;
-  border-style: solid;
-  border-color: #d2d2d2;
-  border-width: 1px;
+  border: 1px solid #d2d2d2;
   width: 708px;
   height: 45px;
+  padding: 10px;
+  font-size: 16px;
   position: absolute;
   left: 349px;
   top: 165px;
+  outline: none;
 }
-.rectangle-6 {
+
+.rectangle-6 { /* name box */
   background: #ffffff;
   border-style: solid;
   border-color: #d2d2d2;
@@ -216,31 +451,8 @@ export default {
   height: 26px;
   -webkit-text-stroke: 1px #d2d2d2;
 }
-.rectangle-8 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d2d2d2;
-  border-width: 1px;
-  width: 125px;
-  height: 45px;
-  position: absolute;
-  left: 1200px;
-  top: 23px;
-}
-.search {
-  color: #000000;
-  text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 1237px;
-  top: 33px;
-  width: 55px;
-  height: 26px;
-  -webkit-text-stroke: 1px #d2d2d2;
-}
-.div {
+
+.div { /* 카페 라는 글씨(검색창) */
   color: #000000;
   text-align: left;
   font-family: "Inter-Medium", sans-serif;
@@ -253,18 +465,8 @@ export default {
   width: 446px;
   height: 36px;
 }
-.rectangle-10 {
-  background: rgba(217, 217, 217, 0);
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 1583px;
-  height: 67px;
-  position: absolute;
-  left: 336px;
-  top: 91px;
-}
-.rectangle-11 {
+
+.rectangle-11 { /* 카테고리 생성란 배경상자 */
   background: rgba(217, 217, 217, 0);
   border-style: solid;
   border-color: #d9d9d9;
@@ -275,7 +477,7 @@ export default {
   left: 336px;
   top: 221px;
 }
-.rectangle-20 {
+.rectangle-20 { /* 코인노래방 바탕 상자 */
   background: rgba(217, 217, 217, 0);
   border-style: solid;
   border-color: #d9d9d9;
@@ -286,7 +488,7 @@ export default {
   left: 336px;
   top: 288px;
 }
-.rectangle-26 {
+.rectangle-26 { /* 혼밥 바탕상자 */
   background: rgba(217, 217, 217, 0);
   border-style: solid;
   border-color: #d9d9d9;
@@ -323,7 +525,7 @@ export default {
   width: 150px;
   height: 28px;
 }
-._5 {
+._5 { /* 스터디카페 (5) 링크 */
   color: #000000;
   text-align: left;
   font-family: "Stylish-Regular", sans-serif;
@@ -335,8 +537,9 @@ export default {
   top: 243px;
   width: 225px;
   height: 22px;
+  cursor: pointer; /* 클릭 가능한 링크처럼 보이게 변경 */
 }
-._3 {
+._3 { /* 코인노래방 글씨 */
   color: #000000;
   text-align: left;
   font-family: "Stylish-Regular", sans-serif;
@@ -348,8 +551,9 @@ export default {
   top: 306px;
   width: 225px;
   height: 22px;
+  cursor: pointer;
 }
-.o {
+.o { /* 스터디카페 publish O*/
   color: #000000;
   text-align: left;
   font-family: "Inter-Medium", sans-serif;
@@ -375,7 +579,7 @@ export default {
   width: 299px;
   height: 25px;
 }
-.line-2 {
+.line-2 { /* 스카 자리이동 맨윗줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -386,7 +590,7 @@ export default {
   left: 1846px;
   top: 249px;
 }
-.line-3 {
+.line-3 { /* 스카 자리이동 중간줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -397,7 +601,7 @@ export default {
   left: 1846px;
   top: 257px;
 }
-.line-4 {
+.line-4 { /* 스카 자리이동 아랫줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -410,7 +614,7 @@ export default {
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, 1);
 }
-.line-7 {
+.line-7 { /*  코노 자리이동 윗줄*/
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -421,7 +625,7 @@ export default {
   left: 1846px;
   top: 314px;
 }
-.line-8 {
+.line-8 { /*  코노 자리이동 중간줄*/
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -432,7 +636,7 @@ export default {
   left: 1846px;
   top: 323px;
 }
-.line-9 {
+.line-9 { /*  코노 자리이동 중간줄*/
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -445,7 +649,7 @@ export default {
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, 1);
 }
-.line-10 {
+.line-10 { /* 혼밥 맨윗줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -456,7 +660,7 @@ export default {
   left: 1846px;
   top: 380px;
 }
-.line-11 {
+.line-11 { /* 혼밥 중간줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -467,7 +671,7 @@ export default {
   left: 1846px;
   top: 388px;
 }
-.line-12 {
+.line-12 { /* 혼밥 맨아래줄 */
   margin-top: -1px;
   border-style: solid;
   border-color: #000000;
@@ -480,33 +684,8 @@ export default {
   transform-origin: 0 0;
   transform: rotate(0deg) scale(1, 1);
 }
-.polygon-3 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  left: 1294.51px;
-  top: 262.73px;
-  transform: translate(-21.52px, -11.24px);
-  overflow: visible;
-}
-.polygon-7 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  left: 1294.51px;
-  top: 394.45px;
-  transform: translate(-21.52px, -11.24px);
-  overflow: visible;
-}
-.polygon-6 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  left: 1294.51px;
-  top: 198.39px;
-  transform: translate(-21.52px, -11.24px);
-  overflow: visible;
-}
+
+
 .x {
   color: #000000;
   text-align: left;
@@ -572,39 +751,8 @@ export default {
   transform-origin: 0 0;
   transform: rotate(90deg) scale(1, 1);
 }
-.polygon-4 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  left: 1293.51px;
-  top: 331.17px;
-  transform: translate(-21.52px, -11.24px);
-  overflow: visible;
-}
-.rectangle-22 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 130px;
-  height: 46px;
-  position: absolute;
-  left: 1174px;
-  top: 277px;
-}
-.x3 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 1212px;
-  top: 288px;
-  width: 52px;
-  height: 17px;
-}
+
+
 .image-22 {
   width: 27px;
   height: 28px;
@@ -613,6 +761,8 @@ export default {
   top: 305px;
   object-fit: cover;
   aspect-ratio: 27/28;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 .image-24 {
   width: 27px;
@@ -622,6 +772,8 @@ export default {
   top: 240px;
   object-fit: cover;
   aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 .image-23 {
   width: 27px;
@@ -631,6 +783,9 @@ export default {
   top: 374px;
   object-fit: cover;
   aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
 }
 .image-25 {
   width: 32px;
@@ -700,6 +855,7 @@ export default {
   align-items: center;
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
+  cursor: pointer;
 }
 .map {
   color: #000000;
@@ -716,6 +872,7 @@ export default {
   align-items: center;
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
+  cursor: pointer;
 }
 .rectangle-28 {
   background: rgba(255, 255, 255, 0);
@@ -767,6 +924,7 @@ export default {
   top: 373px;
   width: 225px;
   height: 23px;
+  cursor: pointer;
 }
 .image-26 {
   width: 37px;
@@ -776,6 +934,8 @@ export default {
   top: 233px;
   object-fit: cover;
   aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 .image-27 {
   width: 37px;
@@ -783,9 +943,22 @@ export default {
   position: absolute;
   left: 1627px;
   top: 302px;
+  cursor: pointer;
   object-fit: cover;
   aspect-ratio: 37/36;
+  transition: transform 0.2s ease-in-out; /* 클릭 효과 */
 }
+
+&:hover {
+    transform: scale(1.1);
+  }
+
+  /* 클릭 시 살짝 눌리는 효과 */
+  &:active {
+    transform: scale(0.95);
+  }
+
+
 .image-28 {
   width: 37px;
   height: 37px;
@@ -794,25 +967,9 @@ export default {
   top: 368px;
   object-fit: cover;
   aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
-.rectangle-282 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 129px;
-  height: 45px;
-  position: absolute;
-  left: 1174px;
-  top: 364px;
-}
-.polygon-8 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  left: 1294.51px;
-  top: 394.45px;
-  transform: translate(-21.52px, -11.24px);
-  overflow: visible;
-}
+
+
 </style>

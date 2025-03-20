@@ -1,51 +1,50 @@
 <template>
     <div class="_2">
       <div class="rectangle-4"></div>
-      <img class="image-15" src="/src/assets/images/public/image-150.png" />
+      <img class="image-15" src="/src/assets/images/public/image-150.png" @click="handleClick" />
       <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
-      <img class="rectangle-32" src="/src/assets/images/public/rectangle-90.png" />
-      <img class="rectangle-31" src="/src/assets/images/public/rectangle-90.png" />
-      <div class="logout">logout</div>
-      <div class="rectangle-5"></div>
-      <div class="rectangle-6"></div>
+      <div class="rectangle-31"></div>
+      <button class="logout-button">Logout</button>
+      <button class="search-button">Search</button>
+
+      <input type="text" class="rectangle-5"  placeholder="   . . ." />
+      <div href="이동할_페이지_URL" class="rectangle-6"></div>
       <div class="name">name</div>
-      <div class="rectangle-8"></div>
-      <div class="search">search</div>
-      <div class="div">카페</div>
       <div class="rectangle-10"></div>
       <div class="rectangle-20"></div>
       <div class="rectangle-26"></div>
       <div class="title">TITLE</div>
-      <div class="div2">비에이블</div>
+      <a href="이동할_페이지_URL" class="div2">비에이블</a>
+
       <div class="line-5"></div>
       <img class="line-6" src="/src/assets/images/public/line-60.png" />
-      <img class="image-22" src="/src/assets/images/public/image-230.png" />
-      <img class="image-23" src="/src/assets/images/public/image-230.png" />
-      <div class="mappride">Mappride</div>
+      <img class="image-22" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+      <img class="image-23" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+      <a href="이동할_페이지_URL" class="mappride">Mappride</a>
       <div class="rectangle-62"></div>
-      <div class="my-categories">My categories</div>
-      <div class="my-page">My page</div>
-      <div class="map">Map</div>
+      <a href="이동할_페이지_URL" class="my-categories">My categories</a>
+      <a href="이동할_페이지_URL" class="my-page">My page</a>
+      <a href="이동할_페이지_URL" class="map">Map</a>
       <div class="rectangle-28"></div>
       <img class="image-12" src="/src/assets/images/public/image-120.png" />
       <img class="image-13" src="/src/assets/images/public/image-130.png" />
       <img class="image-14" src="/src/assets/images/public/image-140.png" />
-      <div class="div3">공부인</div>
-      <img class="image-27" src="/src/assets/images/public/image-290.png" />
-      <img class="image-28" src="/src/assets/images/public/image-290.png" />
+      <a href="이동할_페이지_URL" class="div3">공부인</a>
+      <img class="image-27" src="/src/assets/images/public/image-290.png" @click="handleClick" />
+      <img class="image-28" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <div class="rectangle-30"></div>
-      <img class="image-33" src="/src/assets/images/public/image-230.png" />
-      <div class="div4">단디</div>
-      <img class="image-34" src="/src/assets/images/public/image-290.png" />
+      <img class="image-33" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+      <a href="이동할_페이지_URL" class="div4">단디</a>
+      <img class="image-34" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <div class="rectangle-29"></div>
-      <img class="image-31" src="/src/assets/images/public/image-230.png" />
-      <div class="div5">랭</div>
-      <img class="image-32" src="/src/assets/images/public/image-290.png" />
+      <img class="image-31" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+      <<a href="이동할_페이지_URL" class="div5">랭</a>
+      <img class="image-32" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <div class="rectangle-282"></div>
-      <img class="image-29" src="/src/assets/images/public/image-230.png" />
-      <div class="div6">작심</div>
-      <img class="image-30" src="/src/assets/images/public/image-290.png" />
-      <div class="div7">. . / 스터디카페</div>
+      <img class="image-29" src="/src/assets/images/public/image-230.png" @click="handleClick" />
+      <a href="이동할_페이지_URL" class="div6">작심</a>
+      <img class="image-30" src="/src/assets/images/public/image-290.png" @click="handleClick" />
+      <a href="이동할_페이지_URL" class="div7">. . / 스터디카페</a>
       <div class="address">ADDRESS</div>
       <div class="_1551-6">서울특별시 노원구 동일로 1551, 6층</div>
       <div class="_1547-5">서울특별시 노원구 동일로 1547 5층</div>
@@ -59,17 +58,8 @@
       <div class="ellipse-4"></div>
       <div class="ellipse-5"></div>
       <div class="ellipse-6"></div>
-      <div class="rectangle-41"></div>
       <div class="div8">최신순</div>
-      <div class="div9">최신순</div>
-      <div class="rectangle-43"></div>
-      <div class="div10">이름순</div>
-      <div class="rectangle-44"></div>
-      <div class="div11">이름순</div>
       <img class="image-37" src="/src/assets/images/MyPlaceComponent/image-370.png" />
-      <img class="image-40" src="/src/assets/images/MyPlaceComponent/image-400.png" />
-      <img class="image-42" src="/src/assets/images/MyPlaceComponent/image-400.png" />
-      <img class="image-41" src="/src/assets/images/MyPlaceComponent/image-430.png" />
       <img class="image-43" src="/src/assets/images/MyPlaceComponent/image-430.png" />
     </div>
   </template>
@@ -111,6 +101,11 @@
     top: 27px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-15:active {
+  transform: scale(0.95);
   }
   .rectangle-9 {
     width: 125px;
@@ -120,21 +115,68 @@
     top: 23px;
     overflow: visible;
   }
-  .rectangle-32 {
+  .logout-button {
+  width: 125px;
+  height: 45px;
+  position: absolute;
+  left: 1758px;
+  top: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
+}
+
+/* 마우스 호버 효과 */
+.logout-button:hover {
+  background: #f0f0f0;
+}
+.search-button:hover {
+  background: #f0f0f0;
+}
+
+/* 클릭 효과 */
+.logout-button:active {
+  transform: scale(0.95);
+}
+.search-button:active {
+  transform: scale(0.95);
+}
+&:hover {
+  transform: scale(1.1);
+}
+
+/* 클릭 시 살짝 눌리는 효과 */
+&:active {
+  transform: scale(0.95);
+}
+
+  /* .rectangle-31 {
     width: 125px;
     height: 45px;
     position: absolute;
-    left: 1758px;
-    top: 23px;
+    left: 1778px;
+    top: 102px; 높이는 
     overflow: visible;
-  }
+  } */
   .rectangle-31 {
+    background: #ffffff;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 1px;
     width: 125px;
     height: 45px;
     position: absolute;
     left: 1778px;
     top: 102px;
-    overflow: visible;
   }
   .logout {
     color: #000000;
@@ -148,17 +190,19 @@
     width: 67px;
     height: 26px;
   }
-  .rectangle-5 {
-    background: #ffffff;
-    border-style: solid;
-    border-color: #d2d2d2;
-    border-width: 1px;
-    width: 457px;
-    height: 46px;
-    position: absolute;
-    left: 717px;
-    top: 22px;
-  }
+  .rectangle-5 { /* 검색창  */
+  background: #ffffff;
+  border-style: solid;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  width: 457px;
+  height: 46px;
+  position: absolute;
+  left: 717px;
+  top: 22px;
+  outline: none;
+
+}
   .rectangle-6 {
     background: #ffffff;
     border-style: solid;
@@ -169,6 +213,7 @@
     position: absolute;
     left: 535px;
     top: 23px;
+    cursor: pointer;
   }
   .name {
     color: #000000;
@@ -183,17 +228,25 @@
     height: 26px;
     -webkit-text-stroke: 1px #d2d2d2;
   }
-  .rectangle-8 {
-    background: #ffffff;
-    border-style: solid;
-    border-color: #d2d2d2;
-    border-width: 1px;
-    width: 125px;
-    height: 45px;
-    position: absolute;
-    left: 1200px;
-    top: 23px;
-  }
+  .search-button {
+  width: 125px;
+  height: 45px;
+  position: absolute;
+  left: 1190px;
+  top: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
+}
   .search {
     color: #000000;
     text-align: left;
@@ -309,6 +362,11 @@
     top: 241px;
     object-fit: cover;
     aspect-ratio: 27/28;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-22:active {
+  transform: scale(0.95);
   }
   .image-23 {
     width: 27px;
@@ -318,6 +376,11 @@
     top: 310px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-23:active {
+  transform: scale(0.95);
   }
   .group-4 {
     position: absolute;
@@ -335,6 +398,7 @@
     width: 141px;
     height: 40px;
     -webkit-text-stroke: 1px #ffffff;
+    
   }
   .rectangle-62 {
     background: #f7f7f7;
@@ -378,6 +442,7 @@
     align-items: center;
     justify-content: center;
     -webkit-text-stroke: 1px #ffffff;
+    cursor: pointer;
   }
   .map {
     color: #000000;
@@ -394,6 +459,7 @@
     align-items: center;
     justify-content: center;
     -webkit-text-stroke: 1px #ffffff;
+    cursor: pointer;
   }
   .rectangle-28 {
     background: rgba(255, 255, 255, 0);
@@ -454,7 +520,13 @@
     top: 238px;
     object-fit: cover;
     aspect-ratio: 37/36;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
   }
+  .image-27:active {
+  transform: scale(0.95);
+  }
+
   .image-28 {
     width: 37px;
     height: 37px;
@@ -463,6 +535,11 @@
     top: 304px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-28:active {
+  transform: scale(0.95);
   }
   .rectangle-30 {
     background: rgba(217, 217, 217, 0);
@@ -483,6 +560,11 @@
     top: 515px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-33:active {
+  transform: scale(0.95);
   }
   .div4 {
     color: #000000;
@@ -505,6 +587,11 @@
     top: 509px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-34:active {
+  transform: scale(0.95);
   }
   .rectangle-29 {
     background: rgba(217, 217, 217, 0);
@@ -525,6 +612,11 @@
     top: 445px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-31:active {
+  transform: scale(0.95);
   }
   .div5 {
     color: #000000;
@@ -547,6 +639,11 @@
     top: 439px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-32:active {
+  transform: scale(0.95);
   }
   .rectangle-282 {
     background: rgba(217, 217, 217, 0);
@@ -567,6 +664,11 @@
     top: 379px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-29:active {
+  transform: scale(0.95);
   }
   .div6 {
     color: #000000;
@@ -589,6 +691,11 @@
     top: 373px;
     object-fit: cover;
     aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .image-30:active {
+  transform: scale(0.95);
   }
   .div7 {
     color: #000000;
@@ -803,17 +910,7 @@
     width: 48px;
     height: 19px;
   }
-  .rectangle-44 {
-    background: #ffffff;
-    border-style: solid;
-    border-color: #d9d9d9;
-    border-width: 1px;
-    width: 125px;
-    height: 45px;
-    position: absolute;
-    left: 1778px;
-    top: 233px;
-  }
+
   .div11 {
     color: #000000;
     text-align: left;
