@@ -19,6 +19,9 @@
   
       <input class="txtSearch" type="text" placeholder="Search..." />
       <button class="btnSearch">search</button>
+
+      <img @click="handleClick" class="image-15" src="/src/assets/images/public/image-150.png" />
+
       <button class="btnLogout">logout</button>
   
       <img class="image-6" src="/src/assets/images/public/image-60.png" />
@@ -32,6 +35,11 @@
   components: {},
   props: {},
   data() {},
+  methods: {
+    handleClick() {
+      alert("클릭 이벤트 테스트"); // 클릭 이벤트 테스트
+    }
+  },
   };
   </script>
   
@@ -163,6 +171,18 @@
   .txtSearch::placeholder {
     color: #d2d2d2; /* placeholder 텍스트 색상 설정 */
   }
+
+
+  .image-15 {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  left: 1624px;
+  top: 22px;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
   
   .btnLogout {
     color: #000000;

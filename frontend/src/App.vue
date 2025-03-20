@@ -1,10 +1,10 @@
 <template>
   <div><newPlaceComponent/></div>
-  <div><loginComponent/></div>
+  <!-- <div><loginComponent/></div> -->
   <div><mainComponent/></div>
-  <div><myCategories/></div>
-  <div><myPlaceComponent/></div>
-   <div><myPageComponent/></div>
+  <!-- <div><myCategories/></div> -->
+  <!-- <div><myPlaceComponent/></div> -->
+   <!-- <div><myPageComponent/></div> -->
     <div><placeDetailComponent/></div>
 </template>
 

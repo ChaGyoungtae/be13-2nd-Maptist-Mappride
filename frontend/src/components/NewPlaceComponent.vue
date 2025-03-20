@@ -1,8 +1,10 @@
 <template>
   <div class="div">
     <div class="rectangle-4"></div>
-    <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
-    <a href="#" class="logout">logout</a>
+    <!-- <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" /> -->
+
+    <button class="btnLogout">logout</button>
+    
     <img @click="handleClick" class="image-15" src="/src/assets/images/public/image-150.png" />
     <!-- <div class="rectangle-29"></div> -->
     <label><input type="text" class="rectangle-29"></label>
@@ -31,10 +33,13 @@
     </div>
 
 
-    <div class="rectangle-35"></div>
-    <div class="rectangle-36"></div>
-    <a href="#" class="save">save</a>
-    <a href="#" class="cancel">cancel</a>
+    <!-- <div class="rectangle-35"></div>
+    <div class="rectangle-36"></div> -->
+
+    <button class="btnSave">save</button>
+    <button class="btnCancel">cancel</button>
+
+
 
     <div class="rectangle-33"></div>
 
@@ -52,19 +57,24 @@
       <img v-for="(item, index) in src" :key="index" :src="item" />
     </label>
 
-
-    <!-- <div class="add-thumbnail">+ add thumbnail</div> -->
-
-    <!-- <div class="add-photos">+ add photos..</div> -->
     <div class="mappride">Mappride</div>
-    <div class="rectangle-6"></div>
-    <!-- <div class="my-categories"></div> -->
-    <a href="#" class="my-categories">categories</a>
+    <!-- <div class="rectangle-6"></div> -->
+    <!-- <a href="#" class="my-categories">categories</a>
     <a href="#" class="my-page">My page</a>
     <a href="#" class="map">Map</a>
     <img class="image-12" src="/src/assets/images/public/image-120.png" />
     <img class="image-13" src="/src/assets/images/public/image-130.png" />
-    <img class="image-14" src="/src/assets/images/public/image-140.png" />
+    <img class="image-14" src="/src/assets/images/public/image-140.png" /> -->
+
+    <button class="map" @click="navigateTo('map')">
+          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
+          Map</button>
+      <button class="my-page" @click="navigateTo('my-page')">
+          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
+          My Page</button>
+      <button class="my-categories" @click="navigateTo('my-categories')">
+          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
+          My Categories</button>    
   </div>
 </template>
 <script>
@@ -166,7 +176,7 @@ export default {
   top: 23px;
   overflow: visible;
 }
-.logout {
+/* .logout {
   color: #000000;
   text-align: left;
   font-family: "Stylish-Regular", sans-serif;
@@ -177,7 +187,61 @@ export default {
   top: 31px;
   width: 70px;
   height: 27px;
-}
+} */
+.btnLogout {
+    color: #000000;
+    text-align: left;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    left: 1804px;
+    top: 27px;
+    width: 120px;
+    height: 45px;
+    background-color: transparent; /* 배경을 투명하게 설정 */
+    border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
+    cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 바뀌게 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btnSave {
+    color: #000000;
+    text-align: left;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    width: 97px;
+    height: 60px;
+    left: 1290px;
+    top: 952px;
+    background-color: transparent; /* 배경을 투명하게 설정 */
+    border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
+    cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 바뀌게 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btnCancel {
+    color: #000000;
+    text-align: left;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    width: 97px;
+    height: 60px;
+    left: 1402px;
+    top: 952px;
+    background-color: transparent; /* 배경을 투명하게 설정 */
+    border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
+    cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 바뀌게 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 .image-15 {
   width: 46px;
   height: 46px;
@@ -278,7 +342,7 @@ export default {
   border-radius: 50%;
   position: absolute;
   left: 1266px;
-  top: 180px;
+  top: 237px;
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -448,7 +512,7 @@ export default {
   height: 40.08px;
   -webkit-text-stroke: 1px #ffffff;
 }
-.rectangle-6 {
+/* .rectangle-6 {
   background: #f7f7f7;
   border-style: solid;
   border-color: #ffffff;
@@ -506,7 +570,46 @@ export default {
   align-items: center;
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
-}
+} */
+.map, .my-page, .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    width: 248.36px;
+    height: 84.38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+    background-color: transparent;
+    border: none; /* 버튼 테두리 */
+    cursor: pointer; /* 클릭 시 손 모양 커서 */
+  }
+  
+  .map {
+    top: 335.39px;
+    left: 20.14px;
+  }
+  
+  .my-page {
+    top: 439.80px;
+    left: 20.14px;
+  }
+  
+  .my-categories {
+    top:  544.21px;
+    left: 20.14px;
+  }
+  
+  /* Hover 상태 */
+  button:hover {
+    background-color: #f0f0f0;
+  }
+
+
 .rectangle-28 {
   background: rgba(255, 255, 255, 0);
   border-style: solid;
