@@ -8,9 +8,9 @@
       <button class="my-page" @click="navigateTo('my-page')">
           <img class="imgPage" src="/src/assets/images/public/image-130.png" />
           My Page</button>
-      <button class="my-categories" @click="navigateTo('my-categories')">
-          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
-          My Categories</button>    
+      <!-- <button class="my-categories" @click="navigateTo('my-categories')"></button>     -->
+          
+          <RouterLink to="/categories" class="my-categories"><img class="imgCategory" src="/src/assets/images/public/image-140.png"/>Categories</RouterLink>
   
       <select class="btnDD">
           <option value="address">Address</option>
@@ -101,6 +101,10 @@
   .my-categories {
     top:  544.21px;
     left: 20.14px;
+  }
+
+  .my-categories:hover {
+    background-color: #f0f0f0;
   }
   
   /* Hover 상태 */
