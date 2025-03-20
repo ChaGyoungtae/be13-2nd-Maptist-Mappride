@@ -1,36 +1,28 @@
 <template>
-  <div><newPlaceComponent/></div>
-  <!-- <div><loginComponent/></div> -->
-  <div><mainComponent/></div>
-  <!-- <div><myCategories/></div> -->
-  <!-- <div><myPlaceComponent/></div> -->
-   <!-- <div><myPageComponent/></div> -->
-    <div><placeDetailComponent/></div>
+  <div>
+    <!-- <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/main">Main</RouterLink>
+      <RouterLink to="/categories">Categories</RouterLink>
+      <RouterLink to="/places">Places</RouterLink>
+      <RouterLink to="/new-place">New Place</RouterLink>
+      <RouterLink to="/mypage">My Page</RouterLink>
+    </nav> -->
+
+    <RouterView />
+  </div>
 </template>
 
 <script>
-import NewPlaceComponent from "./components/NewPlaceComponent.vue";
-import LoginComponent from "./components/LoginComponent.vue";
-import MainComponent from "./components/MainComponent.vue";
-import MyCategories from "./components/MyCategories.vue";
-import MyPlaceComponent from "./components/MyPlaceComponent.vue";
-import MyPageComponent from "./components/MyPageComponent.vue";
-import PlaceDetailComponent from "./components/PlaceDetailComponent.vue";
-import "./vars.css";
-import "./styles.css";
-
 export default {
   name: "App",
-  components: {
-    newPlaceComponent: NewPlaceComponent,
-    loginComponent : LoginComponent,
-    mainComponent: MainComponent,
-    myCategories: MyCategories,
-    myPlaceComponent: MyPlaceComponent,
-    myPageComponent: MyPageComponent,
-    placeDetailComponent: PlaceDetailComponent
-  },
 };
 </script>
 
-<style></style>
+<style>
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+</style>
