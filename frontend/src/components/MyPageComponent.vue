@@ -1,8 +1,6 @@
 <template>
   <div class="div">
 
-
-
     <div class="rectangle-4"></div>
     <div class="image-15"></div>
 
@@ -19,12 +17,14 @@
 
     <button>
       <div class="my-categories">My categories</div>
+      <div class="rectangle-2"></div>
     </button>
 
     <div class="my-page">My page</div>
 
     <button>
       <div class="map">Map</div>
+      <div class="rectangle-1"></div>
     </button>
     
     <!-- <div class="rectangle-28"></div> -->
@@ -93,7 +93,13 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  
 }
+button:active *
+{
+  filter: brightness(0.95); /* 클릭 시 이미지 어둡게 */
+}
+
 .rectangle-4 {
   background: #ffffff;
   border-style: solid;
@@ -149,6 +155,29 @@ button {
   width: 185.32px;
   height: 40.08px;
   -webkit-text-stroke: 1px #ffffff;
+  z-index: 1;
+}
+.rectangle-1 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 0px 1px 0px 0px;
+  width: 335.98px;
+  height: 84.38px;
+  position: absolute;
+  left: 0px;
+  top: 343.62px;
+}
+.rectangle-2 {
+  background: #ffffff;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 0px 1px 0px 0px;
+  width: 335.98px;
+  height: 84.38px;
+  position: absolute;
+  left: 0px;
+  top: 512.38px;
 }
 .rectangle-6 {
   background: #f7f7f7;
@@ -168,14 +197,15 @@ button {
   font-size: 25px;
   font-weight: 400;
   position: absolute;
-  left: 46.6px;
-  top: 494.65px;
-  width: 291.6px;
+  left: 19.97px;
+  top: 500px;
+  width: 315.56px;
   height: 104.41px;
   display: flex;
   align-items: center;
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
+  z-index: 1;
 }
 .my-page {
   color: #000000;
@@ -203,11 +233,14 @@ button {
   left: 19.97px;
   top: 335.39px;
   width: 315.56px;
-  height: 104.41px;
+  height: 92.41px;
   display: flex;
   align-items: center;
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
+  border: none; /* 버튼 테두리 */
+  cursor: pointer; /* 클릭 시 손 모양 커서 */
+  z-index: 1;
 }
 .rectangle-28 {
   background: rgba(255, 255, 255, 0);
