@@ -96,7 +96,7 @@ public class MemberRepository {
     public List<CategoryResponseDto> getCategories(Long memberId) {
 
         String query = """
-                SELECT new com.maptist.mappride.mappride.category.dto.CategoryResponseDto(c, c.member.id)
+                SELECT new com.maptist.mappride.mappride.category.dto.CategoryResponseDto(c)
                 FROM Category c
                 WHERE c.member.id = :memberId
                 """;
