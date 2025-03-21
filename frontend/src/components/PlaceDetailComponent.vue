@@ -2,21 +2,51 @@
     <div class="div">
       <div class="rectangle-4"></div>
       <div class="image-15"></div>
+
       <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
+      <!-- logout 버튼 -->
+      <!-- <div class="logout">logout</div> -->
+      <button @click="logoutClick">
       <div class="logout">logout</div>
+      </button>
+
       <div class="mappride">Mappride</div>
       <div class="rectangle-6"></div>
+
       <div class="my-categories">My categories</div>
       <div class="my-page">My page</div>
       <div class="map">Map</div>
+
+      <!-- <button @click="mapClick"><div class="map">Map</div></button> -->
+
+      <!-- <button class="map" @click="navigateTo('map')">
+          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
+          Map</button>
+      <button class="my-page" @click="navigateTo('my-page')">
+          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
+          My Page</button>
+      <button class="my-categories" @click="navigateTo('my-categories')">
+          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
+          My Categories</button> -->
+
       <div class="rectangle-28"></div>
       <img class="image-12" src="/src/assets/images/public/image-120.png" />
       <img class="image-13" src="/src/assets/images/public/image-130.png" />
       <img class="image-14" src="/src/assets/images/public/image-140.png" />
+      <!-- 상단 알림 버튼 -->
+      <!-- <img class="image-29" src="/src/assets/images/public/image-150.png" /> -->
+      <button @click="image29Click">
       <img class="image-29" src="/src/assets/images/public/image-150.png" />
+      </button>
+
       <div class="comment">Comment</div>
       <div class="rectangle-50"></div>
+      <!-- 우측 빈 별 -->
+      <!-- <img class="image-46" src="/src/assets/images/placeDetailComponent/image-460.png" /> -->
+      <button @click="image46Click">
       <img class="image-46" src="/src/assets/images/placeDetailComponent/image-460.png" />
+      </button>
+
       <img class="image-47" src="/src/assets/images/placeDetailComponent/image-470.png" />
       <div class="div2">메가커피 신대방삼거리역점</div>
       <img class="image-35" src="/src/assets/images/placeDetailComponent/image-350.png" />
@@ -24,24 +54,59 @@
       <img class="line-14" src="/src/assets/images/public/line-60.png" />
       <div class="div3">분좋카</div>
       <div class="line-16"></div>
-      <img class="group-10" src="/src/assets/images/placeDetailComponent/group-100.png" />
-      <div class="rectangle-23"></div>
-      <img class="ellipse-2" src="/src/assets/images/public/ellipse-20.png" />
-      <div class="div4">
-        와라랄라ㅏ라라 여기가 이랫구 저랫구 어쨋는데 저쨋구 완전 그랬음~~~
-        대박사건~~
+      <!-- 카테고리 드롭 다운 -->
+      <!-- <img class="group-10" src="/src/assets/images/placeDetailComponent/group-100.png" /> -->
+      <div class="dropdown-group-10">
+      <select v-model="selectedColor" @change="onColorChange">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="green">green</option>
+        <option value="yellow">yellow</option>
+        <option value="purple">purple</option>
+      </select>
       </div>
+      <div class="rectangle-23"></div>
+
+      <!-- 카테고리 드롭다운 사진 -->
+      <!-- <img class="ellipse-2" src="/src/assets/images/public/ellipse-20.png" /> -->
+
+      <!-- 장소 컨텐츠 수정 입력창창 -->
+      <!-- <div class="div4">
+        좌석이 넓어서 수다 떨기 좋아요 메뉴들 퀄리티도 일정하고요~
+      </div> -->
+      <div class="div4">
+      <textarea class="textarea-div4"></textarea>
+      </div>
+      <!-- <img class="image-33" src="/src/assets/images/public/image-230.png" /> -->
+      <button @click="image33Click">
       <img class="image-33" src="/src/assets/images/public/image-230.png" />
+      </button>
+
+      <!-- <img class="image-34" src="/src/assets/images/public/image-290.png" /> -->
+      <button @click="image34Click">
       <img class="image-34" src="/src/assets/images/public/image-290.png" />
+      </button>
+      
       <img class="image-39" src="/src/assets/images/placeDetailComponent/image-390.png" />
       <div class="rectangle-51"></div>
+      <!-- <img class="image-49" src="/src/assets/images/public/image-290.png" /> -->
+      <button @click="image49Click">
       <img class="image-49" src="/src/assets/images/public/image-290.png" />
+      </button>
+
+      <!-- <img class="image-50" src="/src/assets/images/public/image-230.png" /> -->
+      <button @click="image50Click">
       <img class="image-50" src="/src/assets/images/public/image-230.png" />
+      </button>
+
       <div class="line-21"></div>
       <div class="div5">내가 작성한 댓글</div>
       <div class="div6">사장님이 친절해요</div>
       <div class="comment2">Comment</div>
-      <div class="rectangle-5"></div>
+      <!-- <div class="rectangle-5"></div> -->
+      <div class="rectangle-5">
+      <textarea class="textarea-rectangle-5"></textarea>
+      </div>
       <div class="line-18"></div>
       <div class="line-19"></div>
       <div class="line-20"></div>
@@ -55,22 +120,98 @@
       <div class="_2025-03-18-18-01">2025. 03.18 18:01</div>
       <div class="div12">커피러버</div>
       <div class="div13">내용을 입력하세요. . .</div>
+      <!-- <img class="image-44" src="/src/assets/images/placeDetailComponent/image-460.png" /> -->
+      <button @click="image44Click">
       <img class="image-44" src="/src/assets/images/placeDetailComponent/image-460.png" />
+      </button>
+
       <img class="image-45" src="/src/assets/images/placeDetailComponent/image-470.png" />
+      <!-- <img class="image-48" src="/src/assets/images/placeDetailComponent/image-480.png" /> -->
+      <button @click="image48Click">
       <img class="image-48" src="/src/assets/images/placeDetailComponent/image-480.png" />
+      </button>
+
       <img class="rectangle-42" src="/src/assets/images/placeDetailComponent/rectangle-420.png" />
+      <!-- <div class="write">Write</div> -->
+      <button @click="writeClick">
       <div class="write">Write</div>
+      </button>
+      <!-- <img class="frame" src="/src/assets/images/placeDetailComponent/Frame.png" /> -->
+      <button @click="frameClick">
       <img class="frame" src="/src/assets/images/placeDetailComponent/Frame.png" />
+      </button>
     </div>
   </template>
+
   <script>
   export default {
     name: "Component",
     components: {},
     props: {},
-    data() {},
+    data() {
+      return {
+      selectedColor: "red", // 기본 색상 설정
+    };
+    },
+    methods: {
+      image29Click(event) {
+      console.log("image-29 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image33Click(event) {
+      console.log("image-33 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image34Click(event) {
+      console.log("image-34 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image44Click(event) {
+      console.log("image-44 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image46Click(event) {
+      console.log("image-46 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image48Click(event) {
+      console.log("image-48 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image49Click(event) {
+      console.log("image-49 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      image50Click(event) {
+      console.log("image-50 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+    // rectangle23Click(event) {
+      //   console.log("rectangle-23 버튼 클릭됨!");
+      //   console.log("클릭된 요소:", event.target);
+      // },
+
+      frameClick(event) {
+      console.log("frame 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+      logoutClick(event) {
+      console.log("logout 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    },
+    onColorChange(event) {
+      console.log("선택된 색상:", this.selectedColor);
+      
+    },
+      writeClick(event) {
+      console.log("write 버튼 클릭됨!");
+      console.log("클릭된 요소:", event.target);
+    
+    },
+    },
   };
   </script>
+  
   <style scoped>
   .div,
   .div * {
@@ -82,6 +223,45 @@
     position: relative;
     overflow: hidden;
   }
+
+  /* .map, .my-page, .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    width: 318.14px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+    background-color: transparent;
+    border: none; 
+    cursor: pointer; 
+  }
+  
+  .map {
+    top: 335.39px;
+    left: 20.14px;
+  }
+  
+  .my-page {
+    top: 439.80px;
+    left: 20.14px;
+  }
+  
+  .my-categories {
+    top:  544.21px;
+    left: 20.14px;
+  }
+  
+  
+  button:hover {
+    background-color: #f0f0f0;
+  } */
+
   .rectangle-4 {
     background: #ffffff;
     border-style: solid;
@@ -290,7 +470,7 @@
     position: absolute;
     left: 684px;
     top: 161px;
-    width: 361px;
+    width: 380px;
     height: 38px;
   }
   .image-35 {
@@ -329,7 +509,7 @@
     position: absolute;
     left: 461px;
     top: 164px;
-    width: 86px;
+    width: 100px;
     height: 43px;
   }
   .line-16 {
@@ -345,13 +525,27 @@
     transform-origin: 0 0;
     transform: rotate(0.065deg) scale(1, 1);
   }
-  .group-10 {
+  /* .group-10 {
     height: auto;
     position: absolute;
     left: 1151px;
     top: 157px;
     overflow: visible;
+  } */
+
+  .dropdown-group-10 {
+  position: absolute;
+  left: 1151px;
+  top: 157px;
   }
+
+  select {
+  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  padding: 5px;
+  }
+
   .group-11 {
     position: absolute;
     inset: 0;
@@ -386,6 +580,20 @@
     top: 910px;
     width: 776px;
     height: 95px;
+  }
+  .textarea-div4 {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none; /* 크기 조절 비활성화 */
+    outline: none; /* 포커스 시 테두리 제거 */
+    padding: 10px; /* 내부 여백 추가 */
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 15px;
+    color: #000000;
+    background-color: #ffffff;
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    overflow: scroll;
   }
   .image-33 {
     width: 40px;
@@ -497,7 +705,28 @@
     position: absolute;
     left: 1489px;
     top: 922px;
+    
   }
+  .textarea-rectangle-5 {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none; /* 크기 조절 비활성화 */
+    outline: none; /* 포커스 시 테두리 제거 */
+    padding: 10px; /* 내부 여백 추가 */
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 15px;
+    color: #000000;
+    background-color: #ffffff;
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    overflow: scroll;
+  }
+  
+  /* 플레이스홀더 색상 
+  .textarea-rectangle-5::placeholder {
+    color: #d9d9d9;  
+  }
+  */
   .line-18 {
     margin-top: -1px;
     border-style: solid;

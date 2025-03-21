@@ -13,12 +13,18 @@ import lombok.ToString;
 // 유저의 카테고리들 정보 Response
 public class CategoryResponseDto {
 
-    private Category category;
+    private Long id;
+
+    private String name;
+
+    private Boolean publish;
 
     private Long memberId;
 
-    public long getCategoryId() {
-        return category.getId();
+    public CategoryResponseDto(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.publish = category.isPublish();
+        this.memberId = category.getId();
     }
-
 }
