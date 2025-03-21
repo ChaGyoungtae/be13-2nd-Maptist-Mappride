@@ -6,6 +6,7 @@
       <!-- 카테고리 이름 -->
       <a :href="category.url" class="category-link">{{ category.name }}</a>
 
+      <!-- 라디오 버튼 -->
       <div class="radio-container">
         <div class="radio-group">
           <input type="radio" :id="'optionO' + index" 
@@ -181,22 +182,18 @@ export default {
 
 /* 라디오 버튼 그룹 스타일 */
 .radio-container {
-  margin-bottom: 30px;
-  left: 650px;
-  top: 15px;
-  position: relative;
-  gap: 90px;
-  z-index: 10;
-  display: flex;
+  position: absolute;
+  left: 820px;
+  width: 200px;
 }
 
 .radio-group {
   display: flex;
   gap: 20px;
   align-items: center;
-  font-family: "Inter-Medium", sans-serif;
+  /* font-family: "Inter-Medium", sans-serif; */
   font-size: 30px;
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
 input[type="radio"] {
@@ -379,17 +376,14 @@ img {
 
 .category-link {
   color: #000000;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
   text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
+  text-overflow: ellipsis ;
   font-size: 24px;
   font-weight: 400;
   text-decoration: underline;
-  left: 369px;
-  top: 243px;
-  width: auto;
-  height: 22px;
-  cursor: pointer;
-  display: inline-block;
 }
 
 .category-list {
@@ -402,11 +396,12 @@ img {
 .category-item {
   display: flex;           /* 가로 정렬 */
   align-items: center;     /* 세로 중앙 정렬 */
-  justify-content: flex-start; /* 요소들 사이 간격 자동 조절 */
-  width: 100%;             /* 부모 요소 기준으로 전체 너비 사용 */
-  padding: 10px;           /* 내부 여백 추가 */
+  justify-content: space-between; 
+  width: 1550px;             /* 부모 요소 기준으로 전체 너비 사용 */
+  padding: 15px;           /* 내부 여백 추가 */
   border-bottom: 1px solid #ddd; /* 각 항목 구분선 */
-  gap: 10px;;
+  gap: 10px;
+  position: relative;
 }
 .title-dividing-line {
   margin-top: -1px;
@@ -447,23 +442,15 @@ img {
 }
 
 .modify-image {
-  position: absolute;
-  left: 1050px;
   width: 37px;
   height: 36px;
   cursor: pointer;
-  object-fit: cover;
-  aspect-ratio: 37/36;
   transition: transform 0.2s ease-in-out; /* 클릭 효과 */
 }
 
 .delete-image {
-  position: absolute;
   width: 27px;
   height: 28px;
-  left: 1100px;
-  object-fit: cover;
-  aspect-ratio: 27/28;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
@@ -554,9 +541,12 @@ img {
   }
 
 .button-container {
-  display: inline-block;  
+  position: absolute;
+  display: flex;  
   gap: 20px;           /* 버튼 사이 여백 추가 */
-  position: relative;
+  justify-content: flex-end;
+  width: 120px;
+  left: 1330px;
 }
 
 .button-container img {
