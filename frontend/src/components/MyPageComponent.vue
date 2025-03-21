@@ -34,7 +34,7 @@
     <button>
       <img class="image-29" src="/src/assets/images/public/image-150.png" />
     </button>
-
+    <!-- <p>{{ member.nickname }}</p> -->
     <input type="text" class="rectangle-29" value=""/>
     <div class="nickname">Nickname</div>
     <input type="text" class="rectangle-30" value=""/>
@@ -62,18 +62,34 @@
 
   </div>
 </template>
-<script>
-export default {
-  name: "Component",
-  components: {},
-  props: {},
-  data() {},
-  methods: {
-  handleClick(button) {
-    console.log(`${button} 클릭됨`);
-  }
-}
-};
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const member = ref({});
+
+onMounted(() => {
+  axios.get('/members')
+  .then(response => {
+    member.value = response.data;
+    console.log(member);
+  })
+  .catch(error => {
+    console.error("유저 정보 api get mapping error",error);
+  });
+});
+
+// export default {
+//   name: "MyPage",
+//   components: {},
+//   props: {},
+//   data() {},
+//   methods: {
+//   handleClick(button) {
+//     console.log(`${button} 클릭됨`);
+//   }
+// }
+// };
 </script>
 <style scoped>
 .div,
