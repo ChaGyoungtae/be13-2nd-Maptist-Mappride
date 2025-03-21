@@ -2,10 +2,10 @@
   <div>
     <!-- <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/main">Main</RouterLink>
+      <RouterLink to="/main">Main</RouterLink> 
       <RouterLink to="/categories">Categories</RouterLink>
       <RouterLink to="/places">Places</RouterLink>
-      <RouterLink to="/new-place">New Place</RouterLink>
+      <<RouterLink to="/new-place">New Place</RouterLink>
       <RouterLink to="/mypage">My Page</RouterLink>
     </nav> -->
 

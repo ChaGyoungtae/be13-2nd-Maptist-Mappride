@@ -3,12 +3,11 @@
       <div class="rectangle-4"></div>
       <img class="image-15" src="/src/assets/images/public/image-150.png" @click="handleClick" />
       <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
-      <div class="rectangle-31"></div>
       <button class="logout-button">Logout</button>
       <button class="search-button">Search</button>
 
       <input type="text" class="rectangle-5"  placeholder="   . . ." />
-      <div href="이동할_페이지_URL" class="rectangle-6"></div>
+      <!-- <div href="이동할_페이지_URL" class="rectangle-6"></div> -->
       <div class="name">name</div>
       <div class="rectangle-10"></div>
       <div class="rectangle-20"></div>
@@ -18,17 +17,30 @@
 
       <div class="line-5"></div>
       <img class="line-6" src="/src/assets/images/public/line-60.png" />
+      <img class="line-7" src="/src/assets/images/public/line-60.png" />
       <img class="image-22" src="/src/assets/images/public/image-230.png" @click="handleClick" />
       <img class="image-23" src="/src/assets/images/public/image-230.png" @click="handleClick" />
       <a href="이동할_페이지_URL" class="mappride">Mappride</a>
-      <div class="rectangle-62"></div>
-      <a href="이동할_페이지_URL" class="my-categories">My categories</a>
+      <!-- <div class="rectangle-62"></div> -->
+      <!-- <a href="이동할_페이지_URL" class="my-categories">My categories</a>
       <a href="이동할_페이지_URL" class="my-page">My page</a>
-      <a href="이동할_페이지_URL" class="map">Map</a>
+      <a href="이동할_페이지_URL" class="map">Map</a> -->
       <div class="rectangle-28"></div>
-      <img class="image-12" src="/src/assets/images/public/image-120.png" />
+      <button class="map" @click="navigateTo('map')">
+          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
+          Map</button>
+      <button class="my-page" @click="navigateTo('my-page')">
+          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
+          My Page</button>
+
+      <button class="my-categories" @click="navigateTo('my-categories')">
+          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
+          My Categories</button>
+
+
+      <!-- <img class="image-12" src="/src/assets/images/public/image-120.png" />
       <img class="image-13" src="/src/assets/images/public/image-130.png" />
-      <img class="image-14" src="/src/assets/images/public/image-140.png" />
+      <img class="image-14" src="/src/assets/images/public/image-140.png" /> -->
       <a href="이동할_페이지_URL" class="div3">공부인</a>
       <img class="image-27" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <img class="image-28" src="/src/assets/images/public/image-290.png" @click="handleClick" />
@@ -37,8 +49,10 @@
       <a href="이동할_페이지_URL" class="div4">단디</a>
       <img class="image-34" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <div class="rectangle-29"></div>
+
       <img class="image-31" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-      <<a href="이동할_페이지_URL" class="div5">랭</a>
+
+      <a href="이동할_페이지_URL" class="div5">랭</a>
       <img class="image-32" src="/src/assets/images/public/image-290.png" @click="handleClick" />
       <div class="rectangle-282"></div>
       <img class="image-29" src="/src/assets/images/public/image-230.png" @click="handleClick" />
@@ -53,23 +67,115 @@
       <div class="_746-3-6">서울특별시 노원구 상계동 746-3 랑은빌딩 6층</div>
       <div class="color">COLOR</div>
       <div class="line-22"></div>
-      <div class="ellipse-2"></div>
-      <div class="ellipse-3"></div>
-      <div class="ellipse-4"></div>
-      <div class="ellipse-5"></div>
-      <div class="ellipse-6"></div>
-      <div class="div8">최신순</div>
-      <img class="image-37" src="/src/assets/images/MyPlaceComponent/image-370.png" />
-      <img class="image-43" src="/src/assets/images/MyPlaceComponent/image-430.png" />
+
     </div>
+
+    <div>
+      <!-- 색상 드롭다운 -->
+    <div class="dropdown-container-color">
+    <!-- 선택된 색상 버튼 -->
+    <div class="selected-option" @click="toggleColorDropdown">
+      <div class="color-circle" :class="selectedClass"></div>
+    </div>
+
+    <!-- 드롭다운 메뉴 -->
+    <ul v-if="colorDropdownVisible" class="dropdown-menu-color">
+      <li v-for="(color, index) in colors" :key="index" @click="selectColor(color.className)">
+        <div class="color-circle" :class="color.className"></div>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- 정렬 드롭다운 -->
+  <div class="rectangle-31" @click="toggleSortDropdown">
+      
+      <!-- 선택한 정렬 기준 표시 -->
+      <span>
+        {{ selectedSort }}
+        <img :src="selectedSortImage" class="dropdown-image" alt="Selected Option Image" />
+      </span>
+
+      <!-- 드롭다운 메뉴 -->
+      <div v-if="sortDropdownVisible" class="dropdown-menu">
+        <ul>
+          <li v-for="(option, index) in sortOptions" :key="index" @click="setSortOrder(option)">
+            {{ option.label }}
+            <img class="dropdown-image" :src="option.image" alt="Sort Option Image" />
+          </li>
+        </ul>
+      </div>
+    </div>
+</div>
   </template>
   <script>
+
+  import { ref } from 'vue';
+
   export default {
     name: "Two",
     components: {},
     props: {},
-    data() {},
-  };
+    
+     setup() {
+      const colorDropdownVisible = ref(false); // 드롭다운 열림 여부
+      const selectedClass = ref("ellipse-2"); // 기본 선택된 색상
+
+      const colors = ref([
+        { className: "ellipse-2" },
+        { className: "ellipse-3" },
+        { className: "ellipse-4" },
+        { className: "ellipse-5" },
+        { className: "ellipse-6" }
+      ]);
+      // 드롭다운 열고 닫기
+      const toggleColorDropdown  = () => {
+        colorDropdownVisible.value = !colorDropdownVisible.value;
+      };
+      // 색상 선택
+      const selectColor = (colorClass) => {
+        selectedClass.value = colorClass;
+        colorDropdownVisible.value = false; // 선택 후 드롭다운 닫기
+      };
+
+      // 정렬 드롭다운 상태
+    const sortDropdownVisible = ref(false); 
+    const selectedSort = ref("최신순"); // 초기 값
+    const selectedSortImage = ref('/src/assets/images/MyPlaceComponent/image-400.png'); // 초기 이미지 설정
+    const sortOptions = ref([
+      { value: 'date-asc', label: '최신순', image: '/src/assets/images/MyPlaceComponent/image-430.png' },
+      { value: 'date-desc', label: '최신순', image: '/src/assets/images/MyPlaceComponent/image-400.png' },
+      { value: 'name-asc', label: '이름순', image: '/src/assets/images/MyPlaceComponent/image-430.png' },
+      { value: 'name-desc', label: '이름순', image: '/src/assets/images/MyPlaceComponent/image-400.png' }
+    ]);
+    
+    // 정렬 드롭다운 메뉴 토글
+    const toggleSortDropdown = () => {
+      sortDropdownVisible.value = !sortDropdownVisible.value;
+    };
+    
+    // 정렬 기준 설정
+    const setSortOrder = (option) => {
+      selectedSort.value = option.label; // 선택된 정렬 기준 바로 반영
+      selectedSortImage.value = option.image; // 선택된 옵션에 맞는 이미지 반영
+      console.log(`정렬 기준: ${option.value}`);
+    };
+
+    return {
+      colorDropdownVisible,
+      selectedClass,
+      colors,
+      toggleColorDropdown,
+      selectColor,
+      sortDropdownVisible,
+      selectedSort,
+      sortOptions,
+      selectedSortImage,
+      toggleSortDropdown,
+      setSortOrder
+    };
+  }
+}
   </script>
   <style scoped>
   ._2,
@@ -159,14 +265,73 @@
   transform: scale(0.95);
 }
 
-  /* .rectangle-31 {
-    width: 125px;
-    height: 45px;
+.map, .my-page, .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
     position: absolute;
-    left: 1778px;
-    top: 102px; 높이는 
-    overflow: visible;
-  } */
+    width: 318.14px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+    background-color: transparent;
+    border: none; /* 버튼 테두리 */
+    cursor: pointer; /* 클릭 시 손 모양 커서 */
+  }
+  
+  .map {
+    top: 335.39px;
+    left: 20.14px;
+  }
+  
+  .my-page {
+    top: 439.80px;
+    left: 20.14px;
+  }
+  
+  .my-categories {
+    top:  544.21px;
+    left: 10.14px;
+  }
+
+  .my-categories:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Hover 상태 */
+  button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .imgMap {
+    width: 44.02px;
+    height: 44.02px;
+    position: absolute;
+    left: 25.64px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .imgPage {
+    width: 29.75px;
+    height: 29.75px;
+    position: absolute;
+    left: 32.78px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .imgCategory {
+    width: 30.94px;
+    height: 30.94px;
+    position: absolute;
+    left: 8px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+
   .rectangle-31 {
     background: #ffffff;
     border-style: solid;
@@ -175,9 +340,41 @@
     width: 125px;
     height: 45px;
     position: absolute;
-    left: 1778px;
-    top: 102px;
-  }
+    left: 1770px;
+    top: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 0 10px;
+    cursor: pointer;
+    }
+
+  /* 드롭다운 메뉴 스타일 */
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  width: 125px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
   .logout {
     color: #000000;
     text-align: left;
@@ -203,7 +400,7 @@
   outline: none;
 
 }
-  .rectangle-6 {
+  /* .rectangle-6 {
     background: #ffffff;
     border-style: solid;
     border-color: #d2d2d2;
@@ -214,7 +411,7 @@
     left: 535px;
     top: 23px;
     cursor: pointer;
-  }
+  } */
   .name {
     color: #000000;
     text-align: left;
@@ -354,6 +551,19 @@
     transform: translate(-0.5px, 0px);
     overflow: visible;
   }
+  .line-7 {
+    margin-top: -1px;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 1px 0 0 0;
+    width: 35px;
+    height: 0px;
+    position: absolute;
+    left: 1170px;
+    top: 107px;
+    transform-origin: 0 0;
+    transform: rotate(90deg) scale(1, 1);
+  }
   .image-22 {
     width: 27px;
     height: 28px;
@@ -472,7 +682,7 @@
     left: -1px;
     top: 0px;
   }
-  .image-12 {
+  /* .image-12 {
     width: 43.83px;
     height: 43.83px;
     position: absolute;
@@ -480,8 +690,8 @@
     top: 365.68px;
     object-fit: cover;
     aspect-ratio: 1;
-  }
-  .image-13 {
+  } */
+  /* .image-13 {
     width: 29.61px;
     height: 29.61px;
     position: absolute;
@@ -489,8 +699,8 @@
     top: 455.06px;
     object-fit: cover;
     aspect-ratio: 1;
-  }
-  .image-14 {
+  } */
+  /* .image-14 {
     width: 30.8px;
     height: 30.8px;
     position: absolute;
@@ -498,7 +708,7 @@
     top: 531.98px;
     object-fit: cover;
     aspect-ratio: 1;
-  }
+  } */
   .div3 {
     color: #000000;
     text-align: left;
@@ -807,51 +1017,6 @@
     transform-origin: 0 0;
     transform: rotate(90deg) scale(1, 1);
   }
-  .ellipse-2 {
-    background: #ffc1c1;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1266px;
-    top: 244px;
-  }
-  .ellipse-3 {
-    background: #c1ffe9;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1266px;
-    top: 307px;
-  }
-  .ellipse-4 {
-    background: #4285f4;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1265px;
-    top: 373px;
-  }
-  .ellipse-5 {
-    background: #fbbc05;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1265px;
-    top: 443px;
-  }
-  .ellipse-6 {
-    background: #ff0000;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1265px;
-    top: 509px;
-  }
   .rectangle-41 {
     background: #ffffff;
     border-style: solid;
@@ -875,18 +1040,6 @@
     width: 48px;
     height: 19px;
   }
-  .div9 {
-    color: #000000;
-    text-align: left;
-    font-family: "Inter-Regular", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    position: absolute;
-    left: 1822px;
-    top: 160px;
-    width: 48px;
-    height: 19px;
-  }
   .rectangle-43 {
     background: #ffffff;
     border-style: solid;
@@ -898,40 +1051,26 @@
     left: 1778px;
     top: 189px;
   }
-  .div10 {
-    color: #000000;
-    text-align: left;
-    font-family: "Inter-Regular", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    position: absolute;
-    left: 1822px;
-    top: 202px;
-    width: 48px;
-    height: 19px;
-  }
 
-  .div11 {
-    color: #000000;
-    text-align: left;
-    font-family: "Inter-Regular", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    position: absolute;
-    left: 1822px;
-    top: 247px;
-    width: 48px;
-    height: 19px;
-  }
   .image-37 {
     width: 25px;
     height: 25px;
     position: absolute;
-    left: 1786px;
-    top: 111px;
+    left: 5px;
+    top: 10px;
     object-fit: cover;
     aspect-ratio: 1;
   }
+  .image-43 {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 100px;
+    top: 0px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+
   .image-40 {
     width: 25px;
     height: 25px;
@@ -959,14 +1098,73 @@
     object-fit: cover;
     aspect-ratio: 1;
   }
-  .image-43 {
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    left: 1874px;
-    top: 112px;
-    object-fit: cover;
-    aspect-ratio: 1;
-  }
+  
+/* 드롭다운 컨테이너 */
+.dropdown-container-color {
+  position: relative;
+  left: 1250px;
+  top: -850px;
+  display: block;
+  cursor: pointer;
+}
+
+/* 선택된 색상 버튼 */
+.selected-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu-color {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  list-style: none;
+  display: block;
+  gap: 50px;
+  z-index: 100;
+}
+
+/* 드롭다운 내부 원형 색상 선택 버튼 */
+.color-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+
+/* 기존 ellipse 색상 유지 */
+.ellipse-2 {
+  background: #ffc1c1;
+}
+.ellipse-3 {
+  background: #c1ffe9;
+}
+.ellipse-4 {
+  background: #4285f4;
+}
+.ellipse-5 {
+  background: #fbbc05;
+}
+.ellipse-6 {
+  background: #ff0000;
+}
   </style>
   
