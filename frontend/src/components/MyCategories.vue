@@ -1,127 +1,87 @@
 <template>
-  <a class="_1">
-    
-    <!-- <div class="dropdown-container" :class="{ open: isDropdownOpen }"> -->
-      <!-- 드롭다운 버튼 -->
-      <!-- <div class="dropdown-toggle" @click="toggleDropdown">
-        {{ selectedOption }}
-        <img class="polygon-6" src="/src/assets/images/public/polygon-60.png" />
-      </div> -->
+  <div class="_1"> 
 
-      <!-- 드롭다운 메뉴 -->
-      <!-- <div v-if="isDropdownOpen" class="dropdown-menu">
-        <div class="dropdown-option" @click="selectOption('O')">O</div>
-        <div class="dropdown-option" @click="selectOption('X')">X</div>
-      </div>
-    </div> -->
+    <ul class="category-list">
+    <li v-for="(category, index) in categories" :key="index" class="category-item">
+      <!-- 카테고리 이름 -->
+      <a :href="category.url" class="category-link">{{ category.name }}</a>
 
-    <div v-for="(option, index) in dropdowns" :key="index" class="dropdown-container" :class="{ open: option.isDropdownOpen }">
-      <!-- 드롭다운 버튼 -->
-      <div class="dropdown-toggle" @click="toggleDropdown(index)">
-        {{ option.selectedOption }}
-        <img class="polygon-6" src="/src/assets/images/public/polygon-60.png" />
+      <div class="radio-container">
+        <div class="radio-group">
+          <input type="radio" :id="'optionO' + index" 
+            :name="'option' + index" value="O" v-model="category.selectedOption">
+          <label :for="'optionO' + index">O</label>
+
+          <input type="radio" :id="'optionX' + index" 
+            :name="'option' + index" value="X" v-model="category.selectedOption">
+          <label :for="'optionX' + index">X</label>
+        </div>
       </div>
 
-
-      <!-- 드롭다운 메뉴 -->
-      <div v-if="option.isDropdownOpen" class="dropdown-menu">
-        <div class="dropdown-option" @click="selectOption(index, 'O')">O</div>
-        <div class="dropdown-option" @click="selectOption(index, 'X')">X</div>
+      <!-- 수정/삭제 버튼 -->
+      <div class="button-container">
+        <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="deleteCategory(index)" />
+        <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="editCategory(index)" />
       </div>
-    </div>
-
-
-
-    <div class="rectangle-27"></div>
-    <div class="rectangle-25"></div>
-    <div class="rectangle-4"></div>
-    <img class="image-15" src="/src/assets/images/public/image-150.png" />
+    </li>
+  </ul>
+    <img class="alarm-image" src="/src/assets/images/public/image-150.png" />
 
     <button class="logout-button">Logout</button>
     <button class="search-button">Search</button>
 
-    <input type="text" class="rectangle-5"  placeholder="   . . ." />
-    <input type="text" class="rectangle-17" placeholder="  카테고리 제목을 입력하세요" />    
-    <div class="rectangle-6"></div>
+    <input type="text" class="search-name"  placeholder="   . . ." />
+    <input type="text" class="search-category" placeholder="  카테고리 제목을 입력하세요" />    
+    <div class="name-box"></div>
     <div class="name">name</div>
-    <!-- <div class="div">카페</div> -->
-    <div class="rectangle-10"></div>
-    <div class="rectangle-11"></div>
-    <div class="rectangle-20"></div>
-    <div class="rectangle-26"></div>
     <div class="title">TITLE</div>
     <div class="publish">PUBLISH</div>
-    <a href="이동할_페이지_URL" class="_5">스터디카페 ( 5 )</a>
-    <a href="이동할_페이지_URL" class="_3">코인노래방 ( 3 )</a>
-    <div class="line-2"></div>
-    <div class="line-3"></div>
-    <div class="line-4"></div>
-    <div class="line-7"></div>
-    <div class="line-8"></div>
-    <div class="line-9"></div>
-    <div class="line-10"></div>
-    <div class="line-11"></div>
-    <div class="line-12"></div>
-    <div class="line-5"></div>
-    <div class="line-13"></div>
-    <img class="image-22" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-    <img class="image-24" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-    <img class="image-23" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-    <img class="image-25" src="/src/assets/images/myCategoriesComponent/image-250.png" />
+   
+    <div class="title-dividing-line"></div>
+    <div class="publish-dividing-line"></div>
+
+    <img class="plus-image" src="/src/assets/images/myCategoriesComponent/image-250.png" @click="handleClick" />
     <div class="mappride">Mappride</div>
-    <div class="rectangle-62"></div>
-    <div class="my-categories">My categories</div>
-    <div href="이동할_페이지_URL" class="my-page">My page</div>
-    <div href="이동할_페이지_URL" class="map">Map</div>
-    <div class="rectangle-28"></div>
-    <img class="image-12" src="/src/assets/images/public/image-120.png" />
-    <img class="image-13" src="/src/assets/images/public/image-130.png" />
-    <img class="image-14" src="/src/assets/images/public/image-140.png" />
-    <a href="이동할_페이지_URL" class="_40">혼밥 ( 40 )</a>
-    <img class="image-26" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-    <img class="image-27" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-    <img class="image-28" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-    <div class="rectangle-282"></div>
-  </a>
+
+    <button class="map" @click="navigateTo('map')">
+          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
+          Map</button>
+      <button class="my-page" @click="navigateTo('my-page')">
+          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
+          My Page</button>
+
+      <button class="my-categories" @click="navigateTo('my-categories')">
+          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
+          My Categories</button>
+
+    <div class="left-side-box"></div>
+    </div>
 </template>
 
 
 
 <script>
 export default {
-  name: "DropdownComponent",  
-  components: {},
-  props: {},
+  name: "RadioButtonComponent", 
   data() {
     return {
-      dropdowns: [
-        { isDropdownOpen: false, selectedOption: "X", },
-        { isDropdownOpen: false, selectedOption: "X", },
-        { isDropdownOpen: false, selectedOption: "X", },
-        { isDropdownOpen: false, selectedOption: "X", }
-      ]
-      // isDropdownOpen: false,
-      // selectedOption: "X"
+      categories: [
+        { name: "스터디카페 (5)", url: "이동할_페이지_URL", selectedOption: "X" },
+        { name: "코인노래방 (3)", url: "이동할_페이지_URL", selectedOption: "X" },
+        { name: "혼밥 (40)", url: "이동할_페이지_URL", selectedOption: "X" }
+      ],
     };
   },
-  // methods: {
-  //   toggleDropdown() {
-  //     this.isDropdownOpen = !this.isDropdownOpen;
-  //   },
+
   methods: {
-    // toggleDropdown() {
-    //   this.isDropdownOpen = !this.isDropdownOpen;
-    // },
-    toggleDropdown(index) {
-      this.dropdowns[index].isDropdownOpen = !this.dropdowns[index].isDropdownOpen;
+    navigateTo(page) {
+      this.$router.push(`/${page}`);
     },
-    // selectOption(option) {
-    //       this.selectedOption = option;
-    //       this.isDropdownOpen = false; // 선택 후 닫기
-    // }
-    selectOption(index, option) {
-      this.dropdowns[index].selectedOption = option;
-      this.dropdowns[index].isDropdownOpen = false; // 선택 후 닫기
+    editCategory(index) {
+      console.log(`수정 버튼 클릭: ${this.categories[index].name}`);
+    },
+    deleteCategory(index) {
+      console.log(`삭제 버튼 클릭: ${this.categories[index].name}`);
     }
   }
 };
@@ -140,169 +100,123 @@ export default {
   position: relative;
   overflow: hidden;
 }
-/* .rectangle-21 { /* 스터디카페 publish 드롭다운 
+
+.div,
+  .div * {
+  box-sizing: border-box;
+  }
+  .div {
   background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 130px;
-  height: 45px;
+  height: 1080px;
   position: relative;
-  left: 1174px;
-  top: 233px;
-} */
+  overflow: hidden;
+  }
 
-/* 드롭다운 컨테이너 */
-.dropdown-container {
+  .map, .my-page, .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    width: 318.14px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+    background-color: transparent;
+    border: none; /* 버튼 테두리 */
+    cursor: pointer; /* 클릭 시 손 모양 커서 */
+  }
+  
+  .map {
+    top: 335.39px;
+    left: 20.14px;
+  }
+  
+  .my-page {
+    top: 439.80px;
+    left: 20.14px;
+  }
+  
+  .my-categories {
+    top:  544.21px;
+    left: 10.14px;
+  }
+
+  .my-categories:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Hover 상태 */
+  button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .imgMap {
+    width: 44.02px;
+    height: 44.02px;
+    position: absolute;
+    left: 25.64px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .imgPage {
+    width: 29.75px;
+    height: 29.75px;
+    position: absolute;
+    left: 32.78px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .imgCategory {
+    width: 30.94px;
+    height: 30.94px;
+    position: absolute;
+    left: 8px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+
+/* 라디오 버튼 그룹 스타일 */
+.radio-container {
+  margin-bottom: 30px;
+  left: 650px;
+  top: 15px;
   position: relative;
-  left: 1174px;
-  top: 167px;
-  width: 129px;
-  height: 45px;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
-  cursor: pointer;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  z-index: 100; /* 다른 요소보다 위에 표시 */
-  margin-bottom: 22px;
-}
-
-/* 드롭다운 버튼 내부 삼각형 */
-/* .polygon-6 {
-  width: 23px;
-  height: 15px;
-  left: 1200px;
-  top: 225px;
-  transition: transform 0.3s ease;
-} */
-
-/* 드롭다운이 열릴 때 아이콘 회전 */
-.dropdown-container.open .polygon-6 {
-  transform: rotate(180deg);
-}
-
-/* 드롭다운 메뉴 */
-.dropdown-menu {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 2000; /* 다른 요소보다 위에 표시 */
-}
-
-/* 드롭다운 옵션 */
-.dropdown-option {
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.dropdown-option:hover {
-  background: #f0f0f0;
-}
-
-/* 드롭다운 컨테이너 */
-/* .dropdown-container {
-  position: relative;
-  left: 1174px;
-  top: 168px; 
-  width: 129px;
-  height: 45px;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
-  cursor: pointer;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-} */
-
-/* 드롭다운 버튼 내부 삼각형 이미지 */
- /* .polygon-6 {
-  width: 23px;
-  height: 15px;
-  transition: transform 0.3s ease;
-}  */
-
-/* 삼각형 아이콘 위치 조정 */
-.polygon-6 {
-  width: 23px;
-  height: 15px;
-  position: absolute;
-  right: 10px; /* 오른쪽 정렬 */
-  top: 50%;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
-}
-
-/* 드롭다운이 열릴 때 아이콘 회전 */
-/* .dropdown-container.open .polygon-6 {
-  transform: rotate(180deg);
-} */
-
-/* 드롭다운 메뉴 스타일 */
-/* .dropdown-menu {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 90px;
   z-index: 10;
-} */
+  display: flex;
+}
 
-/* 드롭다운 옵션 스타일 */
-/* .dropdown-option {
-  padding: 10px;
-  text-align: center;
+.radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+input[type="radio"] {
+  display: flex;
+}
+
+input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+
+label {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+img {
   cursor: pointer;
 }
 
-.dropdown-option:hover {
-  background: #f0f0f0;
-} */
-
-/*  카테고리 생성라인 publish_box */
-/* .rectangle-24 { 
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 129px;
-  height: 45px;
-  position: absolute;
-  left: 1174px;
-  top: 168px;
-}  */
-
-
-
-
-.rectangle-4 { /* 최상단 검색창 바탕  */
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d3d3d3;
-  border-width: 0px 0px 1px 0px;
-  width: 1582px;
-  height: 91px;
-  position: absolute;
-  left: 337px;
-  top: 0px;
-}
-.image-15 { /* 알림종  */
+.alarm-image { 
   width: 45px;
   height: 45px;
   position: absolute;
@@ -356,31 +270,15 @@ export default {
 }
 
 
-.image-22:active {
+.delete-image:active {
   transform: scale(0.95);
 }
-.image-23:active {
+.modify-image:active {
   transform: scale(0.95);
 }
-.image-24:active {
+.plus-image:active {
   transform: scale(0.95);
 }
-.image-26:active {
-  transform: scale(0.95);
-}
-.image-27:active {
-  transform: scale(0.95);
-}
-.image-28:active {
-  transform: scale(0.95);
-}
-.image-15:active {
-  transform: scale(0.95);
-}
-.image-25:active {
-  transform: scale(0.95);
-}
-
 
 
 /* 마우스 호버 효과 */
@@ -400,7 +298,7 @@ export default {
 }
 
 
-.rectangle-5 { /* 검색창  */
+.search-name { /* 검색창  */
   background: #ffffff;
   border-style: solid;
   border-color: #d2d2d2;
@@ -414,7 +312,7 @@ export default {
 
 }
 
-.rectangle-17 { /* 카테고리 이름 입력칸 */
+.search-category { /* 카테고리 이름 입력칸 */
   background: #ffffff;
   border: 1px solid #d2d2d2;
   width: 708px;
@@ -427,7 +325,7 @@ export default {
   outline: none;
 }
 
-.rectangle-6 { /* name box */
+.name-box { 
   background: #ffffff;
   border-style: solid;
   border-color: #d2d2d2;
@@ -452,53 +350,6 @@ export default {
   -webkit-text-stroke: 1px #d2d2d2;
 }
 
-.div { /* 카페 라는 글씨(검색창) */
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 728px;
-  top: 34px;
-  width: 446px;
-  height: 36px;
-}
-
-.rectangle-11 { /* 카테고리 생성란 배경상자 */
-  background: rgba(217, 217, 217, 0);
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 1583px;
-  height: 68px;
-  position: absolute;
-  left: 336px;
-  top: 221px;
-}
-.rectangle-20 { /* 코인노래방 바탕 상자 */
-  background: rgba(217, 217, 217, 0);
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 1583px;
-  height: 67px;
-  position: absolute;
-  left: 336px;
-  top: 288px;
-}
-.rectangle-26 { /* 혼밥 바탕상자 */
-  background: rgba(217, 217, 217, 0);
-  border-style: solid;
-  border-color: #d9d9d9;
-  border-width: 1px;
-  width: 1584px;
-  height: 68px;
-  position: absolute;
-  left: 336px;
-  top: 354px;
-}
 .title {
   color: #000000;
   text-align: left;
@@ -525,207 +376,39 @@ export default {
   width: 150px;
   height: 28px;
 }
-._5 { /* 스터디카페 (5) 링크 */
+
+.category-link {
   color: #000000;
   text-align: left;
   font-family: "Stylish-Regular", sans-serif;
   font-size: 24px;
   font-weight: 400;
   text-decoration: underline;
-  position: absolute;
   left: 369px;
   top: 243px;
-  width: 225px;
-  height: 22px;
-  cursor: pointer; /* 클릭 가능한 링크처럼 보이게 변경 */
-}
-._3 { /* 코인노래방 글씨 */
-  color: #000000;
-  text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  text-decoration: underline;
-  position: absolute;
-  left: 369px;
-  top: 306px;
-  width: 225px;
+  width: auto;
   height: 22px;
   cursor: pointer;
-}
-.o { /* 스터디카페 publish O*/
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 1212px;
-  top: 245px;
-  width: 38px;
-  height: 23px;
-}
-.div2 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 369px;
-  top: 179px;
-  width: 299px;
-  height: 25px;
-}
-.line-2 { /* 스카 자리이동 맨윗줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 249px;
-}
-.line-3 { /* 스카 자리이동 중간줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 257px;
-}
-.line-4 { /* 스카 자리이동 아랫줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 266px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, 1);
-}
-.line-7 { /*  코노 자리이동 윗줄*/
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 314px;
-}
-.line-8 { /*  코노 자리이동 중간줄*/
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 323px;
-}
-.line-9 { /*  코노 자리이동 중간줄*/
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 331px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, 1);
-}
-.line-10 { /* 혼밥 맨윗줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 380px;
-}
-.line-11 { /* 혼밥 중간줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 388px;
-}
-.line-12 { /* 혼밥 맨아래줄 */
-  margin-top: -1px;
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 38px;
-  height: 0px;
-  position: absolute;
-  left: 1846px;
-  top: 397px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, 1);
+  display: inline-block;
 }
 
+.category-list {
+  list-style: none;
+  padding: 20px;
+  margin-top: 180px;
+  margin-left: 315px;
+}
 
-.x {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 1218px;
-  top: 179px;
-  width: 51px;
-  height: 17px;
+.category-item {
+  display: flex;           /* 가로 정렬 */
+  align-items: center;     /* 세로 중앙 정렬 */
+  justify-content: flex-start; /* 요소들 사이 간격 자동 조절 */
+  width: 100%;             /* 부모 요소 기준으로 전체 너비 사용 */
+  padding: 10px;           /* 내부 여백 추가 */
+  border-bottom: 1px solid #ddd; /* 각 항목 구분선 */
+  gap: 10px;;
 }
-.o2 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 1214px;
-  top: 373px;
-  width: 51px;
-  height: 17px;
-}
-.x2 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  position: absolute;
-  left: 1214px;
-  top: 309px;
-  width: 51px;
-  height: 17px;
-}
-.line-5 {
+.title-dividing-line {
   margin-top: -1px;
   border-style: solid;
   border-color: #d9d9d9;
@@ -738,7 +421,7 @@ export default {
   transform-origin: 0 0;
   transform: rotate(90deg) scale(1, 1);
 }
-.line-13 {
+.publish-dividing-line {
   margin-top: -1px;
   border-style: solid;
   border-color: #d9d9d9;
@@ -752,54 +435,39 @@ export default {
   transform: rotate(90deg) scale(1, 1);
 }
 
-
-.image-22 {
+.plus-image {
   width: 27px;
   height: 28px;
   position: absolute;
   left: 1742px;
-  top: 305px;
+  top: 175px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.modify-image {
+  position: absolute;
+  left: 1050px;
+  width: 37px;
+  height: 36px;
+  cursor: pointer;
+  object-fit: cover;
+  aspect-ratio: 37/36;
+  transition: transform 0.2s ease-in-out; /* 클릭 효과 */
+}
+
+.delete-image {
+  position: absolute;
+  width: 27px;
+  height: 28px;
+  left: 1100px;
   object-fit: cover;
   aspect-ratio: 27/28;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
-.image-24 {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  left: 1742px;
-  top: 240px;
-  object-fit: cover;
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-.image-23 {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  left: 1742px;
-  top: 374px;
-  object-fit: cover;
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
 
-}
-.image-25 {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  left: 1847px;
-  top: 173px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-.group-4 {
-  position: absolute;
-  inset: 0;
-}
 .mappride {
   color: #000000;
   text-align: left;
@@ -812,17 +480,6 @@ export default {
   width: 141px;
   height: 40px;
   -webkit-text-stroke: 1px #ffffff;
-}
-.rectangle-62 {
-  background: #f7f7f7;
-  border-style: solid;
-  border-color: #ffffff;
-  border-width: 0px 1px 0px 0px;
-  width: 335.69px;
-  height: 84.38px;
-  position: absolute;
-  left: -1px;
-  top: 505.2px;
 }
 .my-categories {
   color: #000000;
@@ -874,7 +531,7 @@ export default {
   -webkit-text-stroke: 1px #ffffff;
   cursor: pointer;
 }
-.rectangle-28 {
+.left-side-box {
   background: rgba(255, 255, 255, 0);
   border-style: solid;
   border-color: #d9d9d9;
@@ -885,69 +542,7 @@ export default {
   left: -1px;
   top: 0px;
 }
-.image-12 {
-  width: 43.83px;
-  height: 43.83px;
-  position: absolute;
-  left: 24.31px;
-  top: 365.68px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-.image-13 {
-  width: 29.61px;
-  height: 29.61px;
-  position: absolute;
-  left: 31.42px;
-  top: 455.06px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-.image-14 {
-  width: 30.8px;
-  height: 30.8px;
-  position: absolute;
-  left: 31.49px;
-  top: 531.98px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-._40 {
-  color: #000000;
-  text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  text-decoration: underline;
-  position: absolute;
-  left: 369px;
-  top: 373px;
-  width: 225px;
-  height: 23px;
-  cursor: pointer;
-}
-.image-26 {
-  width: 37px;
-  height: 37px;
-  position: absolute;
-  left: 1627px;
-  top: 233px;
-  object-fit: cover;
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-.image-27 {
-  width: 37px;
-  height: 36px;
-  position: absolute;
-  left: 1627px;
-  top: 302px;
-  cursor: pointer;
-  object-fit: cover;
-  aspect-ratio: 37/36;
-  transition: transform 0.2s ease-in-out; /* 클릭 효과 */
-}
+
 
 &:hover {
     transform: scale(1.1);
@@ -958,17 +553,16 @@ export default {
     transform: scale(0.95);
   }
 
+.button-container {
+  display: inline-block;  
+  gap: 20px;           /* 버튼 사이 여백 추가 */
+  position: relative;
+}
 
-.image-28 {
-  width: 37px;
-  height: 37px;
-  position: absolute;
-  left: 1627px;
-  top: 368px;
-  object-fit: cover;
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+.button-container img {
+  width: 25px;   /* 버튼 크기 조정 */
+  height: 25px;  /* 버튼 크기 조정 */
+  cursor: pointer; /* 클릭 가능하도록 커서 변경 */
 }
 
 
