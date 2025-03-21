@@ -63,7 +63,7 @@ public class MemberController
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Collections.emptyList());
         }
 
-        return ResponseEntity.ok(memberCategories);
+        return ResponseEntity.ok().body(memberCategories);
     }
 
     //멤버 검색 (이름)

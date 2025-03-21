@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/be13-2nd-Maptist-Mappride.iml" filepath="$PROJECT_DIR$/.idea/be13-2nd-Maptist-Mappride.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.maptist.mappride.mappride.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.maptist.mappride.mappride.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mappride.iml" filepath="$PROJECT_DIR$/.idea/modules/mappride.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mappride.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mappride.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mappride.test.iml" filepath="$PROJECT_DIR$/.idea/modules/mappride.test.iml" />
     </modules>
   </component>
 </project>

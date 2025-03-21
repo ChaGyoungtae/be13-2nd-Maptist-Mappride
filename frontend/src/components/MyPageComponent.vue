@@ -82,9 +82,9 @@ export default {
 }
 .div {
   background: #ffffff;
-  height: 1080px;
-  position: relative;
-  overflow: hidden;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
 }
 button {
   display: flex;
