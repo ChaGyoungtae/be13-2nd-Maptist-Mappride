@@ -1,21 +1,10 @@
 <template>
-  <div class="div">
-    <div class="rectangle-4"></div>
-    <!-- <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" /> -->
-
-    <button class="btnLogout">logout</button>
+  <div class="full">
     
-    <img @click="handleClick" class="image-15" src="/src/assets/images/public/image-150.png" />
-    <!-- <div class="rectangle-29"></div> -->
     <label><input type="text" class="rectangle-29"></label>
     <div class="place-name">Place Name</div>
-    <!-- <div class="rectangle-32"></div> -->
     <textarea class="rectangle-32"/>
     <div class="content">Content</div>
-
-    <!-- <div class="rectangle-23"></div>
-    <img class="polygon-5" src="/src/assets/images/newPlaceComponet/polygon-50.png" />
-    <img class="ellipse-2" src="/src/assets/images/public/ellipse-20.png" /> -->
 
     <!-- 색상 선택 드롭다운 -->
     <div class="dropdown-container" @click="toggleDropdown">
@@ -32,14 +21,8 @@
       </ul>
     </div>
 
-
-    <!-- <div class="rectangle-35"></div>
-    <div class="rectangle-36"></div> -->
-
     <button class="btnSave">save</button>
     <button class="btnCancel">cancel</button>
-
-
 
     <div class="rectangle-33"></div>
 
@@ -56,25 +39,6 @@
       <input id="photosInput" type="file" @change="addImages" multiple /> <br>
       <img v-for="(item, index) in src" :key="index" :src="item" />
     </label>
-
-    <div class="mappride">Mappride</div>
-    <!-- <div class="rectangle-6"></div> -->
-    <!-- <a href="#" class="my-categories">categories</a>
-    <a href="#" class="my-page">My page</a>
-    <a href="#" class="map">Map</a>
-    <img class="image-12" src="/src/assets/images/public/image-120.png" />
-    <img class="image-13" src="/src/assets/images/public/image-130.png" />
-    <img class="image-14" src="/src/assets/images/public/image-140.png" /> -->
-
-    <button class="map" @click="navigateTo('map')">
-          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
-          Map</button>
-      <button class="my-page" @click="navigateTo('my-page')">
-          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
-          My Page</button>
-      <button class="my-categories" @click="navigateTo('my-categories')">
-          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
-          My Categories</button>    
   </div>
 </template>
 <script>
@@ -137,15 +101,15 @@ export default {
 };
 </script>
 <style scoped>
-.div,
-.div * {
+.full * {
   box-sizing: border-box;
 }
-.div {
-  background: #ffffff;
-  height: 1080px;
-  position: relative;
-  overflow: hidden;
+.full {
+  position: absolute;  /* 자식 요소는 부모를 기준으로 절대 위치 */
+  top: 10px;
+  left: 200px;
+  height: 100%;
+  width: 1600px;
 }
 .group-12 {
   width: 248.36px;
@@ -157,22 +121,11 @@ export default {
   height: 104.41px;
   position: static;
 }
-.rectangle-4 {
-  background: #ffffff;
-  border-style: solid;
-  border-color: #d3d3d3;
-  border-width: 0px 0px 1px 0px;
-  width: 1670px;
-  height: 90px;
-  position: absolute;
-  left: 250px;
-  top: 0px;
-}
 .rectangle-9 {
   width: 132px;
   height: 44px;
   position: absolute;
-  left: 1755px;
+  left: 1555px;
   top: 23px;
   overflow: visible;
 }
@@ -188,24 +141,7 @@ export default {
   width: 70px;
   height: 27px;
 } */
-.btnLogout {
-    color: #000000;
-    text-align: left;
-    font-family: "Stylish-Regular", sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    position: absolute;
-    left: 1804px;
-    top: 27px;
-    width: 120px;
-    height: 45px;
-    background-color: transparent; /* 배경을 투명하게 설정 */
-    border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
-    cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 바뀌게 설정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
   .btnSave {
     color: #000000;
     text-align: left;
@@ -215,7 +151,7 @@ export default {
     position: absolute;
     width: 97px;
     height: 60px;
-    left: 1290px;
+    left: 1090px;
     top: 952px;
     background-color: transparent; /* 배경을 투명하게 설정 */
     border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
@@ -233,7 +169,7 @@ export default {
     position: absolute;
     width: 97px;
     height: 60px;
-    left: 1402px;
+    left: 1202px;
     top: 952px;
     background-color: transparent; /* 배경을 투명하게 설정 */
     border: 2px solid #d2d2d2; /* 테두리 추가 (두께 2px, 색상 #d2d2d2) */
@@ -242,21 +178,13 @@ export default {
     align-items: center;
     justify-content: center;
   }
-.image-15 {
-  width: 46px;
-  height: 46px;
-  position: absolute;
-  left: 1624px;
-  top: 22px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
+
 .rectangle-29 {
   background: #f7f7f9;
   width: 244px;
   height: 60px;
   position: absolute;
-  left: 314px;
+  left: 180px;
   top: 237px;
   font-size: medium;
 }
@@ -268,15 +196,15 @@ export default {
   line-height: 150%;
   font-weight: 500;
   position: absolute;
-  left: 314px;
+  left: 180px;
   top: 201px;
 }
 .rectangle-32 {
   background: #f7f7f9;
-  width: 1185px;
+  width: 1100px;
   height: 544px;
   position: absolute;
-  left: 314px;
+  left: 180px;
   top: 371px;
   font-size: medium;
 }
@@ -288,7 +216,7 @@ export default {
   line-height: 150%;
   font-weight: 500;
   position: absolute;
-  left: 314px;
+  left: 180px;
   top: 318px;
 }
 /* .rectangle-23 {
@@ -326,7 +254,7 @@ export default {
   width: 100px;
   height: 35px;
   position: absolute;
-  left: 1402px;
+  left: 1202px;
   top: 237px;
   padding: 5px;
   font-size: 14px;
@@ -341,7 +269,7 @@ export default {
   border: 1px solid #d9d9d9;
   border-radius: 50%;
   position: absolute;
-  left: 1266px;
+  left: 1066px;
   top: 237px;
   background: #ffffff;
   display: flex;
@@ -419,7 +347,7 @@ export default {
   width: 97px;
   height: 60px;
   position: absolute;
-  left: 1402px;
+  left: 1202px;
   top: 952px;
 }
 .rectangle-36 {
@@ -430,7 +358,7 @@ export default {
   width: 97px;
   height: 60px;
   position: absolute;
-  left: 1267px;
+  left: 1067px;
   top: 952px;
 }
 .save {
@@ -440,7 +368,7 @@ export default {
   font-size: 24px;
   font-weight: 400;
   position: absolute;
-  left: 1295px;
+  left: 1095px;
   top: 967px;
 }
 .cancel {
@@ -450,7 +378,7 @@ export default {
   font-size: 24px;
   font-weight: 400;
   position: absolute;
-  left: 1421px;
+  left: 1221px;
   top: 967px;
 }
 
@@ -462,7 +390,7 @@ export default {
   width: 355px;
   height: 355px;
   position: absolute;
-  left: 1565px;
+  left: 1365px;
   top: 89px;
 }
 .add-thumbnail {
@@ -473,7 +401,7 @@ export default {
   line-height: 150%;
   font-weight: 500;
   position: absolute;
-  left: 1682px;
+  left: 1482px;
   top: 253px;
 }
 .rectangle-34 {
@@ -481,7 +409,7 @@ export default {
   width: 355px;
   height: 471px;
   position: absolute;
-  left: 1565px;
+  left: 1365px;
   top: 444px;
 }
 .add-photos {
@@ -492,25 +420,12 @@ export default {
   line-height: 150%;
   font-weight: 500;
   position: absolute;
-  left: 1687px;
+  left: 1487px;
   top: 721px;
 }
 .group-4 {
   position: absolute;
   inset: 0;
-}
-.mappride {
-  color: #000000;
-  text-align: left;
-  font-family: "Stylish-Regular", sans-serif;
-  font-size: 30px;
-  font-weight: 400;
-  position: absolute;
-  left: 57.39px;
-  top: 31.64px;
-  width: 136.99px;
-  height: 40.08px;
-  -webkit-text-stroke: 1px #ffffff;
 }
 /* .rectangle-6 {
   background: #f7f7f7;
@@ -571,39 +486,6 @@ export default {
   justify-content: center;
   -webkit-text-stroke: 1px #ffffff;
 } */
-.map, .my-page, .my-categories {
-    color: #000000;
-    text-align: center;
-    font-family: "Stylish-Regular", sans-serif;
-    font-size: 25px;
-    font-weight: 400;
-    position: absolute;
-    width: 248.36px;
-    height: 84.38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-text-stroke: 1px #ffffff;
-    background-color: transparent;
-    border: none; /* 버튼 테두리 */
-    cursor: pointer; /* 클릭 시 손 모양 커서 */
-  }
-  
-  .map {
-    top: 335.39px;
-    left: 20.14px;
-  }
-  
-  .my-page {
-    top: 439.80px;
-    left: 20.14px;
-  }
-  
-  .my-categories {
-    top:  544.21px;
-    left: 20.14px;
-  }
-  
   /* Hover 상태 */
   button:hover {
     background-color: #f0f0f0;
@@ -620,32 +502,5 @@ export default {
   position: absolute;
   left: 0px;
   top: 0px;
-}
-.image-12 {
-  width: 37.7px;
-  height: 37.7px;
-  position: absolute;
-  left: 16.09px;
-  top: 368.75px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-.image-13 {
-  width: 25.47px;
-  height: 25.47px;
-  position: absolute;
-  left: 22.21px;
-  top: 457.13px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
-.image-14 {
-  width: 26.49px;
-  height: 26.49px;
-  position: absolute;
-  left: 22.19px;
-  top: 534.14px;
-  object-fit: cover;
-  aspect-ratio: 1;
 }
 </style>

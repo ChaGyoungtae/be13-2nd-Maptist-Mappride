@@ -1,7 +1,43 @@
 <template>
-    <div class="full">
+    <div class="div">
+      <div class="rectangle-4"></div>
+      <div class="image-15"></div>
+
+      <img class="rectangle-9" src="/src/assets/images/public/rectangle-90.png" />
+      <!-- logout 버튼 -->
+      <!-- <div class="logout">logout</div> -->
+      <button @click="logoutClick">
+      <div class="logout">logout</div>
+      </button>
+
+      <div class="mappride">Mappride</div>
+      <div class="rectangle-6"></div>
+
+      <div class="my-categories">My categories</div>
+      <div class="my-page">My page</div>
+      <div class="map">Map</div>
+
+      <!-- <button @click="mapClick"><div class="map">Map</div></button> -->
+
+      <!-- <button class="map" @click="navigateTo('map')">
+          <img class="imgMap" src="/src/assets/images/public/image-120.png" />
+          Map</button>
+      <button class="my-page" @click="navigateTo('my-page')">
+          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
+          My Page</button>
+      <button class="my-categories" @click="navigateTo('my-categories')">
+          <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
+          My Categories</button> -->
+
+      <div class="rectangle-28"></div>
+      <img class="image-12" src="/src/assets/images/public/image-120.png" />
+      <img class="image-13" src="/src/assets/images/public/image-130.png" />
+      <img class="image-14" src="/src/assets/images/public/image-140.png" />
       <!-- 상단 알림 버튼 -->
       <!-- <img class="image-29" src="/src/assets/images/public/image-150.png" /> -->
+      <button @click="image29Click">
+      <img class="image-29" src="/src/assets/images/public/image-150.png" />
+      </button>
 
       <div class="comment">Comment</div>
       <div class="rectangle-50"></div>
@@ -177,21 +213,215 @@
   </script>
   
   <style scoped>
-  .full,
-  .full * {
+  .div,
+  .div * {
     box-sizing: border-box;
   }
-  .full {
-    margin-top: -950px;
-    margin-left: 300px;
+  .div {
     background: #ffffff;
+    height: 1080px;
     position: relative;
     overflow: hidden;
-    height: 1080px;
+  }
+
+  /* .map, .my-page, .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    width: 318.14px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+    background-color: transparent;
+    border: none; 
+    cursor: pointer; 
+  }
+  
+  .map {
+    top: 335.39px;
+    left: 20.14px;
+  }
+  
+  .my-page {
+    top: 439.80px;
+    left: 20.14px;
+  }
+  
+  .my-categories {
+    top:  544.21px;
+    left: 20.14px;
+  }
+  
+  
+  button:hover {
+    background-color: #f0f0f0;
+  } */
+
+  .rectangle-4 {
+    background: #ffffff;
+    border-style: solid;
+    border-color: #d3d3d3;
+    border-width: 0px 0px 1px 0px;
+    width: 1583px;
+    height: 91px;
+    position: absolute;
+    left: 337px;
+    top: 0px;
+  }
+  .image-15 {
+    width: 48px;
+    height: 61px;
+    position: absolute;
+    left: 1632px;
+    top: 30px;
+  }
+  .rectangle-9 {
+    width: 125px;
+    height: 45px;
+    position: absolute;
+    left: 1760px;
+    top: 23px;
+    overflow: visible;
+  }
+  .logout {
+    color: #000000;
+    text-align: left;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    left: 1790px;
+    top: 32px;
+    width: 66px;
+    height: 26px;
   }
   .group-5 {
     position: absolute;
     inset: 0;
+  }
+  .mappride {
+    color: #000000;
+    text-align: left;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    position: absolute;
+    left: 77.64px;
+    top: 31.64px;
+    width: 185.32px;
+    height: 40.08px;
+    -webkit-text-stroke: 1px #ffffff;
+  }
+  .rectangle-6 {
+    background: #f7f7f7;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 0px 1px 0px 0px;
+    width: 335.98px;
+    height: 84.38px;
+    position: absolute;
+    left: 0px;
+    top: 505.2px;
+  }
+  .my-categories {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    left: 46.6px;
+    top: 494.65px;
+    width: 291.6px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+  }
+  .my-page {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    left: 19.97px;
+    top: 419.77px;
+    width: 315.56px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+  }
+  .map {
+    color: #000000;
+    text-align: center;
+    font-family: "Stylish-Regular", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    left: 19.97px;
+    top: 335.39px;
+    width: 315.56px;
+    height: 104.41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-text-stroke: 1px #ffffff;
+  }
+  .rectangle-28 {
+    background: rgba(255, 255, 255, 0);
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 1px;
+    width: 336.87px;
+    height: 1080px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+  .image-12 {
+    width: 43.85px;
+    height: 43.85px;
+    position: absolute;
+    left: 25.34px;
+    top: 365.67px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .image-13 {
+    width: 29.63px;
+    height: 29.63px;
+    position: absolute;
+    left: 32.45px;
+    top: 455.05px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .image-14 {
+    width: 30.81px;
+    height: 30.81px;
+    position: absolute;
+    left: 32.53px;
+    top: 531.98px;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+  .image-29 {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    left: 1632px;
+    top: 22px;
+    object-fit: cover;
+    aspect-ratio: 1;
   }
   .comment {
     color: #454545;
