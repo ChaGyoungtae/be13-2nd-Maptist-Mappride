@@ -25,7 +25,7 @@ onMounted(async () => {
 
     if (accessToken) {
       // 토큰을 localStorage에 저장
-      localStorage.setItem("token", accessToken);
+      localStorage.setItem("accessToken", accessToken);
 
       // 알림창 띄우기
       alert("로그인 성공! 🎉");

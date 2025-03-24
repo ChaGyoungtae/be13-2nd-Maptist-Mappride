@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+const apiClient = axios.create({
   baseURL: 'http://localhost:8080/api/v1',
   timeout: 1000,
 });
@@ -16,7 +16,7 @@ apiClient.interceptors.request.use(
 
       // accessToken 확인 후 Authorization 해더에 accessToken을 추가한다.
       if (accessToken) {
-          config.headers['Authorization'] = `Bearer ${accessToken}`;
+          config.headers['Authorization'] = `${accessToken}`;
       }
 
       return config;
@@ -29,4 +29,4 @@ apiClient.interceptors.request.use(
 
 
 
-export default api;
+export default apiClient;
