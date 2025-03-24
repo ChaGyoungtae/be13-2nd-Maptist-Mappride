@@ -1,60 +1,44 @@
 <template>
   <div class="full">
-      <!-- <div class="name">name</div> -->
+    <div class="top"></div>
+    <div class="title">TITLE</div>
+    <div class="address">ADDRESS</div>
+    <div class="color">COLOR</div>
 
-      <div class="top"></div>
-      <div class="title">TITLE</div>
-      <div class="address">ADDRESS</div>
-      <div class="color">COLOR</div>
-      
-      <div class="title-dividing-line"></div>
-      <div class="address-dividing-line"></div>
-      <div class="color-dividing-line"></div>
-            
-            
+    <div class="title-dividing-line"></div>
+    <div class="address-dividing-line"></div>
+    <div class="color-dividing-line"></div>
 
-            <ul class="place-list">
-              <li v-for="(place, index) in places" :key="index" class="place-item">
-                <!-- 카테고리 이름 -->
-                <a :href="place.url" class="place-link">{{ place.name }}</a>
+    <ul class="place-list" >
+      <li v-for="(place, index) in places" :key="index" class="place-item">
+        <a :href="place.url" class="place-link">{{ place.name }}</a>
+        <div class="place-address">{{ place.placeAddress }}</div>
+        <div class="button-container">
+          <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="editPlace(index)" />
+          <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deletePlace(index)" />
+        </div>
 
-                <!-- 주소 -->
-                <div class="place-address">{{ place.placeAddress }}</div>
+        <!-- 색상 드롭다운 -->
+        <div class="dropdown-container-color" :class="{ open: colorDropdownVisible[index] }">
+          <div class="selected-option" @click="toggleColorDropdown(index)">
+            <div class="color-circle" :class="selectedClass[index]"></div>
+          </div>
 
-                <!-- 수정/삭제 버튼 -->
-                <div class="button-container">
-                  <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="editCategory(index)" />
-                  <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deleteCategory(index)" />
-                </div>
-              
+          <ul v-show="colorDropdownVisible[index]" class="dropdown-menu-color">
+            <li v-for="(color, colorIndex) in colors" :key="colorIndex" @click="selectColor(index, color.className)">
+              <div class="color-circle" :class="color.className"></div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
 
-            <!-- 색상 드롭다운 -->
-            <div class="dropdown-container-color" :class="{ open: colorDropdownVisible[index] }">
-              <div class="selected-option" @click="toggleColorDropdown(index)">
-                <div class="color-circle" :class="selectedClass[index]"></div>
-              </div>
-
-              <ul v-show="colorDropdownVisible[index]" class="dropdown-menu-color">
-                <li v-for="(color, colorIndex) in colors" :key="colorIndex" @click="selectColor(index, color.className)">
-                  <div class="color-circle" :class="color.className"></div>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-          
-
-
-  <!-- 정렬 드롭다운 -->
-  <div class="sortDropdown" @click="toggleSortDropdown">
-      
-      <!-- 선택한 정렬 기준 표시 -->
+    <!-- 정렬 드롭다운 -->
+    <div class="sortDropdown" @click="toggleSortDropdown">
       <span class="selected-container">
         <img :src="selectedSortImage" class="dropdown-image" alt="Selected Option Image" />
         <span class="selected-text"> {{ selectedSort }}</span>
       </span>
-
-      <!-- 드롭다운 메뉴 -->
       <div v-if="sortDropdownVisible" class="dropdown-menu">
         <ul>
           <li v-for="(option, index) in sortOptions" :key="index" @click="setSortOrder(option)">
@@ -64,42 +48,18 @@
         </ul>
       </div>
     </div>
-</div>
-
-
-  </template>
+  </div>
+</template>
   <script>
-
-  import { ref } from 'vue';
-
+  import { ref, onMounted } from "vue";
+  import axios from "axios";
+  
   export default {
     name: "Two",
-    components: {},
-    props: {},
-     setup() {
-
-      const places = ref([
-        { name: "비에이블", url: "이동할_페이지_URL", placeAddress: "서울특별시 노원구 동일로 1551, 6층" },
-        { name: "공부인", url: "이동할_페이지_URL", placeAddress: "서울특별시 노원구 동일로 1547 5층" },
-        { name: "작심", url: "이동할_페이지_URL", placeAddress: "서울특별시 노원구 중계동 361-1" },
-        { name: "랭", url: "이동할_페이지_URL", placeAddress: "서울특별시 노원구 상계동 357-2 3층" },
-        { name: "단디", url: "이동할_페이지_URL", placeAddress: "서울특별시 노원구 상계동 746-3 랑은빌딩 6층" },
-      ]);
-
-      // ✅ 수정 및 삭제 기능
-      const editPlace = (index) => {
-        console.log(`수정 버튼 클릭: ${categories.value[index].name}`);
-        alert(`카테고리 수정: ${categories.value[index].name}`);
-      };
-
-      const deletePlace = (index) => {
-        console.log(`삭제 버튼 클릭: ${categories.value[index].name}`);
-        
-      };      
-
-      const colorDropdownVisible = ref(new Array(places.value.length).fill(false)); // 드롭다운 열림 여부
-      const selectedClass = ref(new Array(places.value.length).fill("ellipse-2")); // 기본 선택된 색상
-
+    setup() {
+      const places = ref([]);
+      const colorDropdownVisible = ref(new Array(places.value.length).fill(false));
+      const selectedClass = ref(new Array(places.value.length).fill("ellipse-2"));
       const colors = ref([
         { className: "ellipse-2" },
         { className: "ellipse-3" },
@@ -107,65 +67,84 @@
         { className: "ellipse-5" },
         { className: "ellipse-6" }
       ]);
-
-      // 드롭다운 열고 닫기
+  
+      const sortDropdownVisible = ref(false);
+      const selectedSortImage = ref("/src/assets/images/MyPlaceComponent/filter.png");
+      const selectedSort = ref("Filter");
+      const sortOptions = ref([
+        { value: "date-asc", label: "최신순", image: "/src/assets/images/MyPlaceComponent/image-430.png" },
+        { value: "date-desc", label: "최신순", image: "/src/assets/images/MyPlaceComponent/image-400.png" },
+        { value: "name-asc", label: "이름순", image: "/src/assets/images/MyPlaceComponent/image-430.png" },
+        { value: "name-desc", label: "이름순", image: "/src/assets/images/MyPlaceComponent/image-400.png" }
+      ]);
+  
+      // Axios로 데이터 받아오기
+      const fetchPlaces = async () => {
+        try {
+          const response = await axios.get("API_URL"); // 여기에 실제 API URL을 넣어주세요
+          console.log("받은 데이터:", response.data);
+          places.value = response.data; // API에서 반환된 데이터로 places 값을 업데이트
+        } catch (error) {
+          console.error("데이터를 가져오는 데 실패했습니다:", error);
+        }
+      };
+  
+      // 페이지가 마운트되면 장소 데이터를 받아옴
+      onMounted(() => {
+        fetchPlaces();
+      });
+  
+      // 수정 및 삭제 기능
+      const editPlace = (index) => {
+        console.log(`수정 버튼 클릭: ${places.value[index].name}`);
+        alert(`장소 수정: ${places.value[index].name}`);
+      };
+  
+      const deletePlace = (index) => {
+        console.log(`삭제 버튼 클릭: ${places.value[index].name}`);
+      };
+  
+      // 색상 드롭다운 관련 함수
       const toggleColorDropdown = (index) => {
-      // 현재 클릭한 드롭다운이 열려 있으면 닫고, 열려 있지 않으면 열도록 설정
-      colorDropdownVisible.value[index] = !colorDropdownVisible.value[index];
-      
-      // 다른 드롭다운들은 모두 닫히게 설정
-      colorDropdownVisible.value = colorDropdownVisible.value.map((_, i) => i === index ? colorDropdownVisible.value[index] : false);
+        colorDropdownVisible.value[index] = !colorDropdownVisible.value[index];
+        colorDropdownVisible.value = colorDropdownVisible.value.map((_, i) => (i === index ? colorDropdownVisible.value[index] : false));
       };
-
-      // 색상 선택
+  
       const selectColor = (index, colorClass) => {
-      selectedClass.value[index] = colorClass;
-      colorDropdownVisible.value[index] = false; // 선택 후 드롭다운 닫기
+        selectedClass.value[index] = colorClass;
+        colorDropdownVisible.value[index] = false;
       };
-
-
-      // 정렬 드롭다운 상태
-    const sortDropdownVisible = ref(false); 
-    const selectedSortImage = ref('/src/assets/images/MyPlaceComponent/filter.png'); // 초기 이미지 설정
-    const selectedSort = ref("Filter"); // 초기 값
-    const sortOptions = ref([
-      { value: 'date-asc', label: '최신순', image: '/src/assets/images/MyPlaceComponent/image-430.png' },
-      { value: 'date-desc', label: '최신순', image: '/src/assets/images/MyPlaceComponent/image-400.png' },
-      { value: 'name-asc', label: '이름순', image: '/src/assets/images/MyPlaceComponent/image-430.png' },
-      { value: 'name-desc', label: '이름순', image: '/src/assets/images/MyPlaceComponent/image-400.png' }
-    ]);
-    
-    // 정렬 드롭다운 메뉴 토글
-    const toggleSortDropdown = () => {
-      sortDropdownVisible.value = !sortDropdownVisible.value;
-    };
-    
-    // 정렬 기준 설정
-    const setSortOrder = (option) => {
-      selectedSort.value = option.label; // 선택된 정렬 기준 바로 반영
-      selectedSortImage.value = option.image; // 선택된 옵션에 맞는 이미지 반영
-      console.log(`정렬 기준: ${option.value}`);
-    };
-
-    return {
-      colorDropdownVisible,
-      selectedClass,
-      colors,
-      toggleColorDropdown,
-      selectColor,
-      sortDropdownVisible,
-      selectedSort,
-      sortOptions,
-      selectedSortImage,
-      toggleSortDropdown,
-      setSortOrder, 
-      places,
-      editPlace,
-      deletePlace
-    };
-  }
-}
-</script>
+  
+      // 정렬 드롭다운 관련 함수
+      const toggleSortDropdown = () => {
+        sortDropdownVisible.value = !sortDropdownVisible.value;
+      };
+  
+      const setSortOrder = (option) => {
+        selectedSort.value = option.label;
+        selectedSortImage.value = option.image;
+        console.log(`정렬 기준: ${option.value}`);
+      };
+  
+      return {
+        colorDropdownVisible,
+        selectedClass,
+        colors,
+        toggleColorDropdown,
+        selectColor,
+        sortDropdownVisible,
+        selectedSort,
+        sortOptions,
+        selectedSortImage,
+        toggleSortDropdown,
+        setSortOrder,
+        places,
+        editPlace,
+        deletePlace
+      };
+    }
+  };
+  </script>
 <style scoped>
 
 ._2,
