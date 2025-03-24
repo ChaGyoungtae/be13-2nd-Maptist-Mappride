@@ -23,11 +23,20 @@ public class CommentRepository {
 
 
     // 장소별 댓글 조회
+//    public List<CommentRequestDto> findCommentRequestDtoByPlaceId(Long placeId) {
+//        return em.createQuery("SELECT new com.maptist.mappride.mappride.comment.dto.CommentRequestDto(c.comment, c.place.id)
+//                              FROM Comment c WHERE c.place.id = :placeId", CommentRequestDto.class)
+//                .setParameter("placeId", placeId)
+//                .getResultList();
+//    }
+
     public List<CommentRequestDto> findCommentRequestDtoByPlaceId(Long placeId) {
-        return em.createQuery("SELECT new com.maptist.mappride.mappride.comment.dto.CommentRequestDto(c.comment, c.place.id) FROM Comment c WHERE c.place.id = :placeId", CommentRequestDto.class)
+        return em.createQuery("SELECT new com.maptist.mappride.mappride.comment.dto.CommentRequestDto(c.comment, c.place.id, c.member.id) "
+                                + "FROM Comment c WHERE c.place.id = :placeId", CommentRequestDto.class)
                 .setParameter("placeId", placeId)
                 .getResultList();
     }
+
 
 
     // 댓글 수정
