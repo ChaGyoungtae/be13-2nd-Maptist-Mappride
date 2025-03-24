@@ -9,7 +9,7 @@
     Map
     </RouterLink>
 
-    <RouterLink to="/mypage" class="my-page">
+    <RouterLink to="/Mypage" class="my-page">
     <img class="imgPage" src="/src/assets/images/public/image-130.png" />
     My Page
     </RouterLink>
