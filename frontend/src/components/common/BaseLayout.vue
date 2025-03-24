@@ -25,18 +25,17 @@
     <img @click="handleClick" class="btnNotice" src="/src/assets/images/public/image-150.png" />
 
     <div v-if="route.name === 'Main'">
-      <select class="btnDD">
+      <select v-model="selectedOption" class="btnDD">
           <option value="address">Address</option>
           <option value="user">User</option>
       </select>
 
-      <input class="txtSearch" type="text" placeholder="Search..." />
-      <button class="btnSearch">search</button>
+      <input v-model="txtSearchModel" class="txtSearch" type="text" placeholder="Search..." />
+      <button @click="searchClick" class="btnSearch">search</button>
     </div>
 
     <div v-if="route.name === 'Categories' || route.name === 'Place'">
-      <div class="rectangle-6"></div>
-      <div class="name">name</div>
+      <div class="lblName">name</div>
 
       <input class="txtSearch" type="text" placeholder="Search..." />
       <button class="btnSearch">search</button>
@@ -53,13 +52,51 @@
     </div>
   </div>
 
+  <MainComponent :address="address.addressValue"/>
+
   <RouterView></RouterView>
 </template>
     
 <script setup>
-    import { useRoute } from 'vue-router';
+  import { ref, reactive, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
+  import apiClient from '@/api/axios.js';
 
-    const route = useRoute(); 
+  import MainComponent from '../MainComponent.vue';
+
+  const route = useRoute();
+  const selectedOption = ref('address');
+  const txtSearchModel = ref('');
+  const address = reactive({
+    addressValue: ''
+  });
+
+  const member = ref({});
+
+  const searchClick = async () => {
+    if (txtSearchModel.value.trim() === '') {
+      alert('검색어를 입력해주세요.');
+      return;
+    }
+
+    try {
+      if (selectedOption.value === 'address') {
+        address.addressValue = txtSearchModel.value;
+      } else if (selectedOption.value === 'user') {
+
+        console.log("txtSearchModel.value" + txtSearchModel.value);
+
+        // 경로 파라미터를 사용하여 요청 보내기
+        const response = await apiClient.get(`/api/v1/members/name/${txtSearchModel.value}`);
+
+        console.log("status" + response.status);
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error('API 요청 실패:', error);
+      alert('검색 실패. 다시 시도해주세요.');
+    }
+  };
 </script>
     
 <style scoped>
@@ -197,13 +234,13 @@
   .btnDD option {
     padding: 10px; /* 옵션 항목에 여백 추가 */
   }
-  .name-box {
+  .lblName {
     background: #ffffff; /* 박스 배경 색 */
     border-style: solid;
     border-color: #d2d2d2;
     border-width: 1px;
-    width: 165px; /* 박스 너비 */
-    height: 45px; /* 박스 높이 */
+    width: 165px;
+    height: 45px;
     display: flex;
     justify-content: center; /* 텍스트 수평 중앙 정렬 */
     align-items: center; /* 텍스트 수직 중앙 정렬 */
@@ -213,8 +250,8 @@
     color: #000000; /* 텍스트 색상 */
     -webkit-text-stroke: 1px #d2d2d2; /* 텍스트 테두리 */
     position: absolute;
-    left: 168px; /* 위치 조정 */
-    top: 27px; /* 위치 조정 */
+    left: 168px;
+    top: 27px;
   }
   .txtSearch {
     background: #ffffff;
