@@ -6,17 +6,14 @@
         <!-- 카테고리 이름 -->
         <a :href="category.url" class="category-link">{{ category.name }}</a>
 
-        <!-- 라디오 버튼 -->
-        <div class="radio-container">
-          <div class="radio-group">
-            <input type="radio" :id="'optionO' + index" 
-              :name="'option' + index" value="O" v-model="category.selectedOption">
-            <label :for="'optionO' + index">O</label>
-
-            <input type="radio" :id="'optionX' + index" 
-              :name="'option' + index" value="X" v-model="category.selectedOption">
-            <label :for="'optionX' + index">X</label>
-          </div>
+      <!-- 라디오 버튼 -->
+      <div class="radio-container">
+        <div  class="radio-option" :class="{ selected: category.selectedOption === 'O' }" 
+          @click="category.selectedOption = 'O'">O
+        </div>
+        <div class="radio-option" :class="{ selected: category.selectedOption === 'X' }" 
+          @click="category.selectedOption = 'X'">X
+        </div>
         </div>
 
         <!-- 수정/삭제 버튼 -->
@@ -27,7 +24,26 @@
       </li>
     </ul>
 
-    <input type="text" class="search-category" placeholder="  카테고리 제목을 입력하세요" />    
+    <button class="logout-button">Logout</button>
+    <button class="search-button">Search</button>
+
+    <input type="text" class="search-name"  placeholder="   . . ." />
+
+    <div class="search-box">
+      <input type="text" class="new-category" placeholder="  카테고리 이름을 입력하세요" /> 
+      <div class="new-radio-container">
+        <div class="new-radio-option" :class="{ selected: newSelectedOption === 'O' }"
+          @click="newSelectOption('O')" >O
+        </div>
+        <div class="new-radio-option" :class="{ selected: newSelectedOption === 'X' }"
+          @click="newSelectOption('X')">X
+        </div>
+      </div>
+    </div>
+
+    <div class="name-box">name</div>
+
+    <div class="top"></div>
     <div class="title">TITLE</div>
     <div class="publish">PUBLISH</div>
    
@@ -40,31 +56,48 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
-  name: "RadioButtonComponent", 
-  data() {
+  name: "MyCategories",
+  setup() {
+    const categories = ref([
+      { name: "스터디카페 (5)", url: "이동할_페이지_URL", selectedOption: "X" },
+      { name: "코인노래방 (3)", url: "이동할_페이지_URL", selectedOption: "X" },
+      { name: "혼밥 (40)", url: "이동할_페이지_URL", selectedOption: "X" },
+    ]);
+
+    const newSelectedOption = ref(null); // 새로운 O, X 선택 값
+
+    const newSelectOption = (option) => {
+      newSelectedOption.value = option; // 선택 값 변경
+    };
+
+    const navigateTo = (page) => {
+      // 페이지 이동 로직 (Vue Router가 설정되어 있어야 함)
+      console.log(`Navigating to: ${page}`);
+    };
+
+    const editCategory = (index) => {
+      console.log(`수정 버튼 클릭: ${categories.value[index].name}`);
+    };
+
+    const deleteCategory = (index) => {
+      console.log(`삭제 버튼 클릭: ${categories.value[index].name}`);
+    };
+
     return {
-      categories: [
-        { name: "스터디카페 (5)", url: "이동할_페이지_URL", selectedOption: "X" },
-        { name: "코인노래방 (3)", url: "이동할_페이지_URL", selectedOption: "X" },
-        { name: "혼밥 (40)", url: "이동할_페이지_URL", selectedOption: "X" }
-      ],
+      categories,
+      newSelectedOption,
+      newSelectOption,
+      navigateTo,
+      editCategory,
+      deleteCategory,
     };
   },
-
-  methods: {
-    navigateTo(page) {
-      this.$router.push(`/${page}`);
-    },
-    editCategory(index) {
-      console.log(`수정 버튼 클릭: ${this.categories[index].name}`);
-    },
-    deleteCategory(index) {
-      console.log(`삭제 버튼 클릭: ${this.categories[index].name}`);
-    }
-  }
 };
 </script>
+
 
 
 
@@ -90,20 +123,32 @@ box-sizing: border-box;
   overflow: hidden;
 }
 
-/* 라디오 버튼 그룹 스타일 */
+ /* 라디오 버튼 그룹 스타일 */
 .radio-container {
   position: absolute;
-  left: 620px;
+  left: 835px;
   width: 200px;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.radio-group {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  /* font-family: "Inter-Medium", sans-serif; */
-  font-size: 30px;
-  /* font-weight: 500; */
+/* 기본 옵션 스타일 */
+.radio-option {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 선택된 옵션 스타일 */
+.radio-option.selected {
+  font-weight: bold;
+  background-color: #ddd;
+  border-color: #888;
 }
 
 input[type="radio"] {
@@ -114,13 +159,61 @@ input[type="radio"]:checked + label {
   font-weight: bold;
 }
 
-label {
-  cursor: pointer;
-  font-size: 20px;
-}
 
 img {
   cursor: pointer;
+}
+
+.alarm-image { 
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  left: 1634px;
+  top: 27px;
+  object-fit: cover;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logout-button {
+  width: 125px;
+  height: 45px;
+  position: absolute;
+  left: 1758px;
+  top: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
+}
+
+.search-button {
+  width: 125px;
+  height: 45px;
+  position: absolute;
+  left: 1190px;
+  top: 23px;
+  display: flex;
+  gap: 8px; 
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.3s, transform 0.2s ease-in-out;
 }
 
 .delete-image:active {
@@ -133,7 +226,39 @@ img {
   transform: scale(0.95);
 }
 
-.search-category { /* 카테고리 이름 입력칸 */
+/* 마우스 호버 효과 */
+.logout-button:hover {
+  background: #f0f0f0;
+}
+.search-button:hover {
+  background: #f0f0f0;
+}
+
+/* 클릭 효과 */
+.logout-button:active {
+  transform: scale(0.95);
+}
+.search-button:active {
+  transform: scale(0.95);
+}
+
+/* 검색창  */
+.search-name { 
+  background: #ffffff;
+  border-style: solid;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  width: 457px;
+  height: 46px;
+  position: absolute;
+  left: 717px;
+  top: 22px;
+  outline: none;
+
+}
+
+/* 카테고리 이름 입력칸 */
+.new-category { 
   background: #ffffff;
   border: 1px solid #d2d2d2;
   width: 708px;
@@ -141,10 +266,78 @@ img {
   padding: 10px;
   font-size: 16px;
   position: absolute;
-  left: 149px;
-  top: 125px;
-  outline: none;
+  left: 10px;
+  top: 20px;
+  z-index: 500;
 }
+
+.search-box {
+  background: #ffffff;
+    border-style: solid;
+    border-color: #d2d2d2;
+    border-width: 1px;
+    width: 1550px;
+    height: 80px;
+    position: absolute;
+    left: 335px;
+    top: 154px;
+}
+
+/* 라디오 버튼 그룹 스타일 */
+.new-radio-container {
+  position: absolute;
+  left: 835px;
+  top: 25px;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 선택된 옵션 스타일 */
+.new-radio-option {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.new-radio-option.selected {
+  font-weight: bold;
+  background-color: #ddd;
+  border-color: #888;
+}
+.name-box { 
+  background: #ffffff;
+  border-style: solid;
+  border-color: #d2d2d2;
+  border-width: 1px;
+  width: 164px;
+  height: 45px;
+  position: absolute;
+  left: 535px;
+  top: 23px;
+  align-items: center;
+  justify-content: center;
+  font-size:20px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+}
+
+.top {
+    background: #ffffff;
+    border-style: solid;
+    border-color: #d2d2d2;
+    border-width: 1px;
+    width: 1550px;
+    height: 65px;
+    position: absolute;
+    left: 335px;
+    top: 90px;
+  }
 
 .title {
   color: #000000;
@@ -180,16 +373,16 @@ img {
   overflow: hidden;
   text-align: left;
   text-overflow: ellipsis ;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .category-list {
   list-style: none;
   padding: 20px;
-  margin-top: 150px;
-  margin-left: 115px;
+  margin-top: 210px;
+  margin-left: 315px;
 }
 
 .category-item {
@@ -197,11 +390,13 @@ img {
   align-items: center;     /* 세로 중앙 정렬 */
   justify-content: space-between; 
   width: 1550px;             /* 부모 요소 기준으로 전체 너비 사용 */
-  padding: 15px;           /* 내부 여백 추가 */
+  padding: 30px;           /* 내부 여백 추가 */
   border-bottom: 1px solid #ddd; /* 각 항목 구분선 */
+  border-right: 1px solid #ddd;
   gap: 10px;
   position: relative;
 }
+
 .title-dividing-line {
   margin-top: -1px;
   border-style: solid;
@@ -241,7 +436,7 @@ img {
 }
 
 .modify-image {
-  width: 37px;
+  width: px;
   height: 36px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out; /* 클릭 효과 */
