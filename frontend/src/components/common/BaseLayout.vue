@@ -4,17 +4,17 @@
 
     <div class="leftRectangle"></div>
 
-    <RouterLink to="/main" class="map">
+    <RouterLink :to="{ name: 'Main' }" class="map">
     <img class="imgMap" src="/src/assets/images/public/image-120.png" />
     Map
     </RouterLink>
 
-    <RouterLink to="/Mypage" class="my-page">
+    <RouterLink :to="{ name: 'Mypage' }" class="my-page">
     <img class="imgPage" src="/src/assets/images/public/image-130.png" />
     My Page
     </RouterLink>
 
-    <RouterLink to="/categories" class="my-categories">
+    <RouterLink :to="{ name: 'Categories' }" class="my-categories">
     <img class="imgCategory" src="/src/assets/images/public/image-140.png"/>
     Categories
     </RouterLink>

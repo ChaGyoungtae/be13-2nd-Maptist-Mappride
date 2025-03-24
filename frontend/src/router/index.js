@@ -28,10 +28,11 @@ import MyCategories from "../components/MyCategories.vue";
 import MyPlaceComponent from "../components/MyPlaceComponent.vue";
 import NewPlaceComponent from "../components/NewPlaceComponent.vue";
 import PlaceDetailComponent from "../components/PlaceDetailComponent.vue";
+import LoginSuccessComponent from '@/components/LoginSuccessComponent.vue';
 
 const routes = [
   {
-    path: '/', name: 'BaseLayout',component: BaseLayout,
+    path: '/api/v1/', name: 'BaseLayout',component: BaseLayout,
     children: 
     [
       { path: '', name: 'Login', component: LoginComponent },                                 // 알림, btnLogin,  txtSearch, btnSearch, dropbutton
@@ -40,7 +41,9 @@ const routes = [
       { path: 'categories', name: 'Categories', component: MyCategories },                    // 알림, btnLogout, txtSearch, btnSearch, txtName
       { path: 'places', name: 'Place', component: MyPlaceComponent },                         // 알림, btnLogout, txtSearch, btnSearch, txtName
       { path: 'new-place', name: 'NewPlace', component: NewPlaceComponent },                  // 알림, btnLogout
-      { path: 'place/:id', name: 'PlaceById', component: PlaceDetailComponent, props: true }  // 알림, btnLogout
+      { path: 'place/:id', name: 'PlaceById', component: PlaceDetailComponent, props: true },  // 알림, btnLogout
+      { path: "auth/login-success", component: LoginSuccessComponent },                       // 로그인 성공 처리
+
     ]
   },  
 ];
