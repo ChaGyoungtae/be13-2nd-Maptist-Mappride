@@ -62,22 +62,6 @@ public class MemberRepository {
 
     }
 
-    // 내 정보 수정
-//    public void updateMyInfo(MemberUpdateDto memberDto)
-//    {
-//        String query = """
-//                UPDATE Member m
-//                SET m.nickname = :nickname, m.birthDay = :birthDay, m.publish =:publish
-//                WHERE m.id = :id
-//                """;
-//
-//        em.createQuery(query)
-//                .setParameter("nickname", memberDto.getNickname())
-//                .setParameter("birthDay", memberDto.getBirthDay())
-//                .setParameter("publish",memberDto.isPublish())
-//                .setParameter("id", memberDto.getId())
-//                .executeUpdate();
-//    }
     public void updateBirthday(Long memberId, LocalDate birthday) {
         String query = """
                    UPDATE Member m

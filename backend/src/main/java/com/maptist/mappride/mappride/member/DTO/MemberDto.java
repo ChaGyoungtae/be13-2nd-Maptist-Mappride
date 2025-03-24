@@ -27,7 +27,7 @@ public class MemberDto
 
     private String nickname;
 
-    private LocalDate birthDay;
+    private LocalDate birthday;
 
     private String userRole;
 
