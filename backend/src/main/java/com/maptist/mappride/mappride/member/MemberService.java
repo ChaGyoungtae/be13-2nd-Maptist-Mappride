@@ -13,7 +13,6 @@ import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
-import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
 import com.maptist.mappride.mappride.member.DTO.RegisterDto;
 import com.maptist.mappride.mappride.photo.Photo;
 import com.maptist.mappride.mappride.photo.PhotoRepository;
@@ -79,21 +78,6 @@ public class MemberService {
         return memberRepository.selectMyInfo(memberId);
     }
 
-    // 내 정보 수정
-//    public void updateMyInfo(MemberUpdateDto dto)
-//    {
-//        try
-//        {
-//            validateDuplicateNickname(dto.getNickname(), dto.getId());
-//        }
-//        catch (IllegalStateException e)
-//        {
-//            log.error("닉네임 중복");
-//            return;
-//        }
-//
-//        memberRepository.updateMyInfo(dto);
-//    }
     public void updateInfo(LocalDate birthday) {
         // 멤버 객체에서 아이디만 빼옴
         Long memberId = getMember().getId();

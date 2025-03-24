@@ -45,19 +45,13 @@ public class MemberController
         return ResponseEntity.ok(selectMyInfo);
     }
 
-    // 내 정보 수정
-//    @PutMapping("/update")
-//    public ResponseEntity<Void> updateMyInfo(@RequestBody MemberUpdateDto dto)
-//    {
-//        memberService.updateMyInfo(dto);
-//        return ResponseEntity.ok().build();
-//    }
-
+    // 정보 수정(생일)
     @PutMapping("/update/birthday")
     public ResponseEntity<Void> updateMyBirthday(@RequestBody LocalDate birthday) {
         memberService.updateInfo(birthday);
         return ResponseEntity.ok().build();
     }
+    // 정보 수정(닉네임)
     @PutMapping("/update/nickname")
     public ResponseEntity<Void> updateMyNickname(@RequestBody String nickname){
         memberService.updateInfo(nickname);
