@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.place;
 
+import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryService;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
@@ -38,7 +39,7 @@ public class PlaceController {
     // 장소 생성 페이지 getMapping
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getCategories(){
-        List<CategoryDto> categories = categoryService.findByMemberId();
+        List<CategoryDto> categories = categoryService.findCategoryDtoByMemberId();
         return ResponseEntity.ok().body(categories);
     }
 

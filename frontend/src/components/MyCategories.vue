@@ -3,8 +3,8 @@
     <ul class="category-list">
       <li v-for="(category, index) in categories" :key="index" class="category-item">
         <!-- 카테고리 이름 -->
-        <a :href="category.url" class="category-link" v-if="!isModify">{{ category.name }}</a>
-        <input type="text" class="category-link" :value="category.name" v-if="isModify">
+        <a :href="category.url" class="category-link">{{ category.name }}</a>
+        <input type="text" class="category-link" :value="category.name">
           <!-- 라디오 버튼 -->
           <div class="radio-container">
           <div 
@@ -85,11 +85,10 @@ export default {
     const newCategoryName = ref('');  // 카테고리 이름 입력
     const newSelectedOption = ref('O');  // 기본적으로 X로 설정
     const categories = ref([]);  // 기존 카테고리 목록
-    const isModify = ref(false);
 
 
     const initializeCategoryOptions = () => {
-  categories.value.forEach((category) => {
+    categories.value.forEach((category) => {
     category.selectedOption = category.publish === true || category.publish === 'true' ? 'O' : 'X';
   });
 };
@@ -148,11 +147,6 @@ export default {
     // 카테고리 수정 함수 (추가 기능을 위해 빈 함수로 유지)
     const modifyCategory = (index) => {
       
-      if(isModify.value === true) {
-        isModify.value = false;
-      } else {
-        isModify.value = true;
-      }
 
     };
 

@@ -79,7 +79,7 @@ public class CategoryService {
         // 멤버 객체에서 아이디만 빼옴
         Long memberId = member.getId();
         //멤버아이디를 레포지토리로 이동
-        List<Category> categories = categoryRepository.findCategoryDtoByMemberId(memberId);
+        List<Category> categories = categoryRepository.findCategoryByMemberId(memberId);
         System.out.println("categories = " + categories);
         return categories;
     }
@@ -192,4 +192,8 @@ public class CategoryService {
 
     }
 
+    public List<CategoryDto> findCategoryDtoByMemberId() {
+        Long memberId = memberService.getMember().getId();
+        return categoryRepository.findCategoryDtoByMemberId(memberId);
+    }
 }
