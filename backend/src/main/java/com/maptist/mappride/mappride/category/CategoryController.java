@@ -32,14 +32,14 @@ public class CategoryController {
 
 
     @PostMapping
-    public ResponseEntity<Long> createCategory(@RequestBody CategoryDto dto) {
-
-        return categoryService.createCategory(dto);
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto dto) {
+        categoryService.createCategory(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>>findAll() {
-        List<CategoryDto> findAllCategory = categoryService.findByMemberId();
+    public ResponseEntity<List<Category>>findAll() {
+        List<Category> findAllCategory = categoryService.findByMemberId();
         return ResponseEntity.ok(findAllCategory);
     }
 

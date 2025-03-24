@@ -1,95 +1,174 @@
 <template>
   <div class="full">
-
     <ul class="category-list">
       <li v-for="(category, index) in categories" :key="index" class="category-item">
         <!-- 카테고리 이름 -->
-        <a :href="category.url" class="category-link">{{ category.name }}</a>
-
-      <!-- 라디오 버튼 -->
-      <div class="radio-container">
-        <div  class="radio-option" :class="{ selected: category.selectedOption === 'O' }" 
-          @click="category.selectedOption = 'O'">O
-        </div>
-        <div class="radio-option" :class="{ selected: category.selectedOption === 'X' }" 
-          @click="category.selectedOption = 'X'">X
-        </div>
+        <a :href="category.url" class="category-link" v-if="!isModify">{{ category.name }}</a>
+        <input type="text" class="category-link" :value="category.name" v-if="isModify">
+          <!-- 라디오 버튼 -->
+          <div class="radio-container">
+          <div 
+            class="radio-option" 
+            :class="{ selected: category.selectedOption === 'O' }" 
+            @click="category.selectedOption = 'O'">
+            O
+          </div>
+          <div 
+            class="radio-option" 
+            :class="{ selected: category.selectedOption === 'X' }" 
+            @click="category.selectedOption = 'X'">
+            X
+          </div>
         </div>
 
         <!-- 수정/삭제 버튼 -->
         <div class="button-container">
-          <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="deleteCategory(index)" />
-          <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="editCategory(index)" />
+          <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="modifyCategory(index)" />
+          <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deleteCategory(index)" />
         </div>
       </li>
     </ul>
 
-
-  
-
     <div class="search-box">
-      <input type="text" class="new-category" placeholder="  카테고리 이름을 입력하세요" /> 
+
+      <form @submit.prevent="handleSubmit">
+    <input 
+      type="text" 
+      class="new-category" 
+      placeholder="  카테고리 이름을 입력하세요" 
+      v-model="newCategoryName" /> <!-- 입력된 카테고리 이름 -->
+
+    <img 
+      class="plus-image" 
+      src="/src/assets/images/myCategoriesComponent/image-250.png" 
+      @click="handleSubmit" />
+
       <div class="new-radio-container">
-        <div class="new-radio-option" :class="{ selected: newSelectedOption === 'O' }"
-          @click="newSelectOption('O')" >O
-        </div>
-        <div class="new-radio-option" :class="{ selected: newSelectedOption === 'X' }"
-          @click="newSelectOption('X')">X
-        </div>
+      <div 
+        class="new-radio-option" 
+        :class="{ selected: newSelectedOption === 'O' }"
+        @click="newSelectedOption = 'O'">
+        O
+      </div>
+      <div 
+        class="new-radio-option" 
+        :class="{ selected: newSelectedOption === 'X' }"
+        @click="newSelectedOption = 'X'">
+        X
       </div>
     </div>
+  </form>
+      
+      
+      
+      
 
+    </div>
 
     <div class="top"></div>
     <div class="title">TITLE</div>
     <div class="publish">PUBLISH</div>
-   
+
     <div class="title-dividing-line"></div>
     <div class="publish-dividing-line"></div>
 
-    <img class="plus-image" src="/src/assets/images/myCategoriesComponent/image-250.png" @click="handleClick" />
-
+    
   </div>
 </template>
-
 <script>
-import { ref } from "vue";
+import apiClient from '@/api/axios.js';
+import { ref, onMounted } from 'vue';
 
 export default {
   name: "MyCategories",
   setup() {
-    const categories = ref([
-      { name: "스터디카페 (5)", url: "이동할_페이지_URL", selectedOption: "X" },
-      { name: "코인노래방 (3)", url: "이동할_페이지_URL", selectedOption: "X" },
-      { name: "혼밥 (40)", url: "이동할_페이지_URL", selectedOption: "X" },
-    ]);
+    const newCategoryName = ref('');  // 카테고리 이름 입력
+    const newSelectedOption = ref('O');  // 기본적으로 X로 설정
+    const categories = ref([]);  // 기존 카테고리 목록
+    const isModify = ref(false);
 
-    const newSelectedOption = ref(null); // 새로운 O, X 선택 값
 
-    const newSelectOption = (option) => {
-      newSelectedOption.value = option; // 선택 값 변경
+    const initializeCategoryOptions = () => {
+  categories.value.forEach((category) => {
+    category.selectedOption = category.publish === true || category.publish === 'true' ? 'O' : 'X';
+  });
+};
+    // 서버에서 카테고리 목록을 가져오는 함수
+    onMounted(() => {
+      apiClient.get('/categories').then(response => {
+        categories.value = response.data;
+        initializeCategoryOptions(); // 데이터 로딩 후 초기화
+      }).catch(error => {
+        console.error("에러 발생:", error);
+      });
+    });
+
+
+    // 새 카테고리 추가를 위한 함수
+    const handleSubmit = async () => {
+      if (!newCategoryName.value.trim()) {
+        alert('카테고리 이름을 입력해주세요.');
+        return;
+      }
+
+      const payload = {
+        name: newCategoryName.value,
+        publish: newSelectedOption.value === 'O',  // 'O'일 경우 true, 'X'일 경우 false
+      };
+
+      try {
+        const response = await apiClient.post('/categories', payload);
+        // console.log('카테고리 추가 성공:', response.data);
+
+            // 명시적으로 필요한 필드만 추가
+        const newCategory = {
+          name: response.data.name,
+          publish: response.data.publish
+        };
+
+        console.log(newCategory);
+        
+        
+        // 서버에서 반환된 카테고리 데이터로 새 카테고리 추가
+        // categories.value.push(response.data);
+        categories.value.push(newCategory);
+
+        // 추가 후, 입력 필드 초기화
+        newCategoryName.value = '';
+        newSelectedOption.value = 'X'; // 기본값으로 초기화
+
+        initializeCategoryOptions();
+      } catch (error) {
+        console.error('카테고리 추가 실패:', error);
+      }
     };
 
-    const navigateTo = (page) => {
-      // 페이지 이동 로직 (Vue Router가 설정되어 있어야 함)
-      console.log(`Navigating to: ${page}`);
+
+
+    // 카테고리 수정 함수 (추가 기능을 위해 빈 함수로 유지)
+    const modifyCategory = (index) => {
+      
+      if(isModify.value === true) {
+        isModify.value = false;
+      } else {
+        isModify.value = true;
+      }
+
     };
 
-    const editCategory = (index) => {
-      console.log(`수정 버튼 클릭: ${categories.value[index].name}`);
-    };
-
+    // 카테고리 삭제 함수 (추가 기능을 위해 빈 함수로 유지)
     const deleteCategory = (index) => {
       console.log(`삭제 버튼 클릭: ${categories.value[index].name}`);
     };
 
     return {
-      categories,
+      newCategoryName,
       newSelectedOption,
-      newSelectOption,
-      navigateTo,
-      editCategory,
+      categories,
+      handleSubmit,
+      modifyCategory,
       deleteCategory,
+      isModify,
     };
   },
 };
@@ -427,8 +506,8 @@ img {
   width: 27px;
   height: 28px;
   position: absolute;
-  left: 1300px;
-  top: 145px;
+  left: 1200px;
+  top: 25px;
   object-fit: cover;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;

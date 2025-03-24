@@ -45,12 +45,12 @@ public class CategoryService {
     private final S3Service s3Service;
 
     @Transactional
-    public ResponseEntity<Long> createCategory(@RequestBody CategoryDto categoryDto) {
+    public Long createCategory(@RequestBody CategoryDto categoryDto) {
         try{
             validateDuplicateCategory(categoryDto.getName());
         } catch (IllegalStateException e){
             log.error(e.getMessage());
-            return ResponseEntity.badRequest().body(-1L);
+            return -1L;
         }
 
         Member member = memberService.getMember();
@@ -60,7 +60,7 @@ public class CategoryService {
         Long categoryId = categoryRepository.create(category);
         // 확인용 로그
         log.info("Category created: {}", categoryId);
-        return ResponseEntity.ok().body(categoryId);
+        return categoryId;
     }
 
     // 이름중복
@@ -73,15 +73,15 @@ public class CategoryService {
     }
 
     // 카테고리 조회
-    public List<CategoryDto> findByMemberId() {
+    public List<Category> findByMemberId() {
         // 멤버 가져와서 내꺼만 조회 멤버아이디말고 객체로 받아와야된다
         Member member = memberService.getMember();
         // 멤버 객체에서 아이디만 빼옴
         Long memberId = member.getId();
         //멤버아이디를 레포지토리로 이동
-        List<CategoryDto> categoryDtos = categoryRepository.findCategoryDtoByMemberId(memberId);
-        System.out.println("categoryDtos = " + categoryDtos);
-        return categoryDtos;
+        List<Category> categories = categoryRepository.findCategoryDtoByMemberId(memberId);
+        System.out.println("categories = " + categories);
+        return categories;
     }
 
     // 카테고리 수정
