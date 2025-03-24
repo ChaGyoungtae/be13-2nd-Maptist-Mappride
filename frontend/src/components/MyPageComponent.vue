@@ -46,7 +46,7 @@
     try {
       await apiClient.delete('/members');
       alert('withdrawal success!');
-      router.push('');
+      router.push({name:"Login"});
     } catch(error) {
       console.error('withdrawal failed!', error);
       alert("withdrawal failed!");
