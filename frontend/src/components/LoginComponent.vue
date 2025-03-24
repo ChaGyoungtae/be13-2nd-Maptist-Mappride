@@ -94,10 +94,11 @@
   .rectangle-12 {
     background: #d9d9d9;
     opacity: 0.8;
-    width: 1900px;
+    width: 1668px;
     height: 994px;
     position: absolute;
-    top: 86px;
+    left: 350px;
+    top: 78px;
   }
   .group-2 {
     position: absolute;
