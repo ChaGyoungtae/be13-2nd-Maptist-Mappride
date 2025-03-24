@@ -14,8 +14,13 @@
         <a :href="place.url" class="place-link">{{ place.name }}</a>
         <div class="place-address">{{ place.placeAddress }}</div>
         <div class="button-container">
-          <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="editPlace(index)" />
+          <img class="modify-image" v-if="!place.isModify" src="/src/assets/images/public/image-290.png" @click="modifyPlace(index)" />
           <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deletePlace(index)" />
+        </div>
+
+        <div v-if="place.isModify">
+          <button @click="updateSubmit(place.name, index)" class="modify-submit">완료</button>
+          <button class="modify-reset">취소</button>
         </div>
 
         <!-- 색상 드롭다운 -->
@@ -52,7 +57,7 @@
 </template>
   <script>
   import { ref, onMounted } from "vue";
-  import axios from "axios";
+  import apiClient from "axios";
   
   export default {
     name: "Two",
@@ -79,20 +84,33 @@
       ]);
   
       // Axios로 데이터 받아오기
-      const fetchPlaces = async () => {
-        try {
-          const response = await axios.get("API_URL"); // 여기에 실제 API URL을 넣어주세요
-          console.log("받은 데이터:", response.data);
-          places.value = response.data; // API에서 반환된 데이터로 places 값을 업데이트
-        } catch (error) {
-          console.error("데이터를 가져오는 데 실패했습니다:", error);
-        }
-      };
+      // const fetchPlaces = async () => {
+      //   try {
+      //     const response = await axios.get("API_URL"); // 여기에 실제 API URL을 넣어주세요
+      //     console.log("받은 데이터:", response.data);
+      //     places.value = response.data; // API에서 반환된 데이터로 places 값을 업데이트
+      //   } catch (error) {
+      //     console.error("데이터를 가져오는 데 실패했습니다:", error);
+      //   }
+      // };
   
+      const initializeCategoryOptions = () => {
+          places.value.forEach((place) => {
+          place.isModify = false;
+      });
+    };
       // 페이지가 마운트되면 장소 데이터를 받아옴
       onMounted(() => {
-        fetchPlaces();
-      });
+        apiClient.get('/places')
+        .then(response => {
+          console.log("서버 응답 데이터:", response.data); // 응답 데이터 확인
+          places.value = response.data;
+          initializeCategoryOptions(); // 데이터 로딩 후 초기화
+          
+        }).catch(error => {
+          console.error("에러 발생:", error);
+        });
+      }); 
   
       // 수정 및 삭제 기능
       const editPlace = (index) => {

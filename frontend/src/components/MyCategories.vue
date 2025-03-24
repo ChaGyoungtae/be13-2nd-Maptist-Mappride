@@ -36,7 +36,7 @@
 
         <div v-if="category.isModify">
           <button @click="updateSubmit(category.name, index)" class="modify-submit">완료</button>
-          <button class="modify-reset">취소</button>
+          <button @click="resetCategory(index)" class="modify-reset">취소</button>
         </div>
       </li>
     </ul>
@@ -101,23 +101,23 @@ export default {
 
 
     const initializeCategoryOptions = () => {
-    categories.value.forEach((category) => {
-    category.selectedOption = category.publish === true || category.publish === 'true' ? 'O' : 'X';
-    category.isModify = false;
-  });
-};
+        categories.value.forEach((category) => {
+        category.selectedOption = category.publish === true || category.publish === 'true' ? 'O' : 'X';
+        category.isModify = false;
+      });
+    };
     // 서버에서 카테고리 목록을 가져오는 함수
     onMounted(() => {
-  apiClient.get('/categories')
-  .then(response => {
-    console.log("서버 응답 데이터:", response.data); // 응답 데이터 확인
-    categories.value = response.data;
-    initializeCategoryOptions(); // 데이터 로딩 후 초기화
-    
-  }).catch(error => {
-    console.error("에러 발생:", error);
-  });
-}); 
+      apiClient.get('/categories')
+      .then(response => {
+        console.log("서버 응답 데이터:", response.data); // 응답 데이터 확인
+        categories.value = response.data;
+        initializeCategoryOptions(); // 데이터 로딩 후 초기화
+        
+      }).catch(error => {
+        console.error("에러 발생:", error);
+      });
+    }); 
 
 
     // 새 카테고리 추가를 위한 함수
@@ -160,7 +160,18 @@ export default {
     };
 
     const updateSubmit = async(categoryName, index, publish) => {
-      
+      const isDuplicate = categories.value.some((category, idx) => category.name === categoryName && idx !== index);
+
+      if (isDuplicate) {
+        alert('이미 존재하는 카테고리 이름입니다.');
+        // 수정 전 상태로 돌아가기
+        categories.value[index].name = categories.value[index].originalCategory.name;
+        categories.value[index].publish = categories.value[index].originalCategory.publish;
+        categories.value[index].isModify = false;
+        return; // 중복일 경우 수정 작업을 중단
+      }
+
+
       if(publish === 'O') {
         publish = 'true';
       } else {
@@ -196,26 +207,47 @@ export default {
 
     // 카테고리 수정 함수 (추가 기능을 위해 빈 함수로 유지)
     const modifyCategory = (index) => {
-      
       console.log("수정 버튼");
 
-      // categories[index]가 유효한지 확인
-  if (categories.value[index]) {
-    if (categories.value[index].isModify === false) {
-      categories.value[index].isModify = true;
-    } else {
-      categories.value[index].isModify = false;
-    }
-    console.log(categories.value[index].isModify);
-  } else {
-    console.error(`인덱스 ${index}의 카테고리가 없습니다.`);
+      // 카테고리 수정 전 상태 백업
+  if (!categories.value[index].originalCategory || categories.value[index].isModify === false) {
+    categories.value[index].originalCategory = { ...categories.value[index] }; // 수정 전 상태 백업
   }
-    };
 
-    // 카테고리 삭제 함수 (추가 기능을 위해 빈 함수로 유지)
-    const deleteCategory = (index) => {
-      console.log(`삭제 버튼 클릭: ${categories.value[index].name}`);
-    };
+  categories.value[index].isModify = !categories.value[index].isModify;  // 수정 모드 토글
+};
+
+// 수정 취소 버튼 클릭 시 원래 상태로 복원
+const resetCategory = (index) => {
+  // 수정 전 상태로 복원
+  const originalCategory = categories.value[index].originalCategory;
+  if (originalCategory) {
+    categories.value[index].name = originalCategory.name;
+    categories.value[index].publish = originalCategory.publish;
+    categories.value[index].isModify = false; // 수정 모드 해제
+  } else {
+    console.error('원래 카테고리 정보가 존재하지 않습니다.');
+  }
+};
+
+const deleteCategory = async (index) => {
+  const categoryId = categories.value[index].id;
+
+  // 확인 창을 띄워서 사용자가 삭제를 확인하면 삭제를 진행
+  const isConfirmed = confirm('진짜 지움?');
+  if (isConfirmed) {
+    try {
+      await apiClient.delete(`/categories/${categoryId}`);
+      console.log(`삭제된 카테고리: ${categories.value[index].name}`);
+      
+      categories.value.splice(index, 1); // 삭제 후 배열에서 제거
+    } catch (error) {
+      console.error("카테고리 삭제 중 오류 발생:", error);
+    }
+  } else {
+    console.log("삭제 취소");
+  }
+};
 
     return {
       newCategoryName,
@@ -226,6 +258,7 @@ export default {
       deleteCategory,
       updateSubmit,
       updateName,
+      resetCategory,
     };
   },
 };
