@@ -52,13 +52,15 @@ public class CommentService {
 
 
 
-//    // 장소별 댓글 조회
+    // 장소별 댓글 조회
     @Transactional(readOnly = true)
     public List<CommentRequestDto> findByPlaceId(Long placeId) {
         List<CommentRequestDto> commentRequestDtos = commentRepository.findCommentRequestDtoByPlaceId(placeId);
 
         return commentRequestDtos;
     }
+
+
 
     // 댓글 수정
     public void updateComment(CommentUpdateDto dto) {

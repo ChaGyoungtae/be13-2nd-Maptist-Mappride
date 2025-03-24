@@ -20,6 +20,8 @@ public class CommentRequestDto {
 
     private Long placeId;
 
+    private Long memberId;
+
 
     public Comment toComment(Member member, Place place) {
         return Comment.builder()
