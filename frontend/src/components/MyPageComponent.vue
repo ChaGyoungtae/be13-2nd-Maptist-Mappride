@@ -2,7 +2,7 @@
   <div class="full">
     <input type="text" class="txtName" v-model="member.name"/>
     <div class="name">Name</div>
-    <input type="text" class="txtBirthDay" placeholder="YYYY-MM-DD" v-model="member.birthday"/>
+    <input type="text" class="txtBirthDay" v-model="member.birthday"  placeholder="YYYY-MM-DD" />
     <div class="birthday">Birthday</div>
     <input type="text" class="txtNickname" v-model="member.nickname"/>
     <div class="nickname">Nickname</div>
@@ -46,7 +46,7 @@
     try {
       await apiClient.delete('/members');
       alert('withdrawal success!');
-      router.push('');
+      router.push({name:"Login"});
     } catch(error) {
       console.error('withdrawal failed!', error);
       alert("withdrawal failed!");
