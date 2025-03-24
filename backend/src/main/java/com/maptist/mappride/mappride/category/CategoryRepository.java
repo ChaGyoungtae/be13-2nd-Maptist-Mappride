@@ -53,7 +53,7 @@ public class CategoryRepository {
                 .getResultList();
     }
 
-    public List<Category> findCategoryDtoByMemberId(Long memberId) {
+    public List<Category> findCategoryByMemberId(Long memberId) {
         String query = """
             SELECT c
             FROM Category c
@@ -105,6 +105,15 @@ public class CategoryRepository {
                         "FROM Category c WHERE c.member.id =:memberId and c.name LIKE :name", CategoryNameFindDto.class)
                 .setParameter("name", "%" + name + "%")
                 .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+    public List<CategoryDto> findCategoryDtoByMemberId(Long memberId) {
+        return em.createQuery(
+                "select new com.maptist.mappride.mappride.category.dto.CategoryDto(c.name, c.publish) " +
+                        "from Category c " +
+                        "where c.member.id =: memberId ", CategoryDto.class)
+                .setParameter("memberId",memberId)
                 .getResultList();
     }
 }
