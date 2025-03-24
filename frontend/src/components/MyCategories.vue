@@ -24,10 +24,8 @@
       </li>
     </ul>
 
-    <button class="logout-button">Logout</button>
-    <button class="search-button">Search</button>
 
-    <input type="text" class="search-name"  placeholder="   . . ." />
+  
 
     <div class="search-box">
       <input type="text" class="new-category" placeholder="  카테고리 이름을 입력하세요" /> 
@@ -41,7 +39,6 @@
       </div>
     </div>
 
-    <div class="name-box">name</div>
 
     <div class="top"></div>
     <div class="title">TITLE</div>
@@ -279,8 +276,8 @@ img {
     width: 1550px;
     height: 80px;
     position: absolute;
-    left: 335px;
-    top: 154px;
+    left: 146px;
+    top: 114px;
 }
 
 /* 라디오 버튼 그룹 스타일 */
@@ -335,8 +332,8 @@ img {
     width: 1550px;
     height: 65px;
     position: absolute;
-    left: 335px;
-    top: 90px;
+    left: 146px;
+    top: 50px;
   }
 
 .title {
@@ -395,6 +392,8 @@ img {
   border-right: 1px solid #ddd;
   gap: 10px;
   position: relative;
+  right: 190px;
+  bottom: 38px;
 }
 
 .title-dividing-line {
@@ -428,8 +427,8 @@ img {
   width: 27px;
   height: 28px;
   position: absolute;
-  left: 1542px;
-  top: 135px;
+  left: 1300px;
+  top: 145px;
   object-fit: cover;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;

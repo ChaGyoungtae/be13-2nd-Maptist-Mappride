@@ -1,70 +1,15 @@
 <template>
-  <div class="_2">
-      <a href="이동할_페이지_URL" class="mappride">Mappride</a>
-      <button class="logout-button">Logout</button>
-      <button class="search-button">Search</button>
-      <img class="alarm-image" src="/src/assets/images/public/image-150.png" @click="handleClick" />
-      
-      <input type="text" class="search-box" placeholder="   . . ." />
-      <div class="name-box">name</div>
+  <div class="full">
       <!-- <div class="name">name</div> -->
 
       <div class="top"></div>
       <div class="title">TITLE</div>
-      <a href="이동할_페이지_URL" class="div2">비에이블</a>
-
-      <div class="line-5"></div>
-      <img class="line-6" src="/src/assets/images/public/line-60.png" />
-      <img class="image-22" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-      <img class="image-23" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-
-      <div class="rectangle-28"></div>
-      <a href="이동할_페이지_URL" class="div3">공부인</a>
-      <img class="image-27" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-      <img class="image-28" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-      <div class="rectangle-30"></div>
-      <img class="image-33" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-      <a href="이동할_페이지_URL" class="div4">단디</a>
-      <img class="image-34" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-      <div class="rectangle-29"></div>
-      <img class="image-31" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-      <<a href="이동할_페이지_URL" class="div5">랭</a>
-      <img class="image-32" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-      <div class="rectangle-282"></div>
-      <img class="image-29" src="/src/assets/images/public/image-230.png" @click="handleClick" />
-      <a href="이동할_페이지_URL" class="div6">작심</a>
-      <img class="image-30" src="/src/assets/images/public/image-290.png" @click="handleClick" />
-      <a href="이동할_페이지_URL" class="div7">. . / 스터디카페</a>
       <div class="address">ADDRESS</div>
-      <div class="_1551-6">서울특별시 노원구 동일로 1551, 6층</div>
-      <div class="_1547-5">서울특별시 노원구 동일로 1547 5층</div>
-      <div class="_361-1">서울특별시 노원구 중계동 361-1</div>
-      <div class="_357-2-3">서울특별시 노원구 상계동 357-2 3층</div>
-      <div class="_746-3-6">서울특별시 노원구 상계동 746-3 랑은빌딩 6층</div>
       <div class="color">COLOR</div>
       
       <div class="title-dividing-line"></div>
       <div class="address-dividing-line"></div>
       <div class="color-dividing-line"></div>
-      
-      
-      <div class="left-sidebox"></div>
-      <button class="map" @click="navigateTo('map')">
-        <img class="imgMap" src="/src/assets/images/public/image-120.png" />
-        Map</button>
-        <button class="my-page" @click="navigateTo('my-page')">
-          <img class="imgPage" src="/src/assets/images/public/image-130.png" />
-          My Page</button>
-          
-          <button class="my-categories" @click="navigateTo('my-categories')">
-            <img class="imgCategory" src="/src/assets/images/public/image-140.png" />
-            My Categories</button>
-
-            
-            <div class="category-link-box">
-              <div class="category-border"></div>
-              <a href="이동할_페이지_URL" class="category-link">. . / 스터디카페</a>
-            </div>
             
             
 
@@ -123,8 +68,10 @@
 
 
   </template>
+  <script>
 
-<script>
+  import { ref } from 'vue';
+
   export default {
     name: "Two",
     components: {},
@@ -219,7 +166,6 @@
   }
 }
 </script>
-  
 <style scoped>
 
 ._2,
@@ -375,7 +321,7 @@ button:hover {
   width: 120px;
   height: 45px;
   position: absolute;
-  left: 1755px;
+  left: 1730px;
   top: 100px;
   display: flex;
   justify-content: space-between;
@@ -503,7 +449,7 @@ button:hover {
   width: 1550px;
   height: 65px;
   position: absolute;
-  left: 335px;
+  left: 346px;
   top: 90px;
 }
 
@@ -701,7 +647,7 @@ button:hover {
   position: relative; 
   display: inline-block;
   cursor: pointer;
-  left: -420px;
+  left: -460px;
   top: 0px;
   /* z-index: 500; */
 }
@@ -789,6 +735,8 @@ button:hover {
   border-bottom: 1px solid #ddd; /* 각 항목 구분선 */
   border-right: 1px solid #ddd;
   position: relative;
+  bottom: 1155px;
+  left: 5px;
 }
 
 /* 📍 place-link 폰트 크기 조정 */
@@ -827,7 +775,7 @@ button:hover {
   width: 37px;
   height: 36px;
   position: absolute;
-  left: 170px;
+  left: 100px;
   top: -10px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out; /* 클릭 효과 */
@@ -837,7 +785,7 @@ button:hover {
   width: 27px;
   height: 28px;
   position: absolute;
-  left: 230px;
+  left: 170px;
   top: -10px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
