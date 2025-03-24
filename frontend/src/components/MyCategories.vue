@@ -30,7 +30,7 @@
 
         <!-- 수정/삭제 버튼 -->
         <div class="button-container">
-          <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="modifyCategory(index)" />
+          <img class="modify-image" v-if="!category.isModify" src="/src/assets/images/public/image-290.png" @click="modifyCategory(index)" />
           <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deleteCategory(index)" />
         </div>
 
