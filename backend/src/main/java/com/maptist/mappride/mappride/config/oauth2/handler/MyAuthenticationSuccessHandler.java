@@ -53,7 +53,7 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
             GeneratedToken token = jwtUtil.generateToken(email, role);
 
             // accessToken을 쿼리스트링에 담는 url을 만들어준다.
-           String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/api/v1/auth/login-success")
+           String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:5173/api/v1/auth/login-success")
                    .build()
                     .encode(StandardCharsets.UTF_8)
                     .toUriString();

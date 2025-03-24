@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -57,7 +58,12 @@ public class AuthController {
         // 소셜로그인 후 그 유저에 대한 회원 정보가 있으면 토큰 발급 후 여기로 리디렉션됌.
         String decodedCookie = decodeCookie(request, response);
 
-        return ResponseEntity.ok().body(decodedCookie);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResponse = objectMapper.writeValueAsString(Map.of("accessToken", decodedCookie));
+
+        return ResponseEntity.ok().body(jsonResponse);
     }
 
     @GetMapping("/register")

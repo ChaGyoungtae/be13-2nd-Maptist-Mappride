@@ -13,16 +13,16 @@
     />
     <img class="btn-g" src="../assets/images/loginComponent/btn-g0.png" /> -->
 
-    <button class="login-button">
+    <button @click="redirectToGoogle()" class="google-login-button">
       <img src="../assets/images/loginComponent/web-light-sq-si-4-x0.png" alt="Web Login" />
     </button>
     
-    <button class="kakao-login-button">
+    <button @click="redirectToKakao()" class="kakao-login-button">
       <img src="../assets/images/loginComponent/kakao-login-medium-narrow0.png" alt="Kakao Login" />
     </button>
     
-    <button class="google-login-button">
-      <img src="../assets/images/loginComponent/btn-g0.png" alt="Google Login" />
+    <button @click="redirectToNaver()" class="naver-login-button">
+      <img src="../assets/images/loginComponent/btn-g0.png" alt="Naver Login" />
     </button>
     <div class="line-13"></div>
   </div>
@@ -34,6 +34,17 @@
     components: {},
     props: {},
     data() {},
+    methods: {
+    redirectToGoogle() {
+      window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    },
+    redirectToKakao() {
+      window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+    },
+    redirectToNaver() {
+      window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+    }
+  }
   };
 </script>
   
@@ -140,7 +151,7 @@
     object-fit: cover;
   }
 
-  .login-button, .kakao-login-button, .google-login-button {
+  .google-login-button, .kakao-login-button, .naver-login-button {
     width: 208px;
     height: 43px;
     position: absolute;
@@ -153,7 +164,7 @@
     border-radius: 5px;
     padding: 0;
   }
-  .login-button {
+  .google-login-button {
     top: 449px;
     background-color: #e1e1e1;
   }
@@ -161,11 +172,11 @@
     top: 523px;
     background-color: #ffeb00;
   }
-  .google-login-button {
+  .naver-login-button {
     top: 597px;
     background-color: #4285F4;
   }
-  .login-button img, .kakao-login-button img, .google-login-button img {
+  .naver-login-button img, .kakao-login-button img, .google-login-button img {
     width: 100%;
     height: 100%;
     object-fit: cover;
