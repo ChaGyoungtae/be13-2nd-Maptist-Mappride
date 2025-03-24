@@ -5,7 +5,6 @@ import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
-import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,10 +46,21 @@ public class MemberController
     }
 
     // 내 정보 수정
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateMyInfo(@RequestBody MemberUpdateDto dto)
-    {
-        memberService.updateMyInfo(dto);
+//    @PutMapping("/update")
+//    public ResponseEntity<Void> updateMyInfo(@RequestBody MemberUpdateDto dto)
+//    {
+//        memberService.updateMyInfo(dto);
+//        return ResponseEntity.ok().build();
+//    }
+
+    @PutMapping("/update/birthday")
+    public ResponseEntity<Void> updateMyBirthday(@RequestBody LocalDate birthday) {
+        memberService.updateInfo(birthday);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/update/nickname")
+    public ResponseEntity<Void> updateMyNickname(@RequestBody String nickname){
+        memberService.updateInfo(nickname);
         return ResponseEntity.ok().build();
     }
 

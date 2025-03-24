@@ -2,31 +2,33 @@
   <div class="full">
     <input type="text" class="txtName" v-model="member.name"/>
     <div class="name">Name</div>
-    <input type="text" class="txtBirthDay" v-model="member.birthday"/>
+    <input type="text" class="txtBirthDay" placeholder="YYYY-MM-DD" v-model="member.birthday"/>
     <div class="birthday">Birthday</div>
     <input type="text" class="txtNickname" v-model="member.nickname"/>
     <div class="nickname">Nickname</div>
     <input type="text" class="txtEmail" v-model="member.email"/>
     <div class="email">Email</div>
-    <input type="text" class="txtGrade" v-model="member.grade"/>
+    <input type="text" class="txtGrade" v-model="member.gradeName"/>
     <div class="grade">Grade</div>
-    <input type="text" class="txtUserType" v-model="usertype"/>
+    <input type="text" class="txtUserType" v-model="member.userRole"/>
     <div class="user-type">User Type</div>
-    
-    <button>
+
+
+    <button @click="handleUpdate1">
       <img class="image-27" src="/src/assets/images/public/image-290.png" />
     </button>
-    <button>
+    <button @click="handleUpdate2">
       <img class="image-30" src="/src/assets/images/public/image-290.png" />
     </button>
 
-    <button class="btnWithDrawal">withdrawal</button>
+    <button @click="handleDelete" class="btnWithDrawal">withdrawal</button>
 
   </div>
 </template>
 <script setup>
   import apiClient from '@/api/axios.js';
   import { ref, onMounted } from 'vue';
+  import router from '@/router/index.js';
 
   const member = ref({});
 
@@ -35,10 +37,47 @@
       member.value = response.data;
     }).catch(error => {
       console.error("에러 발생:", error);
+      router.push('');
     });
   });
 
 
+  const handleDelete = async() => {
+    try {
+      await apiClient.delete('/members');
+      alert('withdrawal success!');
+      router.push('');
+    } catch(error) {
+      console.error('withdrawal failed!', error);
+      alert("withdrawal failed!");
+    }
+  }
+  const handleUpdate1 = async() => {
+      try {await apiClient.put(`/members/update/birthday`, `"${member.value.birthday}"`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      alert('update success!');
+      console.log("new birthday",member.value.birthday);
+      }
+      catch (error) {
+        console.error("update failed!", error);
+      }
+    }
+    const handleUpdate2 = async() => {
+      try {await apiClient.put(`/members/update/nickname`, member.value.nickname, {
+        headers:{
+          'Content-Type': 'text/plain',
+        },
+      })
+      alert('update success!');
+      console.log("new nickname", member.value.nickname);
+      }
+      catch (error) {
+        console.error("update failed!", error);
+      }
+    }
 </script>
 <style scoped>
   .full * {

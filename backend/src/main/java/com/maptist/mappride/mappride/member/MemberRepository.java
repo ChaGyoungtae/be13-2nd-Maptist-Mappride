@@ -6,15 +6,17 @@ import com.maptist.mappride.mappride.member.DTO.MemberDto;
 import com.maptist.mappride.mappride.member.DTO.MemberEmailDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNameDto;
 import com.maptist.mappride.mappride.member.DTO.MemberNicknameDto;
-import com.maptist.mappride.mappride.member.DTO.MemberUpdateDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
@@ -61,19 +63,41 @@ public class MemberRepository {
     }
 
     // 내 정보 수정
-    public void updateMyInfo(MemberUpdateDto memberDto)
-    {
+//    public void updateMyInfo(MemberUpdateDto memberDto)
+//    {
+//        String query = """
+//                UPDATE Member m
+//                SET m.nickname = :nickname, m.birthDay = :birthDay, m.publish =:publish
+//                WHERE m.id = :id
+//                """;
+//
+//        em.createQuery(query)
+//                .setParameter("nickname", memberDto.getNickname())
+//                .setParameter("birthDay", memberDto.getBirthDay())
+//                .setParameter("publish",memberDto.isPublish())
+//                .setParameter("id", memberDto.getId())
+//                .executeUpdate();
+//    }
+    public void updateBirthday(Long memberId, LocalDate birthday) {
+        String query = """
+                   UPDATE Member m
+                   SET m.birthDay = :birthday
+                   WHERE m.id = :memberId
+                """;
+        em.createQuery(query)
+                .setParameter("memberId", memberId)
+                .setParameter("birthday", birthday)
+                .executeUpdate();
+    }
+    public void updateNickname(Long memberId, String nickname) {
         String query = """
                 UPDATE Member m
-                SET m.nickname = :nickname, m.birthDay = :birthDay, m.publish =:publish
-                WHERE m.id = :id
+                SET m.nickname = :nickname
+                WHERE m.id = :memberId
                 """;
-
         em.createQuery(query)
-                .setParameter("nickname", memberDto.getNickname())
-                .setParameter("birthDay", memberDto.getBirthDay())
-                .setParameter("publish",memberDto.isPublish())
-                .setParameter("id", memberDto.getId())
+                .setParameter("memberId",memberId)
+                .setParameter("nickname",nickname)
                 .executeUpdate();
     }
 
@@ -182,4 +206,5 @@ public class MemberRepository {
                 "from Member m", Member.class)
                 .getResultList();
     }
+
 }
