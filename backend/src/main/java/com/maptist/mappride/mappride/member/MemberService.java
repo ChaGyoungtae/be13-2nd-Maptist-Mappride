@@ -21,10 +21,13 @@ import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,19 +80,38 @@ public class MemberService {
     }
 
     // 내 정보 수정
-    public void updateMyInfo(MemberUpdateDto dto)
-    {
-        try 
+//    public void updateMyInfo(MemberUpdateDto dto)
+//    {
+//        try
+//        {
+//            validateDuplicateNickname(dto.getNickname(), dto.getId());
+//        }
+//        catch (IllegalStateException e)
+//        {
+//            log.error("닉네임 중복");
+//            return;
+//        }
+//
+//        memberRepository.updateMyInfo(dto);
+//    }
+    public void updateInfo(LocalDate birthday) {
+        // 멤버 객체에서 아이디만 빼옴
+        Long memberId = getMember().getId();
+        memberRepository.updateBirthday(memberId,birthday);
+    }
+    public void updateInfo(String nickname) {
+
+        Long memberId = getMember().getId();
+        try
         {
-            validateDuplicateNickname(dto.getNickname(), dto.getId());
-        } 
+            validateDuplicateNickname(nickname, memberId);
+        }
         catch (IllegalStateException e)
         {
             log.error("닉네임 중복");
-            return;
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "닉네임이 중복됩니다");
         }
-
-        memberRepository.updateMyInfo(dto);
+        memberRepository.updateNickname(memberId,nickname);
     }
 
     // 닉네임 중복 체크
