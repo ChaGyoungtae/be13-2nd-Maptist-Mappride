@@ -9,13 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -78,8 +72,8 @@ public class MemberController
     }
 
     //멤버 검색 (이름)
-    @GetMapping("/name/{name}")
-    public ResponseEntity<List<MemberNameDto>>selectOtherName(@PathVariable("name") String name)
+    @GetMapping("/name")
+    public ResponseEntity<List<MemberNameDto>>selectOtherName(@RequestParam("name") String name)
     {
         List<MemberNameDto> selectMyInfo = memberService.selectOtherName(name);
 
@@ -90,9 +84,7 @@ public class MemberController
     @GetMapping("/email/{email}")
     public ResponseEntity<MemberEmailDto>selectOtherEmail(@PathVariable("email") String email)
     {
-        System.out.println(email);
         MemberEmailDto selectOtherEmail = memberService.selectOtherEmail(email);
-        System.out.println(selectOtherEmail);
 
         return ResponseEntity.ok(selectOtherEmail);
     }
