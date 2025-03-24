@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.category;
 
+import com.maptist.mappride.mappride.category.dto.AllCategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryNameFindDto;
@@ -38,8 +39,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>>findAll() {
-        List<Category> findAllCategory = categoryService.findByMemberId();
+    public ResponseEntity<List<AllCategoryDto>>findAll() {
+        List<AllCategoryDto> findAllCategory = categoryService.findByMemberId();
         return ResponseEntity.ok(findAllCategory);
     }
 

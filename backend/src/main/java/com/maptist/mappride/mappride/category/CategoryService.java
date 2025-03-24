@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.category;
 
+import com.maptist.mappride.mappride.category.dto.AllCategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryCopyDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryNameFindDto;
@@ -73,13 +74,13 @@ public class CategoryService {
     }
 
     // 카테고리 조회
-    public List<Category> findByMemberId() {
+    public List<AllCategoryDto> findByMemberId() {
         // 멤버 가져와서 내꺼만 조회 멤버아이디말고 객체로 받아와야된다
         Member member = memberService.getMember();
         // 멤버 객체에서 아이디만 빼옴
         Long memberId = member.getId();
         //멤버아이디를 레포지토리로 이동
-        List<Category> categories = categoryRepository.findCategoryByMemberId(memberId);
+        List<AllCategoryDto> categories = categoryRepository.findCategoryByMemberId(memberId);
         System.out.println("categories = " + categories);
         return categories;
     }

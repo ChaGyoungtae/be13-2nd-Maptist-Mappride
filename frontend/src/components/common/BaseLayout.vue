@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <MainComponent :address="address.addressValue"/>
+  <!-- <MainComponent :address="address.addressValue"/> -->
 
   <RouterView></RouterView>
 </template>

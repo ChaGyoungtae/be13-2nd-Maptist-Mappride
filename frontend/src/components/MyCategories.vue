@@ -3,8 +3,14 @@
     <ul class="category-list">
       <li v-for="(category, index) in categories" :key="index" class="category-item">
         <!-- 카테고리 이름 -->
-        <a :href="category.url" class="category-link">{{ category.name }}</a>
-        <input type="text" class="category-link" :value="category.name">
+         <div v-if="!category.isModify">
+          <a :href="category.url" class="category-link">{{ category.name }}</a>
+         </div>
+
+        <div v-if="category.isModify">
+          <input id="updateName" name="updateName" type="text" class="category-link" v-model="category.name">
+          
+        </div>
           <!-- 라디오 버튼 -->
           <div class="radio-container">
           <div 
@@ -19,12 +25,18 @@
             @click="category.selectedOption = 'X'">
             X
           </div>
+          
         </div>
 
         <!-- 수정/삭제 버튼 -->
         <div class="button-container">
           <img class="modify-image" src="/src/assets/images/public/image-290.png" @click="modifyCategory(index)" />
           <img class="delete-image" src="/src/assets/images/public/image-230.png" @click="deleteCategory(index)" />
+        </div>
+
+        <div v-if="category.isModify">
+          <button @click="updateSubmit(category.name, index)" class="modify-submit">완료</button>
+          <button class="modify-reset">취소</button>
         </div>
       </li>
     </ul>
@@ -85,22 +97,27 @@ export default {
     const newCategoryName = ref('');  // 카테고리 이름 입력
     const newSelectedOption = ref('O');  // 기본적으로 X로 설정
     const categories = ref([]);  // 기존 카테고리 목록
+    const updateName = ref('');
 
 
     const initializeCategoryOptions = () => {
     categories.value.forEach((category) => {
     category.selectedOption = category.publish === true || category.publish === 'true' ? 'O' : 'X';
+    category.isModify = false;
   });
 };
     // 서버에서 카테고리 목록을 가져오는 함수
     onMounted(() => {
-      apiClient.get('/categories').then(response => {
-        categories.value = response.data;
-        initializeCategoryOptions(); // 데이터 로딩 후 초기화
-      }).catch(error => {
-        console.error("에러 발생:", error);
-      });
-    });
+  apiClient.get('/categories')
+  .then(response => {
+    console.log("서버 응답 데이터:", response.data); // 응답 데이터 확인
+    categories.value = response.data;
+    initializeCategoryOptions(); // 데이터 로딩 후 초기화
+    
+  }).catch(error => {
+    console.error("에러 발생:", error);
+  });
+}); 
 
 
     // 새 카테고리 추가를 위한 함수
@@ -142,12 +159,57 @@ export default {
       }
     };
 
+    const updateSubmit = async(categoryName, index, publish) => {
+      
+      if(publish === 'O') {
+        publish = 'true';
+      } else {
+        publish = 'false';
+      }
+
+
+      console.log(categoryName);
+      
+      console.log(categories.value[index]);
+
+
+      const payload = {
+        id: categories.value[index].id,
+        name: categoryName,
+        publish: publish
+      };
+
+
+      try {
+        const response = await apiClient.put('/categories/update', payload);
+        categories.value[index].name = categoryName;
+        categories.value[index].publish = publish;
+      
+    } catch(error) {
+        console.error('카테고리 수정 실패:', error);
+      }
+
+      categories.value[index].isModify = false;
+    }
+
 
 
     // 카테고리 수정 함수 (추가 기능을 위해 빈 함수로 유지)
     const modifyCategory = (index) => {
       
+      console.log("수정 버튼");
 
+      // categories[index]가 유효한지 확인
+  if (categories.value[index]) {
+    if (categories.value[index].isModify === false) {
+      categories.value[index].isModify = true;
+    } else {
+      categories.value[index].isModify = false;
+    }
+    console.log(categories.value[index].isModify);
+  } else {
+    console.error(`인덱스 ${index}의 카테고리가 없습니다.`);
+  }
     };
 
     // 카테고리 삭제 함수 (추가 기능을 위해 빈 함수로 유지)
@@ -162,13 +224,12 @@ export default {
       handleSubmit,
       modifyCategory,
       deleteCategory,
-      isModify,
+      updateSubmit,
+      updateName,
     };
   },
 };
 </script>
-
-
 
 
 <style scoped>
@@ -447,6 +508,28 @@ img {
   font-weight: 400;
   text-decoration: none;
 }
+.modify-submit {
+  color: #000000;
+  width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis ;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+}
+.modify-reset {
+  color: #000000;
+  width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis ;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+}
 
 .category-list {
   list-style: none;
@@ -537,6 +620,7 @@ img {
   justify-content: flex-end;
   width: 120px;
   left: 1130px;
+  
 }
 
 .button-container img {

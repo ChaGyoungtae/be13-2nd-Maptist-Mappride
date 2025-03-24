@@ -1,5 +1,6 @@
 package com.maptist.mappride.mappride.category;
 
+import com.maptist.mappride.mappride.category.dto.AllCategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.category.dto.CategoryNameFindDto;
 import com.maptist.mappride.mappride.category.dto.CategoryUpdateDto;
@@ -53,14 +54,14 @@ public class CategoryRepository {
                 .getResultList();
     }
 
-    public List<Category> findCategoryByMemberId(Long memberId) {
+    public List<AllCategoryDto> findCategoryByMemberId(Long memberId) {
         String query = """
-            SELECT c
+            SELECT new com.maptist.mappride.mappride.category.dto.AllCategoryDto(c.id,c.name,c.publish)
             FROM Category c
             WHERE c.member.id = :memberId
             """;
 
-        return em.createQuery(query, Category.class)
+        return em.createQuery(query, AllCategoryDto.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
