@@ -1,16 +1,16 @@
 <template>
   <div class="full">
-    <input type="text" class="txtName" value=""/>
+    <input type="text" class="txtName" v-model="member.name"/>
     <div class="name">Name</div>
-    <input type="text" class="txtBirthDay" value=""/>
+    <input type="text" class="txtBirthDay" v-model="member.birthday"/>
     <div class="birthday">Birthday</div>
-    <input type="text" class="txtNickname" value=""/>
+    <input type="text" class="txtNickname" v-model="member.nickname"/>
     <div class="nickname">Nickname</div>
-    <input type="text" class="txtEmail" value=""/>
+    <input type="text" class="txtEmail" v-model="member.email"/>
     <div class="email">Email</div>
-    <input type="text" class="txtGrade" value=""/>
+    <input type="text" class="txtGrade" v-model="member.grade"/>
     <div class="grade">Grade</div>
-    <input type="text" class="txtUserType" value=""/>
+    <input type="text" class="txtUserType" v-model="usertype"/>
     <div class="user-type">User Type</div>
     
     <button>
@@ -24,7 +24,20 @@
 
   </div>
 </template>
-<script>
+<script setup>
+  import apiClient from '@/api/axios.js';
+  import { ref, onMounted } from 'vue';
+
+  const member = ref({});
+
+  onMounted(() => {
+    apiClient.get('/members').then(response => {
+      member.value = response.data;
+    }).catch(error => {
+      console.error("에러 발생:", error);
+    });
+  });
+
 
 </script>
 <style scoped>
