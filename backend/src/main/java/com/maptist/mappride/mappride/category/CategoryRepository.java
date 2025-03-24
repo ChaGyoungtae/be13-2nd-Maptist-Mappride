@@ -53,14 +53,14 @@ public class CategoryRepository {
                 .getResultList();
     }
 
-    public List<CategoryDto> findCategoryDtoByMemberId(Long memberId) {
+    public List<Category> findCategoryDtoByMemberId(Long memberId) {
         String query = """
-            SELECT new com.maptist.mappride.mappride.category.dto.CategoryDto(c.name,c.publish)
+            SELECT c
             FROM Category c
             WHERE c.member.id = :memberId
             """;
 
-        return em.createQuery(query, CategoryDto.class)
+        return em.createQuery(query, Category.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
