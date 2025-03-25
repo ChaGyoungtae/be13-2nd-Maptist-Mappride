@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -191,6 +192,14 @@ public class PlaceRepository {
                         "where p.category.id =: categoryId", PlaceInfoDto.class)
                 .setParameter("categoryId", categoryId)
                 .getResultList();
+    }
+
+    public Optional<Place> findByName(String name) {
+        return Optional.ofNullable(em.createQuery("select p " +
+                        "from Place p " +
+                        "where p.name =: placeName ", Place.class)
+                .setParameter("placeName", name)
+                .getSingleResult());
     }
 }
 

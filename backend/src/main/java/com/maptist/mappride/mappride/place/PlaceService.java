@@ -85,6 +85,11 @@ public class PlaceService {
             throw new RuntimeException("카테고리를 찾을 수 없습니다.");
         }
 
+        Optional<Place> findPlace = placeRepository.findByName(placeRegisterDto.getName());
+        if(findPlace.isPresent()){
+            throw new RuntimeException("이미 존재하는 이름입니다.");
+        }
+
         String address = naverGeocodingService.getAddressFromCoordinates(placeRegisterDto.getLatitude(), placeRegisterDto.getLongitude());
 
         Place place = placeRegisterDto.toPlace(findCategory.get(),address, LocalDateTime.now());
