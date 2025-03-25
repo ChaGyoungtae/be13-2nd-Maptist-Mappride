@@ -119,7 +119,7 @@ public class MemberService {
     }
 
     // 멤버 검색 (이름)
-    public List<MemberNameDto> selectOtherName(String name)
+    public List<MemberDto> selectOtherName(String name)
     {
         return memberRepository.selectOtherName(name);
     }

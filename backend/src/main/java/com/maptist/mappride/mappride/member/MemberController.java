@@ -67,9 +67,9 @@ public class MemberController
 
     //멤버 검색 (이름)
     @GetMapping("/name")
-    public ResponseEntity<List<MemberNameDto>>selectOtherName(@RequestParam("name") String name)
+    public ResponseEntity<List<MemberDto>>selectOtherName(@RequestParam("name") String name)
     {
-        List<MemberNameDto> selectMyInfo = memberService.selectOtherName(name);
+        List<MemberDto> selectMyInfo = memberService.selectOtherName(name);
 
         return ResponseEntity.ok(selectMyInfo);
     }
