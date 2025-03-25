@@ -126,15 +126,17 @@ public class MemberRepository {
     }
 
     //멤버 검색 (이름)
-    public List<MemberNameDto> selectOtherName(String name)
+    public List<MemberDto> selectOtherName(String name)
     {
         String query = """
-            SELECT new com.maptist.mappride.mappride.member.DTO.MemberNameDto(m.name)
+            SELECT new com.maptist.mappride.mappride.member.DTO.MemberDto(
+            m.id, m.grade.name, m.email, m.name, m.nickname, m.birthDay,
+            m.userRole, m.publish, m.scrapCnt)
             FROM Member m
             WHERE m.name = :name and m.publish = true
             """;
 
-        return em.createQuery(query, MemberNameDto.class)
+        return em.createQuery(query, MemberDto.class)
                 .setParameter("name", name)
                 .getResultList();
     }
