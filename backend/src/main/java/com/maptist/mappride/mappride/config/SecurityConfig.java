@@ -42,8 +42,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize // 요청에 대한 인증 설정
                         //.requestMatchers("/**").permitAll() //모든 경로 인증 불필요
                         .requestMatchers("/api/v1/auth/**").permitAll() //여기 적혀있는 경로는 모두 허용
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico").permitAll()
-                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/static/favicon.ico").permitAll()
+                        .requestMatchers(
+                                            "/swagger-ui/**",
+                                            "/v3/api-docs/**",
+                                            "/swagger-resources/**",
+                                            "/webjars/**"
+                                        ).permitAll()
                         .requestMatchers("/mypage/**").hasAnyRole("USER", "MANAGER") // USER와 MANAGER는 허용
                         .anyRequest().authenticated() // 그 외 요청은 모두 인증이 필요하다.
                 )
