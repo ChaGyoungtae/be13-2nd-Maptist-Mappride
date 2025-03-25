@@ -2,7 +2,6 @@ package com.maptist.mappride.mappride.config.jwt;
 
 import com.maptist.mappride.mappride.config.jwt.DTO.SecurityUserDto;
 import com.maptist.mappride.mappride.member.Member;
-import com.maptist.mappride.mappride.member.MemberRepository;
 import com.maptist.mappride.mappride.member.MemberService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -42,15 +41,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
 
-        //log.info("current uri = {}",requestURI);
+        log.info("current uri = {}",requestURI);
 
         // 해당 경로는 JWT 검증을 거치지 않음
-        if (requestURI.startsWith("/v3/")
+        if (requestURI.startsWith("/v3/api-docs")
+            || requestURI.startsWith("/swagger-ui")
+            || requestURI.startsWith("/swagger-resources")
+            || requestURI.startsWith("/webjars/")
             || requestURI.startsWith("/api/v1/auth/")
-            || requestURI.startsWith("/swagger-ui/")) {
+            || requestURI.startsWith("/default-ui.css")
+            || requestURI.equals("/favicon.ico")) {
             filterChain.doFilter(request, response);
-            return;
-        }
+        return;
+}
 
         // request Header에서 AccessToken을 가져온다.
         String atc = request.getHeader("Authorization");

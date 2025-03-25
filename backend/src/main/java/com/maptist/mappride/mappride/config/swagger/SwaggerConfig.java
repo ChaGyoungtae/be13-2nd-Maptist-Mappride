@@ -1,6 +1,7 @@
 package com.maptist.mappride.mappride.config.swagger;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
