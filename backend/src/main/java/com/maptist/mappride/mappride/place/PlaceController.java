@@ -46,9 +46,11 @@ public class PlaceController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Long> createPlace(@RequestPart MultipartFile thumbnail,
                                             @RequestPart List<MultipartFile> multipartFiles,
-                                            @ModelAttribute PlaceRegisterDto placeRegisterDto){
-        System.out.println(placeRegisterDto);
-        return ResponseEntity.ok().body(placeService.createPlace(thumbnail, multipartFiles, placeRegisterDto));
+                                            @ModelAttribute PlaceRegisterDto placeRegisterDto) {
+        System.out.println("Received DTO: " + placeRegisterDto);
+        // 서비스 호출해서 실제 저장 처리
+        Long placeId = placeService.createPlace(thumbnail, multipartFiles, placeRegisterDto);
+        return ResponseEntity.ok().body(placeId);
     }
 
     @PutMapping
