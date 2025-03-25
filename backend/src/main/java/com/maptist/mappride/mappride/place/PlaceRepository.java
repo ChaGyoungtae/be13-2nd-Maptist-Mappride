@@ -22,7 +22,17 @@ public class PlaceRepository {
     private final EntityManager em;
 
     public List<PlacesByCategoryResponseDto> findPlacesByCategoryId(Long categoryId) {
-        String query = "SELECT new com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto(p.id, p.name) " +
+        String query = "SELECT new com.maptist.mappride.mappride.place.dto.PlacesByCategoryResponseDto(" +
+                "p.id, " +
+                "p.category.id," +
+                "p.name, " +
+                "p.latitude, " +
+                "p.longitude, " +
+                "p.address, " +
+                "p.color, " +
+                "p.content, " +
+                "p.reg_date" +
+                ") " +
                         "FROM Place p " +
                         "WHERE p.category.id = :categoryId ";
         return em.createQuery(query, PlacesByCategoryResponseDto.class)
