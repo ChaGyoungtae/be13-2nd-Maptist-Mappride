@@ -16,4 +16,5 @@ import lombok.ToString;
 public class OtherFindCategoryDto {
     private Long categoryId;
     private String name;
+    private boolean publish;
 }

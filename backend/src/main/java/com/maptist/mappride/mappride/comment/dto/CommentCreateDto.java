@@ -11,23 +11,14 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentRequestDto {
-
-    private Long commentId;
+public class CommentCreateDto {
 
     private String comment;
 
     private Long placeId;
 
-    private Long memberId;
-
-    private String memberName;
-
-    private LocalDateTime regDate;
 
 
 
@@ -37,6 +28,15 @@ public class CommentRequestDto {
                 .place(place)
                 .comment(comment)
                 .regDate(LocalDateTime.now())
+                .build();
+    }
+
+    public CommentCreateResponseDto toResponseDto(String memberName, String comment, Long memberId, LocalDateTime regDate){
+        return CommentCreateResponseDto.builder()
+                .memberName(memberName)
+                .comment(comment)
+                .regDate(regDate)
+                .memberId(memberId)
                 .build();
     }
 }

@@ -132,7 +132,7 @@ public class CategoryService {
     }
 
     // 남의 카테고리 전체 조회
-    public List<OtherFindCategoryDto> findByOtherMemberId(Long memberId) {
+    public List<AllCategoryDto> findByOtherMemberId(Long memberId) {
         //멤버아이디를 레포지토리로 이동
         return categoryRepository.findCategoryByOtherMemberId(memberId);
     }
@@ -196,5 +196,10 @@ public class CategoryService {
     public List<CategoryDto> findCategoryDtoByMemberId() {
         Long memberId = memberService.getMember().getId();
         return categoryRepository.findCategoryDtoByMemberId(memberId);
+    }
+
+    public AllCategoryDto findById(Long categoryId) {
+
+        return categoryRepository.findAllCategoryDtoById(categoryId);
     }
 }

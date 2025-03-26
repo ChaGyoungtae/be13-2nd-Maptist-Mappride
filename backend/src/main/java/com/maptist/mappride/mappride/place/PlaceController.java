@@ -4,6 +4,7 @@ import com.maptist.mappride.mappride.category.Category;
 import com.maptist.mappride.mappride.category.CategoryService;
 import com.maptist.mappride.mappride.category.dto.CategoryDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlaceModifyDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
@@ -54,8 +55,8 @@ public class PlaceController {
     }
 
     @PutMapping
-    public ResponseEntity<Long> modifyPlace(@RequestBody PlaceRequestDto placeRequestDto){
-        return ResponseEntity.ok().body(placeService.modifyPlace(placeRequestDto));
+    public ResponseEntity<Long> modifyPlace(@RequestBody PlaceModifyDto placeModifyDto){
+        return ResponseEntity.ok().body(placeService.modifyPlace(placeModifyDto));
     }
 
     @GetMapping("/{place-id}")

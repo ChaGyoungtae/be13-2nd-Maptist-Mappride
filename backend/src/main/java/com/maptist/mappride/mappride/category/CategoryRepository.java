@@ -86,15 +86,15 @@ public class CategoryRepository {
 //    }
 
     // 남의 카테고리 전체 조회
-    public List<OtherFindCategoryDto> findCategoryByOtherMemberId(Long memberId) {
+    public List<AllCategoryDto> findCategoryByOtherMemberId(Long memberId) {
         String query = """
             
-            SELECT new com.maptist.mappride.mappride.category.dto.OtherFindCategoryDto(c.id,c.name)
+            SELECT new com.maptist.mappride.mappride.category.dto.AllCategoryDto(c.id,c.name,c.publish)
             FROM Category c
             WHERE c.member.id = :memberId and c.publish = true
             """;
 
-        return em.createQuery(query, OtherFindCategoryDto.class)
+        return em.createQuery(query, AllCategoryDto.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
         // 위에서 조회한 CategoryId를 통해 Category들을 조회해서 DTO로 반환
@@ -116,5 +116,17 @@ public class CategoryRepository {
                         "where c.member.id =: memberId ", CategoryDto.class)
                 .setParameter("memberId",memberId)
                 .getResultList();
+    }
+
+    public AllCategoryDto findAllCategoryDtoById(Long categoryId) {
+            String query = """
+            SELECT new com.maptist.mappride.mappride.category.dto.AllCategoryDto(c.id,c.name,c.publish)
+            FROM Category c
+            WHERE c.id = :categoryId
+            """;
+
+        return em.createQuery(query, AllCategoryDto.class)
+                .setParameter("categoryId", categoryId)
+                .getSingleResult();
     }
 }
