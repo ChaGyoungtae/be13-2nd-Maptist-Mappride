@@ -31,10 +31,12 @@ public class PlaceRepository {
                 "p.address, " +
                 "p.color, " +
                 "p.content, " +
-                "p.reg_date" +
+                "p.reg_date," +
+                "ph.photoUrl" +
                 ") " +
-                        "FROM Place p " +
-                        "WHERE p.category.id = :categoryId ";
+                "FROM Place p " +
+                "LEFT JOIN Photo ph ON ph.place.id = p.id " +
+                "WHERE p.category.id = :categoryId AND ph.thumbnail = true";
         return em.createQuery(query, PlacesByCategoryResponseDto.class)
                 .setParameter("categoryId", categoryId)
                 .getResultList();
