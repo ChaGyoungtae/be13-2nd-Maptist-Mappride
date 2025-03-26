@@ -41,7 +41,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션관리 정책을 STATELESS 로 설정
                 .authorizeHttpRequests(authorize -> authorize // 요청에 대한 인증 설정
                         //.requestMatchers("/**").permitAll() //모든 경로 인증 불필요
-                        .requestMatchers("/api/v1/auth/**").permitAll() //여기 적혀있는 경로는 모두 허용
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/geocode").permitAll()//여기 적혀있는 경로는 모두 허용
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/static/favicon.ico").permitAll()
                         .requestMatchers(
                                             "/swagger-ui/**",
