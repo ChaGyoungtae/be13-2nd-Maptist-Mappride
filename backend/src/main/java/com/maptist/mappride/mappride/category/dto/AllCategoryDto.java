@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class AllCategoryDto {
 
-    private Long id;
+    private Long categoryId;
     private String name;
     private boolean publish;
 }
