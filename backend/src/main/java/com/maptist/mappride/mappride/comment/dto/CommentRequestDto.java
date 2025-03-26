@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentRequestDto {
+
+    private Long commentId;
+
     private String comment;
 
     private Long placeId;

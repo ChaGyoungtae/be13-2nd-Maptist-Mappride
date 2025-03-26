@@ -1,5 +1,7 @@
 package com.maptist.mappride.mappride.comment;
 
+import com.maptist.mappride.mappride.comment.dto.CommentCreateDto;
+import com.maptist.mappride.mappride.comment.dto.CommentCreateResponseDto;
 import com.maptist.mappride.mappride.comment.dto.CommentRequestDto;
 import com.maptist.mappride.mappride.comment.dto.CommentUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +29,9 @@ public class CommentController {
 
     // 댓글 생성
     @PostMapping
-    public ResponseEntity<Long> createComment(@RequestBody CommentRequestDto dto) {
-        Long commentId = commentService.createComment(dto);
-        return ResponseEntity.ok().body(commentId);
+    public ResponseEntity<CommentCreateResponseDto> createComment(@RequestBody CommentCreateDto dto) {
+        CommentCreateResponseDto responseDto = commentService.createComment(dto);
+        return ResponseEntity.ok().body(responseDto);
     }
 
     // 댓글 조회
@@ -46,12 +48,14 @@ public class CommentController {
     public ResponseEntity<Long> updateComment(@RequestBody CommentUpdateDto dto) {
 
         commentService.updateComment(dto);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok().body(dto.getId());
     }
 
     // 댓글 삭제
     @DeleteMapping("/{comment-id}")
     public ResponseEntity<Void> deleteComment(@PathVariable("comment-id") Long commentId) {
+        System.out.println("let's delete");
         commentService.deleteComment(commentId);
         return ResponseEntity.ok().build();
     }

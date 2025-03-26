@@ -45,6 +45,16 @@ public class CategoryController {
     }
 
 
+    @GetMapping("/find-one/{category-id}")
+    public ResponseEntity<AllCategoryDto> findById(@PathVariable("category-id") Long categoryId){
+
+        AllCategoryDto allCategoryDto = categoryService.findById(categoryId);
+
+        return ResponseEntity.ok().body(allCategoryDto);
+
+    }
+
+
     @GetMapping("/findCategory/{name}")
     public ResponseEntity<List<CategoryNameFindDto>> searchNameCategory(@PathVariable String name ) {
         List<CategoryNameFindDto> findAllCategory = categoryService.findByCategoryName(name);
@@ -73,7 +83,7 @@ public class CategoryController {
 
     // 남의 카테고리 전체 조회
     @GetMapping("/{member-id}")
-    public ResponseEntity<List<OtherFindCategoryDto>> findOtherMemberCategory(@PathVariable("member-id") Long memberId) {
+    public ResponseEntity<List<AllCategoryDto>> findOtherMemberCategory(@PathVariable("member-id") Long memberId) {
         return ResponseEntity.ok().body(categoryService.findByOtherMemberId(memberId));
     }
 

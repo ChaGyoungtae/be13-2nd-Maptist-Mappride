@@ -17,6 +17,7 @@ import com.maptist.mappride.mappride.photo.PhotoService;
 import com.maptist.mappride.mappride.photo.dto.PhotoRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceCopyRequestDto;
+import com.maptist.mappride.mappride.place.dto.PlaceModifyDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRegisterDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
@@ -125,9 +126,8 @@ public class PlaceService {
     }
 
     @Transactional
-    public Long modifyPlace(PlaceRequestDto placeRequestDto) {
-        String address = naverGeocodingService.getAddressFromCoordinates(placeRequestDto.getLatitude(), placeRequestDto.getLongitude());
-        return placeRepository.updatePlace(placeRequestDto, address);
+    public Long modifyPlace(PlaceModifyDto placeModifyDto) {
+        return placeRepository.updatePlace(placeModifyDto);
     }
 
     @Transactional

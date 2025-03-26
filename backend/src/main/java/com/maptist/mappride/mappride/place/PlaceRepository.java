@@ -2,6 +2,7 @@ package com.maptist.mappride.mappride.place;
 
 import com.maptist.mappride.mappride.place.dto.PlaceCopyDto;
 import com.maptist.mappride.mappride.place.dto.PlaceInfoDto;
+import com.maptist.mappride.mappride.place.dto.PlaceModifyDto;
 import com.maptist.mappride.mappride.place.dto.PlacePreviewResponseDto;
 import com.maptist.mappride.mappride.place.dto.PlaceRequestDto;
 import com.maptist.mappride.mappride.place.dto.PlaceResponseDto;
@@ -100,20 +101,14 @@ public class PlaceRepository {
         return dto;
     }
 
-    public Long updatePlace(PlaceRequestDto placeRequestDto, String address) {
+    public Long updatePlace(PlaceModifyDto placeRequestDto) {
 
         em.createQuery("UPDATE Place p " +
                         "set p.name =: name, " +
-                        "p.latitude =: latitude, " +
-                        "p.longitude =: longitude, " +
-                        "p.address =: address, " +
                         "p.color =: color, " +
                         "p.content =: content " +
                         "where p.id =: placeId")
                         .setParameter("name",placeRequestDto.getName())
-                        .setParameter("latitude",placeRequestDto.getLatitude())
-                        .setParameter("longitude",placeRequestDto.getLongitude())
-                        .setParameter("address",address)
                         .setParameter("color",placeRequestDto.getColor())
                         .setParameter("content",placeRequestDto.getContent())
                         .setParameter("placeId",placeRequestDto.getPlaceId())

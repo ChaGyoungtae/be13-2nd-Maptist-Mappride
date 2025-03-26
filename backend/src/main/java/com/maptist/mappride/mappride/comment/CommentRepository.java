@@ -26,7 +26,7 @@ public class CommentRepository {
     public List<CommentRequestDto> findCommentRequestDtoByPlaceId(Long placeId) {
         return em.createQuery(
                         "SELECT new com.maptist.mappride.mappride.comment.dto.CommentRequestDto(" +
-                                "c.comment, c.place.id, c.member.id, c.member.name, c.regDate) " + // member.name과 regDate 추가
+                                "c.id, c.comment, c.place.id, c.member.id, c.member.name, c.regDate) " + // member.name과 regDate 추가
                                 "FROM Comment c WHERE c.place.id = :placeId", CommentRequestDto.class)
                 .setParameter("placeId", placeId)
                 .getResultList();
@@ -53,6 +53,9 @@ public class CommentRepository {
                .setParameter("comment", commentUpdateDto.getComment())
                .setParameter("id", commentUpdateDto.getId())
                .executeUpdate();
+
+        Comment comment = em.find(Comment.class, commentUpdateDto.getId());
+        System.out.println("comment = " + comment);
     }
 
     // 댓글 삭제

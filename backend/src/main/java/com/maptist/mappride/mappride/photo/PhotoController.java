@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,9 +52,13 @@ public class PhotoController {
 
     // 사진 추가하기
     @PostMapping(value = "/upload-photos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<List<Long>> addPhoto(@RequestPart List<MultipartFile> multipartFiles, @ModelAttribute PhotoAddRequestDto photoAddRequestDto){
-        return ResponseEntity.ok().body(photoService.addPhotos(multipartFiles,photoAddRequestDto));
-    }
+    public ResponseEntity<List<Long>> addPhoto(
+        @RequestPart List<MultipartFile> multipartFiles,
+        @RequestParam Long placeId) {  // @ModelAttribute 대신 @RequestParam 사용
+
+    PhotoAddRequestDto photoAddRequestDto = new PhotoAddRequestDto(placeId);
+    return ResponseEntity.ok().body(photoService.addPhotos(multipartFiles, photoAddRequestDto));
+}
 
     // 대표사진 변경
     @GetMapping("/thumbnail/{photo-id}")

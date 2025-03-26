@@ -1,8 +1,11 @@
 package com.maptist.mappride.mappride.comment;
 
+import com.maptist.mappride.mappride.comment.dto.CommentCreateDto;
+import com.maptist.mappride.mappride.comment.dto.CommentCreateResponseDto;
 import com.maptist.mappride.mappride.comment.dto.CommentRequestDto;
 import com.maptist.mappride.mappride.comment.dto.CommentUpdateDto;
 import com.maptist.mappride.mappride.member.Member;
+import com.maptist.mappride.mappride.member.MemberRepository;
 import com.maptist.mappride.mappride.member.MemberService;
 import com.maptist.mappride.mappride.place.Place;
 import com.maptist.mappride.mappride.place.PlaceRepository;
@@ -26,28 +29,33 @@ public class CommentService {
     private final PlaceRepository placeRepository;
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     // 댓글 생성
     // @RequestBody로 본문을 하나의 객체로 HTTP 요청 데이터 처리
-    public Long createComment(@RequestBody CommentRequestDto commentRequestDto) {
+    public CommentCreateResponseDto createComment(@RequestBody CommentCreateDto commentCreateDto) {
 
         Member member = memberService.getMember();
 
-        Place place = placeRepository.findOne(commentRequestDto.getPlaceId());
+        Place place = placeRepository.findOne(commentCreateDto.getPlaceId());
 
         if(place == null) {
             throw new RuntimeException("Place not found");
         }
 
         // dto로부터 객체 생성
-        Comment comment = commentRequestDto.toComment(member, place);
+        Comment comment = commentCreateDto.toComment(member,place);
 
         Long id = commentRepository.create(comment);
 
+        Optional<Comment> newComment = commentRepository.findById(id);
 
-        // 확인용 로그
-        log.info("Comment created: {}", id);
-        return id;
+        if(newComment.isEmpty()){
+            throw new RuntimeException("댓글 생성 실패");
+        }
+
+        CommentCreateResponseDto responseDto = commentCreateDto.toResponseDto(member.getName(), newComment.get().getComment(), member.getId(), newComment.get().getRegDate());
+        return responseDto;
     }
 
 
@@ -63,6 +71,7 @@ public class CommentService {
 
 
     // 댓글 수정
+    @Transactional
     public void updateComment(CommentUpdateDto dto) {
         commentRepository.updateComment(dto);
     }
