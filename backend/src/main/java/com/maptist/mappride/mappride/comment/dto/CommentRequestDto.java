@@ -22,6 +22,11 @@ public class CommentRequestDto {
 
     private Long memberId;
 
+    private String memberName;
+
+    private LocalDateTime regDate;
+
+
 
     public Comment toComment(Member member, Place place) {
         return Comment.builder()
