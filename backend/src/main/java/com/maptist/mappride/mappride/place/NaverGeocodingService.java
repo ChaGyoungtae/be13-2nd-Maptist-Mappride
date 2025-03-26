@@ -2,6 +2,7 @@ package com.maptist.mappride.mappride.place;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+@Slf4j
 @Service
 public class NaverGeocodingService {
 
@@ -24,6 +34,38 @@ public class NaverGeocodingService {
     private String geocodingUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
+
+    public Map<String, Object> getGeocode(String address) throws IOException {
+
+        String fullUrl = geocodingUrl + URLEncoder.encode(address, "UTF-8");
+        HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+        conn.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        StringBuilder response = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            response.append(line);
+        }
+        br.close();
+        log.info("response = {}",response);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.toString());
+        log.info("root = {}", root);
+        JsonNode addr = root.get("addresses").get(0);
+//        if (addr == null || !addr.isArray() || addr.isEmpty()) {
+//            throw new IllegalArgumentException("유효한 주소 결과가 없습니다.");
+//        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("lat", addr.get("y").asText());
+        result.put("lng", addr.get("x").asText());
+        log.info("result latlng = {}",result);
+        return result;
+
+    }
 
     public String getAddressFromCoordinates(double latitude, double longitude) {
         String url = String.format("%s?coords=%f,%f&output=json", geocodingUrl, longitude, latitude);
