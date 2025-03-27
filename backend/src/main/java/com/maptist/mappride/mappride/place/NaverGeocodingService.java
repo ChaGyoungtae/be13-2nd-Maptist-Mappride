@@ -12,14 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
 @Slf4j
 @Service
 public class NaverGeocodingService {
@@ -35,54 +30,66 @@ public class NaverGeocodingService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public Map<String, Object> getGeocode(String address) throws IOException {
+    // 주소를 위도와 경도로 변환
+    public Map<String, Object> getGeocode(String address) {
+        String url = String.format("%s?query=%s", geocodingUrl, address);
 
-        String fullUrl = geocodingUrl + URLEncoder.encode(address, "UTF-8");
-        HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
-        conn.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line;
-        StringBuilder response = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            response.append(line);
-        }
-        br.close();
-        log.info("response = {}",response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(response.toString());
-        log.info("root = {}", root);
-        JsonNode addr = root.get("addresses").get(0);
-//        if (addr == null || !addr.isArray() || addr.isEmpty()) {
-//            throw new IllegalArgumentException("유효한 주소 결과가 없습니다.");
-//        }
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("lat", addr.get("y").asText());
-        result.put("lng", addr.get("x").asText());
-        log.info("result latlng = {}",result);
-        return result;
-
-    }
-
-    public String getAddressFromCoordinates(double latitude, double longitude) {
-        String url = String.format("%s?coords=%f,%f&output=json", geocodingUrl, longitude, latitude);
-
+        // 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-NCP-APIGW-API-KEY-ID", clientId);
         headers.set("X-NCP-APIGW-API-KEY", clientSecret);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+        // HTTP 요청 엔티티 설정
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-        return extractAddress(response.getBody());  // JSON 응답을 그대로 반환
+        // API 호출
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        log.info("API Response: {}", response.getBody());
+
+        // 응답 데이터에서 위도, 경도 추출
+        return extractLatLngFromResponse(response.getBody());
     }
 
-    private String extractAddress(String jsonResponse) {
+    // 위도, 경도를 주소로 변환
+    public String getAddressFromCoordinates(double latitude, double longitude) {
+        String url = String.format("%s?coords=%f,%f&output=json", geocodingUrl, longitude, latitude);
 
+        // 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-NCP-APIGW-API-KEY-ID", clientId);
+        headers.set("X-NCP-APIGW-API-KEY", clientSecret);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // HTTP 요청 엔티티 설정
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        // API 호출
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        log.info("API Response: {}", response.getBody());
+
+        // 응답 데이터에서 주소 추출
+        return extractAddressFromResponse(response.getBody());
+    }
+
+    // 응답에서 위도, 경도를 추출
+    private Map<String, Object> extractLatLngFromResponse(String jsonResponse) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode root = objectMapper.readTree(jsonResponse);
+            JsonNode address = root.path("addresses").get(0);
+
+            result.put("lat", address.path("y").asText());
+            result.put("lng", address.path("x").asText());
+        } catch (Exception e) {
+            log.error("Error extracting latitude and longitude: {}", e.getMessage());
+        }
+        return result;
+    }
+
+    // 응답에서 주소를 추출
+    private String extractAddressFromResponse(String jsonResponse) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(jsonResponse);
@@ -92,22 +99,20 @@ public class NaverGeocodingService {
                 return "주소를 찾을 수 없습니다.";
             }
 
-            // "results" 배열에서 첫 번째 결과 가져오기
+            // 결과에서 첫 번째 주소 추출
             JsonNode results = root.path("results");
             if (results.isEmpty()) {
                 return "주소 정보를 찾을 수 없습니다.";
             }
 
             JsonNode region = results.get(0).path("region");
-
-            // 주소 구성 요소 가져오기
             String area1 = region.path("area1").path("name").asText();  // 서울특별시
             String area2 = region.path("area2").path("name").asText();  // 중구
             String area3 = region.path("area3").path("name").asText();  // 태평로1가
 
             return String.format("%s %s %s", area1, area2, area3).trim();
-            } catch (Exception e) {
-                return "주소 변환 오류: " + e.getMessage();
-            }
+        } catch (Exception e) {
+            return "주소 변환 오류: " + e.getMessage();
+        }
     }
 }
