@@ -141,9 +141,6 @@
 
 # 테스트 계획 및 결과 보고서
 
-
-http://localhost:8080/swagger-ui/index.html#/
-
 ![Image](https://github.com/user-attachments/assets/6acef265-225f-457c-8881-b8b7fe13b511)
 ![Image](https://github.com/user-attachments/assets/81b89515-e304-4b00-a0aa-18303e3a2241)
 ![Image](https://github.com/user-attachments/assets/ace591c1-21d2-4edd-b159-41a8df5309e7)
