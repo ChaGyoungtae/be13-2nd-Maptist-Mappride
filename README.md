@@ -118,6 +118,7 @@
 ## API 명세서
 
 <br>
+https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 
 ![api2](https://github.com/user-attachments/assets/0c3276cb-d0a9-4d04-ba31-28d3e9d895c9)
 ![api1](https://github.com/user-attachments/assets/138995b4-b552-4693-b89f-c0f781e9146a)
