@@ -91,18 +91,19 @@
 ### DATABASE
 
 
-![redis](https://github.com/user-attachments/assets/df929d81-ce2f-4853-97fd-cdf7bf45907e) ![mariadb](https://github.com/user-attachments/assets/19a0ad09-804d-4303-80bd-32cafdae0e6f)
+![redis](https://github.com/user-attachments/assets/df929d81-ce2f-4853-97fd-cdf7bf45907e) ![mariadb](https://github.com/user-attachments/assets/19a0ad09-804d-4303-80bd-32cafdae0e6f) ![image](https://github.com/user-attachments/assets/5e1795a5-88c5-4411-93cd-8afcf16d781e)
+
 
 <br>
 
-### etc
+### ETC
 
 
 ![postman](https://github.com/user-attachments/assets/4bcd5043-6841-4cd1-b864-dec4dc39f918) ![swagger](https://github.com/user-attachments/assets/607806d1-b228-4d6a-8a87-45c60ccecc8d)
 
 <br>
 
-### ide
+### IDE
 
 
 ![intellij](https://github.com/user-attachments/assets/25d426ed-e30e-4619-9968-11375adba8b9)
@@ -114,7 +115,7 @@
 
 <br>
 
-## api 명세서
+## API 명세서
 
 <br>
 
@@ -124,7 +125,7 @@
 
 <br><br>
 
-## wbs
+## WBS
 
 
 ![wbs](https://github.com/user-attachments/assets/5e2ddafe-690b-4311-814c-ffa4e10b9e99)
@@ -136,10 +137,23 @@
 
 
 
+<br>
+
+
+## 테이블 명세서
+
+![Image](https://github.com/user-attachments/assets/6aadcde4-3ac0-451d-81ee-e56293d7f7b5)
+![Image](https://github.com/user-attachments/assets/3980ed4d-9719-46c0-859c-3b2dfee3c169)
+![Image](https://github.com/user-attachments/assets/b0df3b7d-5376-4cd0-985e-ca9d0747bb67)
+![Image](https://github.com/user-attachments/assets/e56d4cc1-f243-4ec4-8cc5-9fb3d75a6b80)
+![Image](https://github.com/user-attachments/assets/819dab75-45fa-4716-af2f-42a176f70ac1)
+![Image](https://github.com/user-attachments/assets/6e988ecb-7e87-4167-bbc3-c3a2e15950c1)
+
+
 <br><br>
 
 
-# 테스트 계획 및 결과 보고서
+# 📌 테스트 계획 및 결과 보고서
 
 ![Image](https://github.com/user-attachments/assets/6acef265-225f-457c-8881-b8b7fe13b511)
 ![Image](https://github.com/user-attachments/assets/81b89515-e304-4b00-a0aa-18303e3a2241)
@@ -149,10 +163,15 @@
 
 
 
-# 회고
 
-권지민 : 
-이성일 : 
-이창신 : 
-차경태 :  
-최유진 : 
+
+# 📌 회고
+
+| 조원<br>이름 | 회고 |
+| --------- | --- |
+| 권지민 | 이번 프로젝트를 진행하면서 처음으로 Spring을 다뤄보았는데, 많이 배웠습니다. 소셜 로그인, 알림 등 어려운 부분은 다른 팀원분들이 최선을 다해주셔서 더 퀄리티 있는 프로젝트가 완성된 것 같아서 감사합니다. |<br/>
+| 이성일 |  |<br/>
+| 이창신 | 수업 때 배운 것과 프로젝트 작업 시 실전에서 사용하는 것과 많이 달라서 힘들었다. 백엔드에서는 데이터를 어떻게 받고 어떻게 수행되는지 이해하기 어려웠고, 자바로 구현하면서 복잡한 구조에 다양한 데이터 타입까지 머리를 어지럽게 만들었다. 팀원들이 도와주고 알려주면서 기본적인 CRUD 정도는 조금이나마 습득할 수 있게 되었다. 학습의 목적으로 JPA로 구현하도록 했는데 이를 세팅하는 것은 비교적 수월했지만 내용을 작성하면 작성할수록 공부할 내용이 까도 까도 계속 나왔다. 더 공부했어야 했는데 프로젝트를 수행하면서 추가적인 공부를 소홀히 한 것 같아 나 자신을 뒤돌아볼 때 너무나 부족한 실력인 것 같다. 나 스스로 발전할 필요를 느꼈다. |<br/>
+| 차경태 |  |<br/>
+| 최유진 | Java와 Spring Framework, JPA를 사용해 백엔드를 구축하고 해당 기술에 대한 이해도가 높아졌습니다. 특히 JPA를 활용한 데이터 모델링은 처음엔 다소 어려웠지만 점차 익숙해졌고 DB와의 연동이 어떻게 이루어지는지에 대한 이해도가 깊어졌습니다. |
+
