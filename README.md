@@ -144,17 +144,11 @@
 
 http://localhost:8080/swagger-ui/index.html#/
 
+![Image](https://github.com/user-attachments/assets/6acef265-225f-457c-8881-b8b7fe13b511)
+![Image](https://github.com/user-attachments/assets/81b89515-e304-4b00-a0aa-18303e3a2241)
+![Image](https://github.com/user-attachments/assets/ace591c1-21d2-4edd-b159-41a8df5309e7)
+![Image](https://github.com/user-attachments/assets/96cc847e-5442-4188-b38a-0f21a54f7dae)
 
-
-
-![place-get](https://github.com/user-attachments/assets/33791965-b700-4035-9df2-de062d4d1a04)
-
-
-![findCategory](https://github.com/user-attachments/assets/6a4a18b1-6b6a-406e-9406-56481f35eed4)
-
-
-
-![getComment](https://github.com/user-attachments/assets/e9ff2895-4953-4e9f-86d9-06210328afdf)
 
 
 
