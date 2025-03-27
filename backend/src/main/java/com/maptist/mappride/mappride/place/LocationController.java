@@ -25,12 +25,8 @@ public class LocationController {
     public ResponseEntity<Map<String,Object>> getGeocode(@RequestParam String address) {
 
         log.info("geocode address = {}",address);
-        try {
-            log.info("geocode address = {}",address);
-            return ResponseEntity.ok(naverGeocodingService.getGeocode(address));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        log.info("geocode address = {}",address);
+        return ResponseEntity.ok(naverGeocodingService.getGeocode(address));
     }
     @GetMapping("/reverse-geocode")
     public String getAddress(@RequestParam("lat") double lat, @RequestParam("lon") double lon) {

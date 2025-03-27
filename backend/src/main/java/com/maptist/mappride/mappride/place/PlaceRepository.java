@@ -37,7 +37,7 @@ public class PlaceRepository {
                 ") " +
                 "FROM Place p " +
                 "LEFT JOIN Photo ph ON ph.place.id = p.id " +
-                "WHERE p.category.id = :categoryId AND ph.thumbnail = true";
+                "WHERE p.category.id = :categoryId";
         return em.createQuery(query, PlacesByCategoryResponseDto.class)
                 .setParameter("categoryId", categoryId)
                 .getResultList();

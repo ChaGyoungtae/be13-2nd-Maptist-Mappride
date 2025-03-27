@@ -79,6 +79,9 @@ public class PlaceService {
     public Long createPlace(MultipartFile thumbnail, List<MultipartFile> multipartFiles, PlaceRegisterDto placeRegisterDto) {
 
         System.out.println(placeRegisterDto);
+        System.out.println("thumbnail = " + thumbnail);
+        System.out.println("multipartFiles = " + multipartFiles);
+
 
         Optional<Category> findCategory = categoryRepository.findById(placeRegisterDto.getCategoryId());
 
@@ -86,10 +89,8 @@ public class PlaceService {
             throw new RuntimeException("카테고리를 찾을 수 없습니다.");
         }
 
-        Optional<Place> findPlace = placeRepository.findByName(placeRegisterDto.getName());
-        if(findPlace.isPresent()){
-            throw new RuntimeException("이미 존재하는 이름입니다.");
-        }
+
+
 
         String address = naverGeocodingService.getAddressFromCoordinates(placeRegisterDto.getLatitude(), placeRegisterDto.getLongitude());
 
@@ -139,23 +140,30 @@ public class PlaceService {
         // placeId를 이용해 사진 리스트 가져오기
         List<Photo> photoList = photoRepository.findByPlaceId(placeId);
 
-        if( memberService.getMember() != photoList.get(0).getMember()){
+        if(!photoList.isEmpty()) { // 사진이 있는 장소일경우
+            if( memberService.getMember() != photoList.get(0).getMember()){
             throw new RuntimeException("본인의 장소만 삭제할 수 있습니다.");
+            }
+
+            // 사진 지우고, photo 테이블 지우기
+            for(Photo p : photoList){
+                s3Service.deleteFile(p.getPhotoUrl());
+                photoRepository.remove(p);
+            }
         }
 
-        // 사진 지우고, photo 테이블 지우기
-        for(Photo p : photoList){
-            s3Service.deleteFile(p.getPhotoUrl());
-            photoRepository.remove(p);
-        }
+
 
         // placeId를 이용해 댓글 리스트 가져오기
         List<Comment> commentList = commentRepository.findByPlaceId(placeId);
 
-        // 댓글 지우기
-        for(Comment c: commentList){
-            commentRepository.delete(c);
+        if(!commentList.isEmpty()) { // 댓글이 존재하는 경우
+            // 댓글 지우기
+            for(Comment c: commentList){
+                commentRepository.delete(c);
+            }
         }
+
 
         // place 지우기
         return placeRepository.delete(place);
