@@ -119,8 +119,9 @@
 
 <br>
 https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
-
-![api2](https://github.com/user-attachments/assets/0c3276cb-d0a9-4d04-ba31-28d3e9d895c9)
+![메인페이지](https://github.com/user-attachments/assets/238ed41b-359e-47db-a2e2-09dad4554780)
+![나만의장소상세보기](https://github.com/user-attachments/assets/cf93b148-092f-4a86-aabd-dc100a175bc1)
+![나만의장소생성페이지](https://github.com/user-attachments/assets/20ee3986-aeca-490c-b6ba-7d0c87c90e62)
 ![마이페이지](https://github.com/user-attachments/assets/fe3ba7c6-7b7d-4336-8f14-5390b4c8579f)
 ![카테고리관리](https://github.com/user-attachments/assets/30e2081d-6199-4282-8877-75cacbb5cca7)
 ![검색페이지](https://github.com/user-attachments/assets/adaa76a5-6ce6-46bc-b0fa-098a454203b3)
