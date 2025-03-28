@@ -35,14 +35,15 @@
 <br><br>
 
 # 📌 주요 기능
-### 회원 관리
+
+### 1️⃣ 회원 관리
 - 간편한 소셜 로그인 (Google, Kakao, Naver 등)
 
 - 사용자 프로필 관리
   
  <br>
 
-### 카테고리 및 장소 관리
+### 2️⃣ 카테고리 및 장소 관리
 - 카테고리 생성/수정/삭제
 
 - 각 카테고리에 장소 추가 가능
@@ -51,7 +52,7 @@
 
 <br>
 
-### 장소 상세보기 및 소통 기능
+### 3️⃣ 장소 상세보기 및 소통 기능
 - 장소별 사진과 설명 추가 가능
 
 - 다른 사용자가 장소를 열람하고 댓글 작성 가능
@@ -115,38 +116,110 @@
 
 <br>
 
-## API 명세서
+
+## 1️⃣ API 명세서
 
 <br>
+
 https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 
-![메인페이지](https://github.com/user-attachments/assets/238ed41b-359e-47db-a2e2-09dad4554780)
-![나만의장소상세보기](https://github.com/user-attachments/assets/cf93b148-092f-4a86-aabd-dc100a175bc1)
-![나만의장소생성페이지](https://github.com/user-attachments/assets/20ee3986-aeca-490c-b6ba-7d0c87c90e62)
-![마이페이지](https://github.com/user-attachments/assets/fe3ba7c6-7b7d-4336-8f14-5390b4c8579f)
-![카테고리관리](https://github.com/user-attachments/assets/30e2081d-6199-4282-8877-75cacbb5cca7)
-![검색페이지](https://github.com/user-attachments/assets/adaa76a5-6ce6-46bc-b0fa-098a454203b3)
+<br>
 
+<details>
+<summary> <b> 메인 페이지(지도) </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/5391cddd-c0e1-4408-833f-0293d7d4fb51)
+
+</div>
+</details>
+
+<details>
+<summary> <b> 나만의 장소 생성 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/cd90209a-bc85-4669-b0cf-cf8318c2532f)
+
+</div>
+</details>
+
+<details>
+<summary> <b> 나만의 장소 상세보기 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/fcc444fa-4e76-4d92-a332-053b6ba35c90)
+
+</div>
+</details>
+
+<details>
+<summary> <b> 마이 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/299093fc-39db-45e2-9246-6fe86295c12b)
+
+</div>
+</details>
+
+<details>
+<summary> <b> 카테고리 관리 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/bd49a5e7-efc1-4405-b904-382b38680271)
+
+</div>
+</details>
+
+
+
+<details>
+<summary> <b> 검색 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/ed1b9a7e-949c-455c-8677-8656af4b821c)
+
+</div>
+</details>
 
 
 <br><br>
 
-## WBS
+## 2️⃣ WBS
 
+
+<details>
+<summary> <b> WBS </b> </summary>
+<div markdown="1">
 
 ![wbs](https://github.com/user-attachments/assets/5e2ddafe-690b-4311-814c-ffa4e10b9e99)
 
+</div>
+</details>
+
+
+
 <br><br>
 
-## ERD
+
+## 3️⃣ ERD
+
+<details>
+<summary> <b> ERD </b> </summary>
+<div markdown="1">
+
 ![erd](https://github.com/user-attachments/assets/b857a80d-a35c-4338-a02c-6b4876890baf)
 
+</div>
+</details>
+
+<br><br>
 
 
-<br>
+## 4️⃣ 테이블 명세서
 
-
-## 테이블 명세서
+<details>
+<summary> <b> 테이블 명세서 </b> </summary>
+<div markdown="1">
 
 ![Image](https://github.com/user-attachments/assets/6aadcde4-3ac0-451d-81ee-e56293d7f7b5)
 ![Image](https://github.com/user-attachments/assets/3980ed4d-9719-46c0-859c-3b2dfee3c169)
@@ -155,19 +228,27 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 ![Image](https://github.com/user-attachments/assets/819dab75-45fa-4716-af2f-42a176f70ac1)
 ![Image](https://github.com/user-attachments/assets/6e988ecb-7e87-4167-bbc3-c3a2e15950c1)
 
+</div>
+</details>
+
 
 <br><br>
 
 
 # 📌 테스트 계획 및 결과 보고서
 
+
+<details>
+<summary> <b> swagger </b> </summary>
+<div markdown="1">
+
 ![Image](https://github.com/user-attachments/assets/6acef265-225f-457c-8881-b8b7fe13b511)
 ![Image](https://github.com/user-attachments/assets/81b89515-e304-4b00-a0aa-18303e3a2241)
 ![Image](https://github.com/user-attachments/assets/ace591c1-21d2-4edd-b159-41a8df5309e7)
 ![Image](https://github.com/user-attachments/assets/96cc847e-5442-4188-b38a-0f21a54f7dae)
 
-
-
+</div>
+</details>
 
 
 
