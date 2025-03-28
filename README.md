@@ -117,6 +117,8 @@
 <br>
 
 
+
+
 ## 1️⃣ API 명세서
 
 <br>
@@ -129,7 +131,9 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 메인 페이지(지도) </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/5391cddd-c0e1-4408-833f-0293d7d4fb51)
+![Image](https://github.com/user-attachments/assets/778276a3-4d70-4e6c-96a8-01cb9728dd6c)
+
+
 
 </div>
 </details>
@@ -138,7 +142,9 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 나만의 장소 생성 페이지 </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/cd90209a-bc85-4669-b0cf-cf8318c2532f)
+![Image](https://github.com/user-attachments/assets/cd9d2aa4-6eae-4310-8678-4e93d1d0d75d)
+
+
 
 </div>
 </details>
@@ -147,7 +153,9 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 나만의 장소 상세보기 페이지 </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/fcc444fa-4e76-4d92-a332-053b6ba35c90)
+![Image](https://github.com/user-attachments/assets/db13c166-aba0-4651-907b-9592899cef1a)
+
+
 
 </div>
 </details>
@@ -156,7 +164,9 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 마이 페이지 </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/299093fc-39db-45e2-9246-6fe86295c12b)
+![Image](https://github.com/user-attachments/assets/19eee04d-0ddb-4a34-95cd-fcbec88de91f)
+
+
 
 </div>
 </details>
@@ -165,7 +175,8 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 카테고리 관리 페이지 </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/bd49a5e7-efc1-4405-b904-382b38680271)
+![Image](https://github.com/user-attachments/assets/e11bbcbc-31c3-4d58-9513-341e52b6b609)
+
 
 </div>
 </details>
@@ -176,7 +187,8 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <summary> <b> 검색 페이지 </b> </summary>
 <div markdown="1">
 
-![Image](https://github.com/user-attachments/assets/ed1b9a7e-949c-455c-8677-8656af4b821c)
+![Image](https://github.com/user-attachments/assets/df3abe80-e2cc-4401-9b54-bc69c6b2a8e2)
+
 
 </div>
 </details>
@@ -250,7 +262,7 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 </div>
 </details>
 
-
+<br><br>
 
 # 📌 회고
 
