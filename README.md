@@ -133,8 +133,6 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 
 ![Image](https://github.com/user-attachments/assets/778276a3-4d70-4e6c-96a8-01cb9728dd6c)
 
-
-
 </div>
 </details>
 
@@ -143,7 +141,6 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 <div markdown="1">
 
 ![Image](https://github.com/user-attachments/assets/cd9d2aa4-6eae-4310-8678-4e93d1d0d75d)
-
 
 
 </div>
