@@ -240,6 +240,74 @@ https://www.notion.so/playdatacademy/API-1c3d943bcac2802e9250f00063c69ebb?pvs=4
 </div>
 </details>
 
+<br><br>
+
+## 5️⃣ 요구사항 명세서
+
+<br>
+
+<details>
+<summary> <b> 메인 페이지(지도) </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/5a63c648-82cc-48d1-9f32-8939cff2eb0e)
+
+
+</div>
+</details>
+
+<details>
+<summary> <b> 나만의 장소 생성 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/abe83958-9ce3-480f-8e19-b7f4a2b4ca3c)
+
+
+</div>
+</details>
+
+<details>
+<summary> <b> 나만의 장소 상세보기 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/e2442a2f-8d50-4fbd-b3cf-c74383022211)
+
+
+</div>
+</details>
+
+<details>
+<summary> <b> 마이 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/7f66610f-2d5a-4e59-bb1a-4f7949579d41)
+
+
+</div>
+</details>
+
+<details>
+<summary> <b> 카테고리 관리 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/ed0596a5-06b8-4512-a9ae-edc496d24362)
+
+
+</div>
+</details>
+
+<details>
+<summary> <b> 검색 페이지 </b> </summary>
+<div markdown="1">
+
+![Image](https://github.com/user-attachments/assets/80206087-cb8c-4802-94b6-60e581b19ab7)
+
+
+</div>
+</details>
+    
+<br>
+
 
 <br><br>
 
